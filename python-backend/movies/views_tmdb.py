@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponse
 import requests
 from .models import Genre, Movie, Actor, Director, MovieEnglish
 
-API_KEY = 'beb7b861594dd717f65e23cc4c3d9b55'
+API_KEY = 'b44d068c0598769b439da2b0cc74f085'
 GENRE_URL = 'https://api.themoviedb.org/3/genre/movie/list'
 POPULAR_MOVIE_URL = 'https://api.themoviedb.org/3/movie/popular'
 
@@ -91,12 +91,13 @@ def movie_data(page=1):
     
     for movie_en_dict in response_en.get('results'):
         if not movie_en_dict.get('overview'): continue
-        if MovieEnglish.objects.filter(pk=movie_en_dict.get('id')).exists(): continue
-        MovieEnglish.objects.create(
-            id=movie_en_dict.get('id'),
-            title=movie_en_dict.get('title'),
-            overview=movie_en_dict.get('overview'),
-        )
+        try:
+            MovieEnglish.objects.create(
+                id=movie_en_dict.get('id'),
+                title=movie_en_dict.get('title'),
+                overview=movie_en_dict.get('overview'),
+            )
+        except: continue
 
     response = requests.get(
         POPULAR_MOVIE_URL,
@@ -109,27 +110,28 @@ def movie_data(page=1):
 
     for movie_dict in response.get('results'):
         if not movie_dict.get('release_date'): continue   # 없는 필드 skip
-        if Movie.objects.filter(pk=movie_en_dict.get('id')).exists(): continue
+        try:
         # 유투브 key 조회
-        youtube_key = get_youtube_key(movie_dict)
-        movie = Movie.objects.create(
-            id=movie_dict.get('id'),
-            title=movie_dict.get('title'),
-            release_date=movie_dict.get('release_date'),
-            popularity=movie_dict.get('popularity'),
-            vote_count=movie_dict.get('vote_count'),
-            vote_average=movie_dict.get('vote_average'),
-            overview=movie_dict.get('overview'),
-            poster_path=movie_dict.get('poster_path'),   
-            youtube_key=youtube_key         
-        )
-        for genre_id in movie_dict.get('genre_ids', []):
-            movie.genres.add(genre_id)
+            youtube_key = get_youtube_key(movie_dict)
+            movie = Movie.objects.create(
+                id=movie_dict.get('id'),
+                title=movie_dict.get('title'),
+                release_date=movie_dict.get('release_date'),
+                popularity=movie_dict.get('popularity'),
+                vote_count=movie_dict.get('vote_count'),
+                vote_average=movie_dict.get('vote_average'),
+                overview=movie_dict.get('overview'),
+                poster_path=movie_dict.get('poster_path'),   
+                youtube_key=youtube_key         
+            )
+            for genre_id in movie_dict.get('genre_ids', []):
+                movie.genres.add(genre_id)
 
-        # 배우들 저장
-        get_actors(movie)
-        # 감독들 저장
-        get_directors(movie)
+            # 배우들 저장
+            get_actors(movie)
+            # 감독들 저장
+            get_directors(movie)
+        except: continue
 
 
 def tmdb_data(request):
