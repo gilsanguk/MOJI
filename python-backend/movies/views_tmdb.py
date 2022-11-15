@@ -80,6 +80,24 @@ def get_directors(movie):
         break
 
 def movie_data(page=1):
+    response_en = requests.get(
+        POPULAR_MOVIE_URL,
+        params={
+            'api_key': API_KEY,
+            'language': 'en-US', 
+            'page': page,       
+        }
+    ).json()
+    
+    for movie_en_dict in response_en.get('results'):
+        if not movie_en_dict.get('overview'): continue
+        if MovieEnglish.objects.filter(pk=movie_en_dict.get('id')).exists(): continue
+        MovieEnglish.objects.create(
+            id=movie_en_dict.get('id'),
+            title=movie_en_dict.get('title'),
+            overview=movie_en_dict.get('overview'),
+        )
+
     response = requests.get(
         POPULAR_MOVIE_URL,
         params={
@@ -91,9 +109,9 @@ def movie_data(page=1):
 
     for movie_dict in response.get('results'):
         if not movie_dict.get('release_date'): continue   # 없는 필드 skip
+        if Movie.objects.filter(pk=movie_en_dict.get('id')).exists(): continue
         # 유투브 key 조회
         youtube_key = get_youtube_key(movie_dict)
-
         movie = Movie.objects.create(
             id=movie_dict.get('id'),
             title=movie_dict.get('title'),
@@ -113,25 +131,6 @@ def movie_data(page=1):
         # 감독들 저장
         get_directors(movie)
 
-def movie_en_data(page=1):
-    response_en = requests.get(
-        POPULAR_MOVIE_URL,
-        params={
-            'api_key': API_KEY,
-            'language': 'en-US', 
-            'page': page,       
-        }
-    ).json()
-    
-    for movie_en_dict in response_en.get('results'):
-        if not movie_en_dict.get('release_date'): continue
-        if MovieEnglish.objects.filter(pk=movie_en_dict.get('id')).exists(): continue
-        MovieEnglish.objects.create(
-            id=movie_en_dict.get('id'),
-            title=movie_en_dict.get('title'),
-            overview=movie_en_dict.get('overview'),
-        )
-
 
 def tmdb_data(request):
     Genre.objects.all().delete()
@@ -141,7 +140,6 @@ def tmdb_data(request):
 
     tmdb_genres()
     for i in range(1, 500):
-        if (i == 6): continue
         movie_data(i)
-        movie_en_data(i)
+        print(i)
     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
