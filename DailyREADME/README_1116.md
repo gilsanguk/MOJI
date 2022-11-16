@@ -1,13 +1,29 @@
-# MovieRecommendApp
+# 1116
 
-### SSAFY 1학기 최종 프로젝트 - 영화 추천 앱 제작
+- Notion으로 계획 수정 및 회의
 ---
-##### BackEnd
+### BackEnd
+#### django
+- 메인페이지 구현
+- 영화 디테일 페이지
+- 리뷰 작성
+- 리뷰 리스트 페이지
+- 리뷰 댓글
+- 회원가입 및 로그인 구축
+- 사용자 인증 설정하기
+
+##### Vue
+- 로그인 회원가입 페이지 구현
+- 메인 페이지 작동여부 확인(포스터 보여주기)
+- 메인페이지에서 포스터 누르면 디테일 페이지로 이동 확인
 
 
-
-##### FrontEnd
+### FrontEnd
+##### Figma
+- 로그인 페이지 이미지화
+- 메인 페이지 이미지화
+- 메인페이지 호버 이미지화
 
 ---------------
 ### 진행중
-https://app.diagrams.net/#Hgilsanguk%2FMovieRecommendApp%2Fmaster%2FERD.drawio.png
+- Figma 리뷰페이지 가이드라인 작성
