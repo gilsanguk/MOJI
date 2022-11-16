@@ -1,6 +1,7 @@
 # 1116
 
 - Notion으로 계획 수정 및 회의
+- 
 ![Alt text](1116_notinon.PNG)
 ---
 ### BackEnd
