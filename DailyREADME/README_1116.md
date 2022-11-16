@@ -25,8 +25,13 @@
 ### FrontEnd
 ##### Figma
 - 로그인 페이지 이미지화
+![index](https://user-images.githubusercontent.com/109333410/202173446-33ab7f66-bfb2-4ab2-8863-a0f09fc87a1c.png)
 - 메인 페이지 이미지화
+![main](https://user-images.githubusercontent.com/109333410/202173453-71e34c2c-0ce4-4da9-9dfc-817ae7873c3e.png)
 - 메인페이지 호버 이미지화
+![main-hover](https://user-images.githubusercontent.com/109333410/202173478-64b791b9-1c69-4520-a455-4d91ad7b5d8c.png)
+![main-detail-hover](https://user-images.githubusercontent.com/109333410/202173466-8f6c8d46-d97a-49c5-b372-151af8095142.png)
+
 
 ---------------
 
