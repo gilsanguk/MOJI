@@ -21,12 +21,10 @@ class Movie(models.Model):
     overview = models.TextField()
     poster_path = models.CharField(max_length=200)
     youtube_key = models.CharField(max_length=100)
+    vector = models.TextField(null = True)
+
     actors = models.ManyToManyField(Actor, related_name='actors')
     directors = models.ManyToManyField(Director, related_name='directors')
     genres = models.ManyToManyField(Genre, related_name='movies')
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
 
-
-class MovieEnglish(models.Model):
-    title = models.CharField(max_length=100)
-    overview = models.TextField()

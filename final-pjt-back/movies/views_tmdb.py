@@ -1,6 +1,6 @@
 from django.http import JsonResponse, HttpResponse
 import requests
-from .models import Genre, Movie, Actor, Director, MovieEnglish
+from .models import Genre, Movie, Actor, Director
 
 API_KEY = 'b44d068c0598769b439da2b0cc74f085'
 GENRE_URL = 'https://api.themoviedb.org/3/genre/movie/list'
@@ -80,25 +80,6 @@ def get_directors(movie):
         break
 
 def movie_data(page=1):
-    response_en = requests.get(
-        POPULAR_MOVIE_URL,
-        params={
-            'api_key': API_KEY,
-            'language': 'en-US', 
-            'page': page,       
-        }
-    ).json()
-    
-    for movie_en_dict in response_en.get('results'):
-        if not movie_en_dict.get('overview'): continue
-        try:
-            MovieEnglish.objects.create(
-                id=movie_en_dict.get('id'),
-                title=movie_en_dict.get('title'),
-                overview=movie_en_dict.get('overview'),
-            )
-        except: continue
-
     response = requests.get(
         POPULAR_MOVIE_URL,
         params={
@@ -141,7 +122,7 @@ def tmdb_data(request):
     # MovieEnglish.objects.all().delete()
 
     tmdb_genres()
-    for i in range(1, 500):
+    for i in range(1, 2):
         movie_data(i)
         print(i)
     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
