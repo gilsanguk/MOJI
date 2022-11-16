@@ -1,7 +1,7 @@
 # 1116
 
 - Notion으로 계획 수정 및 회의
-[label](../../../../../../../c:/Users/multicampus/Downloads/Export-23a2c1c4-ef54-46ea-9103-192cb63674bc/%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A9%E1%86%BC%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%20ff3437db05d64f059ada6a2fd2caad34.md)
+![Alt text](1116_notinon.PNG)
 ---
 ### BackEnd
 #### django
