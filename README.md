@@ -1,13 +1,15 @@
 # MovieRecommendApp
 
 ### SSAFY 1학기 최종 프로젝트 - 영화 추천 앱 제작
+#### 계획
 ![Plan](https://user-images.githubusercontent.com/109333410/202171444-478b992f-44a7-49b4-a509-eaaf7b978c45.png)
----
-##### BackEnd
 
+-----
+### BackEnd
+#### ERD
 <img src="ERD.drawio.png">
 
-##### FrontEnd
+### FrontEnd
 
 ---------------
 ### 진행중
