@@ -1,7 +1,7 @@
 # 1116
 
 - Notion으로 계획 수정 및 회의
-![캡처](C:/Users/multicampusDesktop/1116_notinon.PNG)
+![캡처](/DailyREADME/1116_notinon.PNG)
 ---
 ### BackEnd
 #### django
