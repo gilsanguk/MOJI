@@ -135,10 +135,10 @@ def movie_data(page=1):
 
 
 def tmdb_data(request):
-    Genre.objects.all().delete()
-    Actor.objects.all().delete()
-    Movie.objects.all().delete()
-    MovieEnglish.objects.all().delete()
+    # Genre.objects.all().delete()
+    # Actor.objects.all().delete()
+    # Movie.objects.all().delete()
+    # MovieEnglish.objects.all().delete()
 
     tmdb_genres()
     for i in range(1, 500):
