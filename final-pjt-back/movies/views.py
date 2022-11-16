@@ -17,14 +17,21 @@ def movie_list(request):
     for movie in serializers.data:
         if not movie.get('poster_path'):
             movie['poster_path'] = 'https://www.movienewz.com/img/films/poster-holder.jpg'
-        movie['poster_path'] = 'https://image.tmdb.org/t/p/original' + movie['poster_path']
+        else:
+            movie['poster_path'] = 'https://image.tmdb.org/t/p/original' + movie['poster_path']
     return Response(serializers.data)
 
 
 @api_view(['GET',])
 def movie_detail(request, movie_pk):
+    print('!!!!!')
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = MovieSerializer(movie)
+    if not serializer.data.get('poster_path'):
+        serializer.data['poster_path'] = 'https://www.movienewz.com/img/films/poster-holder.jpg'
+    else:
+        serializer.data['poster_path'] = 'https://image.tmdb.org/t/p/original' + serializer.data['poster_path']
+        print(serializer.data)
     return Response(serializer.data)
 
 

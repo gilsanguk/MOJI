@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-link :to="{ name: 'SignUpView' }">Sign Up</router-link>
+    <AppNav />
     <router-view/>
   </div>
 </template>
@@ -27,3 +27,14 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
+
+<script>
+import AppNav from '@/components/AppNav'
+
+export default {
+  name: 'App',
+  components: {
+    AppNav,
+  }
+}
+</script>
