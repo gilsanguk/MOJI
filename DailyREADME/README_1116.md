@@ -5,7 +5,7 @@
 ![Alt text](1116_notinon.PNG)
 ---
 ### BackEnd
-#### django
+##### django
 - 메인페이지 구현
 - 영화 디테일 페이지
 - 리뷰 작성
