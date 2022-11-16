@@ -2,17 +2,25 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MoviesView from '@/views/MoviesView'
 import CommunityView from '@/views/CommunityView'
+import SignUpView from '@/views/SignUpView'
+import LogInView from '@/views/LogInView'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: '/movies',
+    name: 'LogInView',
+    component: LogInView
+  },
+  {
+    path: '/signup',
+    name: 'SignUpView',
+    component: SignUpView
   },
   {
     path: '/movies',
-    name: 'Movies',
+    name: 'MoviesView',
     component: MoviesView
   },
   {

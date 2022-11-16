@@ -40,14 +40,19 @@ export default {
       this.showCreateForm = false
     },
     getReviews() {
-      console.log(this.$route.params.id);
       axios.get(`${API_URL}/community/${this.$route.params.id}/reviews/`)
         .then(res => {
           this.reviews = res.data
           console.log(this.reviews);
         })
         .catch(err => {
-          console.log(err);
+          if (err.response.status === 401) {
+            this.$router.push({ name: 'LogInView' })
+          } else if (err.response.status === 404) {
+            this.$router.push({ name: 'NotFound404' })
+          } else {
+            console.log(err)
+          }
         })
     },
     createReview() {
@@ -57,7 +62,13 @@ export default {
           this.showCreateForm = true
         })
         .catch(err => {
-          console.log(err);
+          if (err.response.status === 401) {
+            this.$router.push({ name: 'LogInView' })
+          } else if (err.response.status === 404) {
+            this.$router.push({ name: 'NotFound404' })
+          } else {
+            console.log(err)
+          }
         })
     }
   },
