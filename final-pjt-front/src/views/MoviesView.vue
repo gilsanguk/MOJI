@@ -1,15 +1,38 @@
 <template>
   <div>
-    <div id="like-movies">
+    <div id="recommend">
       <h1>Movies</h1>
       <swiper class="swiper" :options="swiperOption3D">
-        <swiper-slide v-for="movie in movies" :key="movie.id">
+        <swiper-slide v-for="movie in recommendMovies" :key="movie.id">
           <MoviesItem :movie="movie" />
         </swiper-slide>
         <div class="swiper-pagination"></div>
       </swiper>
+    </div>
+
+    <div id="liked">
       <swiper class="swiper" :options="swiperOption2D">
-        <swiper-slide v-for="movie in movies" :key="movie.id">
+        <swiper-slide v-for="movie in likedMovies" :key="movie.id">
+          <MoviesItem :movie="movie" />
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
+    </div>
+
+    <div id="recent">
+      <swiper class="swiper" :options="swiperOption2D">
+        <swiper-slide v-for="movie in recentMovies" :key="movie.id">
+          <MoviesItem :movie="movie" />
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
+    </div>
+
+    <div id="random-genre">
+      <swiper class="swiper" :options="swiperOption2D">
+        <swiper-slide v-for="movie in randomGenreMovies" :key="movie.id">
           <MoviesItem :movie="movie" />
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
@@ -76,9 +99,17 @@ export default {
     this.getMovies();
   },
   computed: {
-    movies() {
-      const movies = this.$store.state.movies;
-      return movies;
+    recommendMovies() {
+      return this.$store.state.recommendMovies;
+    },
+    likedMovies() {
+      return this.$store.state.likedMovies;
+    },
+    recentMovies() {
+      return this.$store.state.recentMovies;
+    },
+    randomGenreMovies() {
+      return this.$store.state.randomGenreMovies;
     },
   },  
 };

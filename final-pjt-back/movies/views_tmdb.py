@@ -1,6 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 import requests
 from .models import Genre, Movie, Actor, Director
+from .bert import bert
 
 API_KEY = 'b44d068c0598769b439da2b0cc74f085'
 GENRE_URL = 'https://api.themoviedb.org/3/genre/movie/list'
@@ -94,6 +95,10 @@ def movie_data(page=1):
         try:
         # 유투브 key 조회
             youtube_key = get_youtube_key(movie_dict)
+            if movie_dict.get('poster_path'):
+                poster_path = f'https://image.tmdb.org/t/p/original{movie_dict.get("poster_path")}'
+            else:
+                poster_path = 'https://www.movienewz.com/img/films/poster-holder.jpg'
             movie = Movie.objects.create(
                 id=movie_dict.get('id'),
                 title=movie_dict.get('title'),
@@ -102,7 +107,7 @@ def movie_data(page=1):
                 vote_count=movie_dict.get('vote_count'),
                 vote_average=movie_dict.get('vote_average'),
                 overview=movie_dict.get('overview'),
-                poster_path=movie_dict.get('poster_path'),   
+                poster_path=poster_path,   
                 youtube_key=youtube_key         
             )
             for genre_id in movie_dict.get('genre_ids', []):
@@ -115,14 +120,37 @@ def movie_data(page=1):
         except: continue
 
 
+def bert_data(page):
+    response = requests.get(
+        POPULAR_MOVIE_URL,
+        params={
+            'api_key': API_KEY,
+            'language': 'en-US',     
+            'page': page,       
+        }
+    ).json()
+
+    for movie_dict in response.get('results'):
+        if not movie_dict.get('overview'): continue
+        vector = bert(movie_dict.get('overview'))
+        movie = Movie.objects.get(pk=movie_dict.get('id'))
+        movie.vector = vector
+        movie.save()
+
+
+
 def tmdb_data(request):
-    # Genre.objects.all().delete()
-    # Actor.objects.all().delete()
-    # Movie.objects.all().delete()
-    # MovieEnglish.objects.all().delete()
+    Genre.objects.all().delete()
+    Actor.objects.all().delete()
+    Movie.objects.all().delete()
 
     tmdb_genres()
     for i in range(1, 2):
         movie_data(i)
-        print(i)
+        print('originalpage : ', i)
+    for i in range(1, 2):
+        # bert_data(i)
+        print('bertpage : ', i)
+
+    Movie.objects.filter(overview__isnull=True).delete()
     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
