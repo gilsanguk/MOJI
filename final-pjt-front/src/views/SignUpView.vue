@@ -5,19 +5,18 @@
         <h1>Sign Up</h1>
       </div>
       <form @submit.prevent="signUp" id="signupform">
-        <div>
-        <label for="username">username : </label>
-        <input type="text" id="username" v-model="username"><br>
-          
+        <div class="d-flex flex-column">
+          <label for="username">username : </label>
+          <input type="text" id="username" v-model="username" /><br />
         </div>
 
         <label for="password1"> password : </label>
-        <input type="password" id="password1" v-model="password1"><br>
+        <input type="password" id="password1" v-model="password1" /><br />
 
         <label for="password2"> password confirmation : </label>
-        <input type="password" id="password2" v-model="password2">
-        
-        <input type="submit" value="SignUp">
+        <input type="password" id="password2" v-model="password2" />
+
+        <input type="submit" value="SignUp" />
       </form>
     </div>
   </div>
@@ -25,18 +24,18 @@
 
 <script>
 export default {
-  name: 'SignUpView',
+  name: "SignUpView",
   data() {
     return {
       username: null,
       password1: null,
       password2: null,
-    }
+    };
   },
   methods: {
     signUp() {
       if (this.password1 !== this.password2) {
-        alert('비밀번호가 일치하지 않습니다.');
+        alert("비밀번호가 일치하지 않습니다.");
         return;
       }
       const user = {
@@ -44,33 +43,33 @@ export default {
         password1: this.password1,
         password2: this.password2,
       };
-      this.$store.dispatch('signUp', user)
-    }
-  }
-}
+      this.$store.dispatch("signUp", user);
+    },
+  },
+};
 </script>
 
 <style scoped>
-#signupdiv{
+#signupdiv {
   height: 100vh;
-  background: url('https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/945eec79-6856-4d95-b4c6-83ff5292f33d/KR-ko-20220111-popsignuptwoweeks-perspective_alpha_website_large.jpg');
+  background: url("https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/945eec79-6856-4d95-b4c6-83ff5292f33d/KR-ko-20220111-popsignuptwoweeks-perspective_alpha_website_large.jpg");
 }
 
-#signupdiv:before{
+#signupdiv:before {
   margin: 0;
-  content: '';
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.733),transparent);
+  content: "";
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.733), transparent);
   position: absolute;
   left: 0;
   height: 100%;
   width: 100%;
 }
 
-#signupform{
+#signupform {
   width: 25%;
   height: 25%;
   background-color: rgba(0, 0, 0, 0.447);
-  color : white;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;

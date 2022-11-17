@@ -44,38 +44,6 @@ export default {
 </script>
 
 <style scoped>
-label#username,
-label#password {
-  width: 400px;
-  height: 15px;
-  border-radius: 10px;
-  padding-left: 1rem;
-  margin-top: 1rem;
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-}
-
-input#username,
-input#password {
-  width: 400px;
-  height: 38px;
-  border-radius: 10px;
-  padding-left: 1rem;
-  margin-top: 1rem;
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-}
-
-#clickbutton {
-  width: 70px;
-  height: 38px;
-  border-radius: 10px;
-  margin-left: 2rem;
-  margin-top: 1rem;
-}
-
 #logindiv {
   height: 100vh;
   background: url("https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/945eec79-6856-4d95-b4c6-83ff5292f33d/KR-ko-20220111-popsignuptwoweeks-perspective_alpha_website_large.jpg");
@@ -115,5 +83,37 @@ input#password {
   justify-content: center;
   align-items: center;
   justify-content: center;
+}
+
+label#username,
+label#password {
+  width: 400px;
+  height: 15px;
+  border-radius: 10px;
+  padding-left: 1rem;
+  margin-top: 1rem;
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+input#username,
+input#password {
+  width: 400px;
+  height: 38px;
+  border-radius: 10px;
+  padding-left: 1rem;
+  margin-top: 1rem;
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+#clickbutton {
+  width: 70px;
+  height: 38px;
+  border-radius: 10px;
+  margin-left: 2rem;
+  margin-top: 1rem;
 }
 </style>
