@@ -24,12 +24,8 @@
           />
         </div>
         <div class="d-flex flex-row">
-          <div id="clickbutton">
-            <router-link v-if="!isLogin" :to="{ name: 'SignUpView' }">
-              Sign Up
-            </router-link>
-          </div>
-          <input type="submit" value="logIn" id="clickbutton" />
+          <input type="submit" value="Login" id="clickbutton"/>
+          <input type="submit" value="SignUp" id="clickbutton" @click.prevent="goSignUp"/>
         </div>
       </form>
     </div>
@@ -52,6 +48,9 @@ export default {
         password: this.password,
       };
       this.$store.dispatch("logIn", user);
+    },
+    goSignUp() {
+      this.$router.push("/signup");
     },
   },
   created() {
