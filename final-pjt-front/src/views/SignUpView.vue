@@ -6,17 +6,20 @@
       </div>
       <form @submit.prevent="signUp" id="signupform">
         <div class="d-flex flex-column">
-          <label for="username">username : </label>
-          <input type="text" id="username" v-model="username" /><br />
+          <label for="username" id="username">username : </label>
+          <input type="text" id="username" placeholder="아이디를 입력하시오." v-model="username" /><br />
         </div>
-
-        <label for="password1"> password : </label>
-        <input type="password" id="password1" v-model="password1" /><br />
-
-        <label for="password2"> password confirmation : </label>
-        <input type="password" id="password2" v-model="password2" />
-
-        <input type="submit" value="SignUp" />
+        <div class="d-flex flex-column">
+          <label for="password1" id="password1"> password : </label>
+          <input type="password" id="password1" placeholder="비밀번호를 입력하시오." v-model="password1" /><br />
+        </div>
+        <div class="d-flex flex-column">
+          <label for="password2" id="password2"> password confirmation : </label>
+          <input type="password" id="password2" placeholder="비밀번호를 다시 입력하시오." v-model="password2" />
+        </div>
+        <div>
+          <input type="submit" value="SignUp" id="clickbutton"/>
+        </div>
       </form>
     </div>
   </div>
@@ -53,6 +56,9 @@ export default {
 #signupdiv {
   height: 100vh;
   background: url("https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/945eec79-6856-4d95-b4c6-83ff5292f33d/KR-ko-20220111-popsignuptwoweeks-perspective_alpha_website_large.jpg");
+  display: flex;
+  align-items: center;
+  justify-content: start;
 }
 
 #signupdiv:before {
@@ -65,15 +71,61 @@ export default {
   width: 100%;
 }
 
-#signupform {
-  width: 25%;
-  height: 25%;
+#signupformdiv {
+  padding: 2rem;
   background-color: rgba(0, 0, 0, 0.447);
   color: white;
+  overflow: hidden;
+  border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: fixed;
-  margin-left: 5rem;
+  margin-right: 15rem;
 }
+
+#signupform {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+label#username,
+label#password1,
+label#password2 {
+  width: 400px;
+  height: 15px;
+  border-radius: 10px;
+  padding-left: 1rem;
+  margin-top: 1rem;
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+input#username,
+input#password1,
+input#password2 {
+  width: 400px;
+  height: 38px;
+  border-radius: 10px;
+  padding-left: 1rem;
+  margin-top: 1rem;
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+#clickbutton {
+  width: 70px;
+  height: 38px;
+  border-radius: 10px;
+  margin-left: 2rem;
+  margin-top: 1rem;
+}
+
 </style>
