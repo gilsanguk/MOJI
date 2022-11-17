@@ -97,6 +97,9 @@ export default {
   },
   created() {
     this.getMovies();
+    if (!this.$store.getters.isLogin) {
+      this.$router.push({ name: "LogInView" });
+    }
   },
   computed: {
     recommendMovies() {

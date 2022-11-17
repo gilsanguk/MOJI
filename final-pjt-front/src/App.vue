@@ -30,6 +30,7 @@ nav a.router-link-exact-active {
 .appbody {
   height: 100%;
   background-color: black;
+  scroll-behavior: smooth;
 }
 
 

@@ -3,13 +3,25 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
 import createPersistedState from 'vuex-persistedstate'
+import SecureLS from "secure-ls"
 
 Vue.use(Vuex)
+  
+const ls = new SecureLS({ isCompression: false })
 
 const API_URL = 'http://127.0.0.1:8000'
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
+  plugins: [
+    createPersistedState({
+      paths: ['token'],
+      storage: {
+        getItem: (key) => ls.get(key),
+        setItem: (key, value) => ls.set(key, value),
+        removeItem: (key) => ls.remove(key)
+      }
+    })
+  ],
   state: {
     recommendMovies: [],
     likedMovies: [],
@@ -89,7 +101,7 @@ export default new Vuex.Store({
             random_genre: random_genre.data,
           })
         }))
-        .catch(err => {
+        .catch(err => { 
           if (err.response.status === 401) {
             router.push({ name: 'LogInView' })
           } else if (err.response.status === 404) {
