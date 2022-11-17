@@ -14,7 +14,10 @@
           <input type="password" id="password" placeholder="비밀번호를 입력하시오." v-model="password" />
         </div>
         <div>
-          <span id="clickbutton" >회원가입</span>
+          <!-- <span  >회원가입</span> -->
+          <router-link v-if="!isLogin" :to="{ name: 'SignUpView' }" id="clickbutton">
+            Sign Up
+          </router-link>
           <input type="submit" value="logIn" id="clickbutton" />
         </div>
       </form>
