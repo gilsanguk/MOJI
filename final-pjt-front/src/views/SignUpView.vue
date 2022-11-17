@@ -82,7 +82,7 @@ export default {
   justify-content: center;
   align-items: center;
   position: fixed;
-  margin-right: 15rem;
+  margin-left: 15rem;
 }
 
 #signupform {
