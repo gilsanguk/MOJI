@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="appbody">
-    <AppNav />
+    <AppNav v-if="isLogin"/>
     <router-view/>
   </div>
 </template>
@@ -43,6 +43,11 @@ export default {
   name: 'App',
   components: {
     AppNav,
-  }
+  },
+  computed: {
+    isLogin() {
+      return this.$store.getters.isLogin
+    },
+  },
 }
 </script>

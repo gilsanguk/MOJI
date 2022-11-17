@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <button v-if="isLogin" @click="logOut">Log Out</button>
+    <button @click="logOut">Log Out</button>
   </nav>
 </template>
 
@@ -12,11 +12,6 @@ export default {
       this.$store.dispatch('logOut')
     }
   },
-  computed: {
-    isLogin() {
-      return this.$store.getters.isLogin
-    }
-  }
 }
 </script>
 

@@ -24,8 +24,8 @@
           />
         </div>
         <div class="d-flex flex-row">
-          <input type="submit" value="Login" id="clickbutton"/>
-          <input type="submit" value="SignUp" id="clickbutton" @click.prevent="goSignUp"/>
+          <input type="submit" value="Login" class="clickbutton"/>
+          <input type="submit" value="SignUp" class="clickbutton" @click.prevent="goSignUp"/>
         </div>
       </form>
     </div>
@@ -124,7 +124,7 @@ input#password {
   height: 38px;
 }
 
-#clickbutton {
+.clickbutton {
   width: 70px;
   height: 35px;
   border-radius: 10px;
@@ -139,16 +139,9 @@ input#password {
   transition: all 0.2s ease-in-out;
 }
 
-#clickbutton:hover {
+.clickbutton:hover {
   transform: scale(1.1);
   outline-style: none;
   background-color: #3cb371;
-}
-
-div > a {
-  display:table-cell;
-  vertical-align:middle;
-  text-decoration: none;
-  color: black;
 }
 </style>

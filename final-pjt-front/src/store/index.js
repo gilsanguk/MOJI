@@ -43,7 +43,6 @@ export default new Vuex.Store({
     },
     SAVE_TOKEN(state, token) {
       state.token = token
-      router.push({ name: 'MoviesView' })
     },
   },
   actions: {
@@ -59,6 +58,7 @@ export default new Vuex.Store({
       })
         .then((res) => {
           commit('SAVE_TOKEN', res.data.key)
+          router.push({ name: 'MoviesView' })
         })
         .catch((err) => console.log(err));
     },
@@ -73,6 +73,7 @@ export default new Vuex.Store({
       })
         .then((res) => {
           commit('SAVE_TOKEN', res.data.key)
+          router.push({ name: 'MoviesView' })
         })
         .catch((err) => console.log(err));
     },
