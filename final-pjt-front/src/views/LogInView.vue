@@ -14,7 +14,6 @@
           <input type="password" id="password" placeholder="비밀번호를 입력하시오." v-model="password" />
         </div>
         <div>
-          <!-- <span  >회원가입</span> -->
           <router-link v-if="!isLogin" :to="{ name: 'SignUpView' }" id="clickbutton">
             Sign Up
           </router-link>
@@ -88,35 +87,39 @@ export default {
   justify-content: center;
 }
 
-label#username,
-label#password {
+#username,
+#password {
   width: 400px;
-  height: 15px;
   border-radius: 10px;
   padding-left: 1rem;
   margin-top: 1rem;
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+
+}
+
+label#username,
+label#password {
+  height: 15px;
 }
 
 input#username,
 input#password {
-  width: 400px;
   height: 38px;
-  border-radius: 10px;
-  padding-left: 1rem;
-  margin-top: 1rem;
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
 }
 
 #clickbutton {
   width: 70px;
-  height: 38px;
+  height: 35px;
   border-radius: 10px;
   margin-left: 2rem;
   margin-top: 1rem;
+  text-decoration: none;
+}
+
+a#clickbutton{
+  background-color: white;
+  color: black;
 }
 </style>
