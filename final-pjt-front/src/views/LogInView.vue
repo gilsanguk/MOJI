@@ -7,16 +7,28 @@
       <form @submit.prevent="logIn" id="loginform">
         <div class="d-flex flex-column">
           <label for="username" id="username">username : </label>
-          <input type="text" id="username" placeholder="아이디를 입력하시오." v-model="username" />
+          <input
+            type="text"
+            id="username"
+            placeholder="아이디를 입력하시오."
+            v-model="username"
+          />
         </div>
         <div class="d-flex flex-column">
           <label for="password" id="password"> password : </label>
-          <input type="password" id="password" placeholder="비밀번호를 입력하시오." v-model="password" />
+          <input
+            type="password"
+            id="password"
+            placeholder="비밀번호를 입력하시오."
+            v-model="password"
+          />
         </div>
-        <div>
-          <router-link v-if="!isLogin" :to="{ name: 'SignUpView' }" id="clickbutton">
-            Sign Up
-          </router-link>
+        <div class="d-flex flex-row">
+          <div id="clickbutton">
+            <router-link v-if="!isLogin" :to="{ name: 'SignUpView' }">
+              Sign Up
+            </router-link>
+          </div>
           <input type="submit" value="logIn" id="clickbutton" />
         </div>
       </form>
@@ -101,7 +113,6 @@ export default {
   display: inline-block;
   text-align: left;
   vertical-align: middle;
-
 }
 
 label#username,
@@ -115,16 +126,31 @@ input#password {
 }
 
 #clickbutton {
-  width: 70px;
-  height: 35px;
   border-radius: 10px;
   margin-left: 2rem;
   margin-top: 1rem;
-  text-decoration: none;
+  background-color: white;
+  font-size: medium;
+  display:table;
+  table-layout:fixed;
+  text-align:center;
+  outline-style: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-a#clickbutton{
-  background-color: white;
+#clickbutton:hover {
+  transform: scale(1.1);
+  outline-style: none;
+  background-color: #3cb371;
+}
+
+div > a {
+  width: 70px;
+  height: 5px;
+  display:table-cell;
+  vertical-align:middle;
+  text-decoration: none;
   color: black;
 }
 </style>

@@ -7,18 +7,35 @@
       <form @submit.prevent="signUp" id="signupform">
         <div class="d-flex flex-column">
           <label for="username" id="username">username : </label>
-          <input type="text" id="username" placeholder="아이디를 입력하시오." v-model="username" /><br />
+          <input
+            type="text"
+            id="username"
+            placeholder="아이디를 입력하시오."
+            v-model="username"
+          /><br />
         </div>
         <div class="d-flex flex-column">
           <label for="password1" id="password1"> password : </label>
-          <input type="password" id="password1" placeholder="비밀번호를 입력하시오." v-model="password1" /><br />
+          <input
+            type="password"
+            id="password1"
+            placeholder="비밀번호를 입력하시오."
+            v-model="password1"
+          /><br />
         </div>
         <div class="d-flex flex-column">
-          <label for="password2" id="password2"> password confirmation : </label>
-          <input type="password" id="password2" placeholder="비밀번호를 다시 입력하시오." v-model="password2" />
+          <label for="password2" id="password2">
+            password confirmation :
+          </label>
+          <input
+            type="password"
+            id="password2"
+            placeholder="비밀번호를 다시 입력하시오."
+            v-model="password2"
+          />
         </div>
         <div>
-          <input type="submit" value="SignUp" id="clickbutton"/>
+          <input type="submit" value="SignUp" id="clickbutton" />
         </div>
       </form>
     </div>
@@ -48,6 +65,11 @@ export default {
       };
       this.$store.dispatch("signUp", user);
     },
+  },
+  created() {
+    if (this.$store.getters.isLogin) {
+      this.$router.push({ name: "MoviesView" });
+    }
   },
 };
 </script>
@@ -126,6 +148,12 @@ input#password2 {
   border-radius: 10px;
   margin-left: 2rem;
   margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
+#clickbutton:hover {
+transform: scale(1.1);
+background-color: #3cb371
+}
 </style>
