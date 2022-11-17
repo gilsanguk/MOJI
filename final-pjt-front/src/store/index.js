@@ -11,10 +11,10 @@ const API_URL = 'http://127.0.0.1:8000'
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    recommend_movies: [],
-    liked_movies: [],
-    recent_movies: [],
-    random_genre_movies: [],
+    recommendMovies: [],
+    likedMovies: [],
+    recentMovies: [],
+    randomGenreMovies: [],
     token: null,
   },
   getters: {
@@ -24,10 +24,10 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_MOVIES(state, movies) {
-      state.recommend_movies = movies.recommend
-      state.liked_movies = movies.liked
-      state.recent_movies = movies.recent
-      state.random_genre_movies = movies.random_genre
+      state.recommendMovies = movies.recommend
+      state.likedMovies = movies.liked
+      state.recentMovies = movies.recent
+      state.randomGenreMovies = movies.random_genre
     },
     SAVE_TOKEN(state, token) {
       state.token = token

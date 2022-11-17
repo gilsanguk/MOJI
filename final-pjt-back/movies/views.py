@@ -42,6 +42,7 @@ def recent_movie_list(request):
 def random_genre_movie_list(request):
     genres = get_list_or_404(Genre)
     genre = random.choice(genres)
+    print(genre)
     movies = get_list_or_404(Movie.objects.filter(genres=genre)[:20])
     serializers = MovieListSerializer(movies, many=True)
     return Response(serializers.data)
