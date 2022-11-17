@@ -42,7 +42,6 @@
 <img width="925" alt="image" src="https://user-images.githubusercontent.com/109333410/202433109-a9961222-d674-47cb-af48-bcff33f47c45.png">
 
 - 회원가입 페이지
-<img width="923" alt="image" src="https://user-images.githubusercontent.com/109333410/202433553-f48d5c2f-cf6e-40fa-a1c5-f993b2352dac.png">
 
 
 - 메인 페이지
@@ -52,3 +51,4 @@
 ---------------
 
 ### 진행중
+ - 로그인에서 회원가입 누르면 자연스럽게 넘어가는 화면 구성
