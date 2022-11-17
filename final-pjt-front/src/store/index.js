@@ -89,31 +89,16 @@ export default new Vuex.Store({
             random_genre: random_genre.data,
           })
         }))
-        .catch((err) => console.log(err));
-    }
-
-    // getMovies(context) {
-    //   axios({
-    //     method: 'get',
-    //     url: `${API_URL}/movies/`,
-    //     headers: {
-    //       Authorization: `Token ${this.state.token}`
-    //   }
-    // })
-    //   .then(res => {
-    //     context.commit('GET_MOVIES', res.data)
-    //   })
-    //   .catch(err => {
-    //     if (err.response.status === 401) {
-    //       router.push({ name: 'LogInView' })
-    //     } else if (err.response.status === 404) {
-    //       router.push({ name: 'NotFound404' })
-    //     } else {
-    //       console.log(err)
-    //     }
-    //   });
-    // },
-
+        .catch(err => {
+          if (err.response.status === 401) {
+            router.push({ name: 'LogInView' })
+          } else if (err.response.status === 404) {
+            router.push({ name: 'NotFound404' })
+          } else {
+            console.log(err)
+          }
+        });
+    },
   },
   modules: {
   }
