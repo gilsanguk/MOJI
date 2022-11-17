@@ -99,6 +99,7 @@ input#password {
   background-color: rgba(0, 0, 0, 0.447);
   color: white;
   overflow: hidden;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;

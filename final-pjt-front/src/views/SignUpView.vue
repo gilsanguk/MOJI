@@ -1,10 +1,15 @@
 <template>
   <div id="signupdiv" class="d-flex align-items-center justify-content-start">
-    <div id="signupform">
-      <h1>Sign Up</h1>
-      <form @submit.prevent="signUp">
+    <div id="signupformdiv">
+      <div>
+        <h1>Sign Up</h1>
+      </div>
+      <form @submit.prevent="signUp" id="signupform">
+        <div>
         <label for="username">username : </label>
         <input type="text" id="username" v-model="username"><br>
+          
+        </div>
 
         <label for="password1"> password : </label>
         <input type="password" id="password1" v-model="password1"><br>
