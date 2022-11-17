@@ -42,6 +42,11 @@ export default {
       this.$store.dispatch("logIn", user);
     },
   },
+  created() {
+    if (this.$store.getters.isLogin) {
+      this.$router.push({ name: "MoviesView" });
+    }
+  },
 };
 </script>
 
