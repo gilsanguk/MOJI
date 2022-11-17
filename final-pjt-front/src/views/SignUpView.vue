@@ -2,11 +2,11 @@
   <div id="signupdiv" class="d-flex align-items-center justify-content-start">
     <div id="signupformdiv">
       <div>
-        <h1>Sign Up</h1>
+        <h1><b>Sign Up</b></h1>
       </div>
       <form @submit.prevent="signUp" id="signupform">
         <div class="d-flex flex-column">
-          <label for="username" id="username">username : </label>
+          <label for="username" id="username"><b>username :</b></label>
           <input
             type="text"
             id="username"
@@ -15,7 +15,7 @@
           /><br />
         </div>
         <div class="d-flex flex-column">
-          <label for="password1" id="password1"> password : </label>
+          <label for="password1" id="password1"><b>password : </b></label>
           <input
             type="password"
             id="password1"
@@ -25,7 +25,7 @@
         </div>
         <div class="d-flex flex-column">
           <label for="password2" id="password2">
-            password confirmation :
+            <b>password confirmation :</b>
           </label>
           <input
             type="password"

@@ -126,13 +126,14 @@ input#password {
 }
 
 #clickbutton {
+  width: 70px;
+  height: 35px;
   border-radius: 10px;
   margin-left: 2rem;
   margin-top: 1rem;
   background-color: white;
   font-size: medium;
   display:table;
-  table-layout:fixed;
   text-align:center;
   outline-style: none;
   cursor: pointer;
@@ -146,8 +147,6 @@ input#password {
 }
 
 div > a {
-  width: 70px;
-  height: 5px;
   display:table-cell;
   vertical-align:middle;
   text-decoration: none;
