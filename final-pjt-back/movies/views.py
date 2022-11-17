@@ -19,7 +19,7 @@ def index(request):
 def recommend_movie_list(request):
     movies = get_list_or_404(Movie)
     serializers = MovieListSerializer(movies, many=True)
-    return Response(serializers.data)
+    return Response(serializers.data or [])
 
 
 @api_view(['GET',])
@@ -35,7 +35,7 @@ def liked_movie_list(request):
 def recent_movie_list(request):
     recent_movies = get_list_or_404(Movie.objects.order_by('-release_date')[:20])
     serializers = MovieListSerializer(recent_movies, many=True)
-    return Response(serializers.data)
+    return Response(serializers.data or [])
 
 
 @api_view(['GET',])
@@ -43,9 +43,9 @@ def random_genre_movie_list(request):
     genres = get_list_or_404(Genre)
     genre = random.choice(genres)
     print(genre)
-    movies = get_list_or_404(Movie.objects.filter(genres=genre)[:20])
+    movies = Movie.objects.filter(genres=genre)[:20]
     serializers = MovieListSerializer(movies, many=True)
-    return Response(serializers.data)
+    return Response(serializers.data or [])
 
 
 @api_view(['GET',])

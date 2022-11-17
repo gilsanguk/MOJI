@@ -4,6 +4,7 @@ import LogInView from '@/views/LogInView'
 import SignUpView from '@/views/SignUpView'
 import MoviesView from '@/views/MoviesView'
 import CommunityView from '@/views/CommunityView'
+import NotFound404 from '@/views/NotFound404'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,11 @@ const routes = [
   {
     path: '/',
     redirect: '/movies',
+  },
+  {
+    path: '/notfound404',
+    name: 'NotFound404',
+    component: NotFound404,
   },
   {
     path: '/login',
@@ -32,6 +38,7 @@ const routes = [
     name: 'CommunityView',
     component: CommunityView
   },
+
 ]
 
 const router = new VueRouter({
