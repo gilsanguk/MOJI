@@ -2,7 +2,7 @@
 
 - Notion으로 계획 수정 및 회의
 
-<img src="1116_notinon.PNG">
+![1116_notinon](https://user-images.githubusercontent.com/109333410/202319516-92c1ed4e-6cc5-4e01-90e5-218c274cc731.PNG)
 
 ---
 
