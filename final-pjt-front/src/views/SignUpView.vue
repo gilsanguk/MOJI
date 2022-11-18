@@ -2,7 +2,7 @@
   <div id="signupdiv" class="d-flex align-items-center justify-content-start">
     <div id="signupformdiv">
       <div>
-        <h1><b>Sign Up</b></h1>
+        <h1 style="font-size:50px"><b>Sign Up</b></h1>
       </div>
       <form @submit.prevent="signUp" id="signupform">
         <div class="d-flex flex-column">
@@ -80,7 +80,7 @@ export default {
   background: url("https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/945eec79-6856-4d95-b4c6-83ff5292f33d/KR-ko-20220111-popsignuptwoweeks-perspective_alpha_website_large.jpg");
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: end;
 }
 
 #signupdiv:before {
@@ -94,10 +94,9 @@ export default {
 }
 
 #signupformdiv {
-  padding: 2rem;
-  background-color: rgba(0, 0, 0, 0.447);
+  padding: 3rem 5rem;
+  background-color: rgba(0, 0, 0, 0.517);
   color: white;
-  overflow: hidden;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -113,47 +112,62 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  justify-content: center;
 }
 
-label#username,
-label#password1,
-label#password2 {
-  width: 400px;
-  height: 15px;
+
+#username,
+#password1,
+#password2 {
+  width: 500px;
   border-radius: 10px;
   padding-left: 1rem;
   margin-top: 1rem;
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+}
+
+
+label#username,
+label#password1,
+label#password2 {
+  margin-top: 1.5rem;
+  font-size: 27px;
 }
 
 input#username,
 input#password1,
 input#password2 {
-  width: 400px;
-  height: 38px;
-  border-radius: 10px;
-  padding-left: 1rem;
-  margin-top: 1rem;
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
+  height: 55px;
 }
 
 #clickbutton {
-  width: 70px;
-  height: 38px;
+  width: 110px;
+  height: 45px;
   border-radius: 10px;
-  margin-left: 2rem;
-  margin-top: 1rem;
-  cursor: pointer;
+  padding: 0rem 1rem;
+  margin-top: 2rem;
+  background-color: white;
+  font-size: 20px;
+  cursor:pointer;
   transition: all 0.2s ease-in-out;
 }
 
 #clickbutton:hover {
-transform: scale(1.1);
-background-color: #3cb371
+  transform: scale(1.1);
+  background-color: #3cb371
+}
+
+
+@keyframes fadeInUpBig {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 </style>

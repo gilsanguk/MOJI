@@ -2,7 +2,7 @@
   <div id="logindiv">
     <div id="loginformdiv">
       <div>
-        <h1 class="mb-3 text-left"><b>LogIn</b></h1>
+        <h1 style="font-size: 50px"><b>LogIn</b></h1>
       </div>
       <form @submit.prevent="logIn" id="loginform">
         <div class="d-flex flex-column">
@@ -23,7 +23,7 @@
             v-model="password"
           />
         </div>
-        <div class="d-flex flex-row">
+        <div class="d-flex flex-row justify-content-right">
           <input type="submit" value="Login" class="clickbutton"/>
           <input type="submit" value="SignUp" class="clickbutton" @click.prevent="goSignUp"/>
         </div>
@@ -81,10 +81,9 @@ export default {
 }
 
 #loginformdiv {
-  padding: 2rem;
-  background-color: rgba(0, 0, 0, 0.447);
+  padding: 3rem 5rem;
+  background-color: rgba(0, 0, 0, 0.517);
   color: white;
-  overflow: hidden;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -99,13 +98,12 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  justify-content: center;
+  align-items: end;
 }
 
 #username,
 #password {
-  width: 400px;
+  width: 500px;
   border-radius: 10px;
   padding-left: 1rem;
   margin-top: 1rem;
@@ -116,22 +114,24 @@ export default {
 
 label#username,
 label#password {
-  height: 15px;
+  margin-top: 3rem;
+  font-size: 27px;
 }
 
 input#username,
 input#password {
-  height: 38px;
+  height: 55px;
 }
 
 .clickbutton {
-  width: 70px;
-  height: 35px;
+  width: 110px;
+  height: 45px;
   border-radius: 10px;
-  margin-left: 2rem;
-  margin-top: 1rem;
+  margin-right: 1.5rem;
+  padding: 0rem 1rem;
+  margin-top: 2rem;
   background-color: white;
-  font-size: medium;
+  font-size: 20px;
   display:table;
   text-align:center;
   outline-style: none;
@@ -143,5 +143,21 @@ input#password {
   transform: scale(1.1);
   outline-style: none;
   background-color: #3cb371;
+}
+
+/* .clickbutton:active {
+  animation: fadeOutDown 4s 1s infinite linear alternate;
+} */
+
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
 }
 </style>
