@@ -1,11 +1,15 @@
 <template>
   <div id="selectdiv">
-    <div draggable="True" class="item">
-      <div
-        v-for="movie in movies"
-        :key="movie.id"
-      >
-        {{ moive.title }}
+    <div class="container">
+      <div class="d-flex">
+        <div
+          v-for="movie in movies"
+          :key="movie.id"
+          draggable="True"
+          class="item"
+        >
+          <img :src="movie.poster_path" alt="">
+        </div>
       </div>
     </div>
   </div>
@@ -14,14 +18,24 @@
 <script>
 export default {
   name: 'SelectMovieView',
+  methods: {
+    getPopularMovies() {
+      this.$store.dispatch('getPopularMovies')
+    },
+  },
+  created() {
+    this.getPopularMovies()
+  },
   computed: {
-    movies () {
+    movies() {
       return this.$store.state.popularMovies
-    }
+    },
   },
 }
 </script>
 
-<style>
-
+<style scoped>
+img {
+  width: 200px;
+}
 </style>

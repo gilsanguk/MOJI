@@ -50,7 +50,6 @@ export default new Vuex.Store({
       state.user.profileImage = userData.profileImage
     },
     GET_MOVIES(state, movies) {
-      state.popularMovies = movies
       state.recommendMovies = movies.recommend
       state.likedMovies = movies.liked
       state.recentMovies = movies.recent
@@ -125,7 +124,6 @@ export default new Vuex.Store({
 
     getMovies(context) {
       axios.all([
-        axios.get(`${API_URL}/movies/popular/`),
         axios.get(`${API_URL}/movies/recommend/${context.state.user.username}/`),
         axios.get(`${API_URL}/movies/liked/`),
         axios.get(`${API_URL}/movies/recent/`),
@@ -136,9 +134,8 @@ export default new Vuex.Store({
             Authorization: `Token ${this.state.token}`
           }
         })
-        .then(axios.spread((popular, recommend, liked, recent, random_genre) => {
+        .then(axios.spread((recommend, liked, recent, random_genre) => {
           context.commit('GET_MOVIES', {
-            popular: popular.data,
             recommend: recommend.data,
             liked: liked.data,
             recent: recent.data,
@@ -155,6 +152,14 @@ export default new Vuex.Store({
           }
         });
     },
+
+    getPopularMovies(context) {
+      axios.get(`${API_URL}/movies/popular/`)
+        .then((res) => {
+          context.state.popularMovies = res.data
+        })
+        .catch((err) => console.log(err));
+    }
   },
   modules: {
   }

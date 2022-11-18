@@ -29,8 +29,8 @@ export default {
 <style scoped>
 #bgdiv {
   background-color: rgba(240, 240, 240);
-  height: 100vh;
-  opacity: 0.3;
+  height: 1000px;
+  opacity: 0.8;
 }
 
 #notfounddiv {
