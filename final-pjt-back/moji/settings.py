@@ -38,7 +38,10 @@ INSTALLED_APPS = [
 
     # third party apps
     'rest_framework',
+<<<<<<< HEAD
 
+=======
+>>>>>>> 37c6f6de0ed7836744825198c72d5472e6c15992
 
     # auth
     'rest_framework.authtoken',
@@ -73,10 +76,13 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny',
     ],
+<<<<<<< HEAD
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+=======
+>>>>>>> 37c6f6de0ed7836744825198c72d5472e6c15992
 }
 
 ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
