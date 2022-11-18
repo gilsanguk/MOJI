@@ -1,5 +1,5 @@
 <template>
-  <div id="signupdiv" class="d-flex align-items-center justify-content-start">
+  <div id="signupdiv">
     <div id="signupformdiv">
       <div>
         <h1 style="font-size:50px"><b>Sign Up</b></h1>
@@ -87,11 +87,11 @@ export default {
 
 <style scoped>
 #signupdiv {
-  height: 100vh;
+  height: 1000px;
   background: url("https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/945eec79-6856-4d95-b4c6-83ff5292f33d/KR-ko-20220111-popsignuptwoweeks-perspective_alpha_website_large.jpg");
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: start;
 }
 
 #signupdiv:before {
@@ -100,7 +100,7 @@ export default {
   background: linear-gradient(to left, rgba(0, 0, 0, 0.733), transparent);
   position: absolute;
   left: 0;
-  height: 100%;
+  height: 1000px;
   width: 100%;
 }
 

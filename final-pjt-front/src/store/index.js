@@ -55,7 +55,7 @@ export default new Vuex.Store({
           username: user.username,
           password1: user.password1,
           password2: user.password2,
-          first_name: user.nickname,
+          nickname: user.nickname,
         }
       })
         .then((res) => {
@@ -83,7 +83,7 @@ export default new Vuex.Store({
       commit('SAVE_TOKEN', null)
       router.push({ name: 'LogInView' })
     },
-      
+
     getMovies(context) {
       axios.all([
         axios.get(`${API_URL}/movies/recommend/`),
