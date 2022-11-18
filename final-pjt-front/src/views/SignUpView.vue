@@ -15,6 +15,15 @@
           /><br />
         </div>
         <div class="d-flex flex-column">
+          <label for="nickname" id="nickname"><b>nickname :</b></label>
+          <input
+            type="text"
+            id="nickname"
+            placeholder="닉네임을 입력하시오."
+            v-model="nickname"
+          /><br />
+        </div>
+        <div class="d-flex flex-column">
           <label for="password1" id="password1"><b>password : </b></label>
           <input
             type="password"
@@ -50,6 +59,7 @@ export default {
       username: null,
       password1: null,
       password2: null,
+      nickname: null,
     };
   },
   methods: {
@@ -62,6 +72,7 @@ export default {
         username: this.username,
         password1: this.password1,
         password2: this.password2,
+        nickname: this,nickname
       };
       this.$store.dispatch("signUp", user);
     },
