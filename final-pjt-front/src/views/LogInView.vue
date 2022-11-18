@@ -136,28 +136,11 @@ input#password {
   text-align:center;
   outline-style: none;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
 }
 
 .clickbutton:hover {
   transform: scale(1.1);
   outline-style: none;
   background-color: #3cb371;
-}
-
-/* .clickbutton:active {
-  animation: fadeOutDown 4s 1s infinite linear alternate;
-} */
-
-
-@keyframes fadeOutDown {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-    transform: translate3d(0, 100%, 0);
-  }
 }
 </style>
