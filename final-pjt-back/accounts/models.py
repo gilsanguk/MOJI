@@ -3,4 +3,6 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
+    nickname = models.CharField(max_length=20, unique=True)
+
     prefer_movies = models.ManyToManyField('movies.Movie', related_name='prefer_users')

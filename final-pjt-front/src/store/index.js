@@ -47,6 +47,7 @@ export default new Vuex.Store({
   },
   actions: {
     signUp({ commit }, user) {
+      console.log(user.nickname);
       axios({
         method: 'post',
         url: `${API_URL}/accounts/signup/`,
@@ -54,6 +55,7 @@ export default new Vuex.Store({
           username: user.username,
           password1: user.password1,
           password2: user.password2,
+          first_name: user.nickname,
         }
       })
         .then((res) => {

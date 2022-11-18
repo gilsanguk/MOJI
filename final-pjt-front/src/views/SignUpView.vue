@@ -72,7 +72,7 @@ export default {
         username: this.username,
         password1: this.password1,
         password2: this.password2,
-        nickname: this,nickname
+        nickname: this.nickname
       };
       this.$store.dispatch("signUp", user);
     },

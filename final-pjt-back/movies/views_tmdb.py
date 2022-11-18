@@ -1,7 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 import requests
 from .models import Genre, Movie, Actor, Director
-from .bert import bert
+
 
 API_KEY = 'b44d068c0598769b439da2b0cc74f085'
 GENRE_URL = 'https://api.themoviedb.org/3/genre/movie/list'
@@ -93,7 +93,7 @@ def movie_data(page=1):
     for movie_dict in response.get('results'):
         if not movie_dict.get('release_date'): continue   # 없는 필드 skip
         try:
-        # 유투브 key 조회
+            
             youtube_key = get_youtube_key(movie_dict)
             if movie_dict.get('poster_path'):
                 poster_path = f'https://image.tmdb.org/t/p/original{movie_dict.get("poster_path")}'
@@ -120,25 +120,6 @@ def movie_data(page=1):
         except: continue
 
 
-def bert_data(page):
-    response = requests.get(
-        POPULAR_MOVIE_URL,
-        params={
-            'api_key': API_KEY,
-            'language': 'en-US',     
-            'page': page,       
-        }
-    ).json()
-
-    for movie_dict in response.get('results'):
-        if not movie_dict.get('overview'): continue
-        vector = bert(movie_dict.get('overview'))
-        movie = Movie.objects.get(pk=movie_dict.get('id'))
-        movie.vector = vector
-        movie.save()
-
-
-
 def tmdb_data(request):
     Genre.objects.all().delete()
     Actor.objects.all().delete()
@@ -147,10 +128,7 @@ def tmdb_data(request):
     tmdb_genres()
     for i in range(1, 2):
         movie_data(i)
-        print('originalpage : ', i)
-    for i in range(1, 2):
-        # bert_data(i)
-        print('bertpage : ', i)
+        print('page : ', i)
 
     Movie.objects.filter(overview__isnull=True).delete()
     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
