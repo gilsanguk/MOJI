@@ -1,6 +1,10 @@
 from django.http import JsonResponse, HttpResponse
 import requests
 from .models import Genre, Movie, Actor, Director
+import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import numpy as np
+import base64
 
 
 API_KEY = 'b44d068c0598769b439da2b0cc74f085'
@@ -22,7 +26,6 @@ def tmdb_genres():
             name=genre['name']
         )
     return JsonResponse(response)
-
 
 def get_youtube_key(movie_dict):    
     movie_id = movie_dict.get('id')
@@ -80,7 +83,21 @@ def get_directors(movie):
         movie.directors.add(director_id)
         break
 
-def movie_data(page=1):
+tokenizer = AutoTokenizer.from_pretrained("Tejas3/distillbert_110_uncased_movie_genre")
+model = AutoModelForSequenceClassification.from_pretrained("Tejas3/distillbert_110_uncased_movie_genre").cuda().eval()
+
+def getvector(overview):
+    inputs = tokenizer.batch_encode_plus([overview])
+    input_ids = torch.tensor(inputs['input_ids']).cuda()
+    with torch.no_grad():
+        out = model(input_ids = input_ids, output_hidden_states=True)
+
+    output_cpu = out.hidden_states[-1][:,0,:].cpu().numpy()
+    vector_bytes = output_cpu.tobytes()
+    vector_str = base64.b64encode(vector_bytes).decode('ascii') 
+    return vector_str
+
+def movie_data(page):
     response = requests.get(
         POPULAR_MOVIE_URL,
         params={
@@ -93,8 +110,19 @@ def movie_data(page=1):
     for movie_dict in response.get('results'):
         if not movie_dict.get('release_date'): continue   # 없는 필드 skip
         try:
-            
+        # 유튜브 key 조회
+            data_en = requests.get(
+                f'https://api.themoviedb.org/3/movie/{movie_dict.get("id")}',
+                params={
+                    'api_key': API_KEY,
+                    'language': 'en-US',     
+                    'page': page,       
+                }
+            ).json().get('overview')
+            if not data_en: continue
+            vector = getvector(data_en)
             youtube_key = get_youtube_key(movie_dict)
+
             if movie_dict.get('poster_path'):
                 poster_path = f'https://image.tmdb.org/t/p/original{movie_dict.get("poster_path")}'
             else:
@@ -107,8 +135,9 @@ def movie_data(page=1):
                 vote_count=movie_dict.get('vote_count'),
                 vote_average=movie_dict.get('vote_average'),
                 overview=movie_dict.get('overview'),
-                poster_path=poster_path,   
-                youtube_key=youtube_key         
+                poster_path=poster_path,
+                youtube_key=youtube_key,
+                vector = vector,
             )
             for genre_id in movie_dict.get('genre_ids', []):
                 movie.genres.add(genre_id)
@@ -120,14 +149,17 @@ def movie_data(page=1):
         except: continue
 
 
+
+
 def tmdb_data(request):
-    Genre.objects.all().delete()
-    Actor.objects.all().delete()
-    Movie.objects.all().delete()
+    # Genre.objects.all().delete()
+    # Actor.objects.all().delete()
+    # Movie.objects.all().delete()
 
     tmdb_genres()
-    for i in range(1, 3):
+    for i in range(1, 501):
         movie_data(i)
         print('page : ', i)
 
+    # Movie.objects.filter(vector__isnull=True).delete()
     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
