@@ -128,7 +128,8 @@ export default {
 
 #username,
 #password1,
-#password2 {
+#password2,
+#nickname {
   width: 500px;
   border-radius: 10px;
   padding-left: 1rem;
@@ -141,14 +142,16 @@ export default {
 
 label#username,
 label#password1,
-label#password2 {
+label#password2,
+label#nickname {
   margin-top: 1.5rem;
   font-size: 27px;
 }
 
 input#username,
 input#password1,
-input#password2 {
+input#password2,
+input#nickname {
   height: 55px;
 }
 
@@ -167,18 +170,5 @@ input#password2 {
 #clickbutton:hover {
   transform: scale(1.1);
   background-color: #3cb371
-}
-
-
-@keyframes fadeInUpBig {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 2000px, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
 }
 </style>
