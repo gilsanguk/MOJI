@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     # third party apps
     'rest_framework',
     'imagekit',
+    'django_extensions',
 
     # auth
     'rest_framework.authtoken',

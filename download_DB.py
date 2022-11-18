@@ -1,10 +1,35 @@
 from django.http import JsonResponse, HttpResponse
 import requests
 from .models import Genre, Movie, Actor, Director
-import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import numpy as np
-import base64
+
+
+# import torch
+# from transformers import AutoTokenizer, AutoModelForSequenceClassification
+# import numpy as np
+# import base64
+
+# tokenizer = AutoTokenizer.from_pretrained("Tejas3/distillbert_110_uncased_movie_genre")
+# model = AutoModelForSequenceClassification.from_pretrained("Tejas3/distillbert_110_uncased_movie_genre").cuda().eval()
+
+# def getvector(movie_dict, page):
+#     overview = requests.get(
+#         f'https://api.themoviedb.org/3/movie/{movie_dict.get("id")}',
+#         params={
+#             'api_key': API_KEY,
+#             'language': 'en-US',     
+#             'page': page,       
+#         }
+#         ).json().get('overview')
+#     if not overview: return 0
+#     inputs = tokenizer.batch_encode_plus([overview])
+#     input_ids = torch.tensor(inputs['input_ids']).cuda()
+#     with torch.no_grad():
+#         out = model(input_ids = input_ids, output_hidden_states=True)
+
+#     output_cpu = out.hidden_states[-1][:,0,:].cpu().numpy()
+#     vector_bytes = output_cpu.tobytes()
+#     vector_str = base64.b64encode(vector_bytes).decode('ascii') 
+#     return vector_str
 
 
 API_KEY = 'b44d068c0598769b439da2b0cc74f085'
@@ -83,19 +108,6 @@ def get_directors(movie):
         movie.directors.add(director_id)
         break
 
-tokenizer = AutoTokenizer.from_pretrained("Tejas3/distillbert_110_uncased_movie_genre")
-model = AutoModelForSequenceClassification.from_pretrained("Tejas3/distillbert_110_uncased_movie_genre").cuda().eval()
-
-def getvector(overview):
-    inputs = tokenizer.batch_encode_plus([overview])
-    input_ids = torch.tensor(inputs['input_ids']).cuda()
-    with torch.no_grad():
-        out = model(input_ids = input_ids, output_hidden_states=True)
-
-    output_cpu = out.hidden_states[-1][:,0,:].cpu().numpy()
-    vector_bytes = output_cpu.tobytes()
-    vector_str = base64.b64encode(vector_bytes).decode('ascii') 
-    return vector_str
 
 def movie_data(page):
     response = requests.get(
@@ -110,17 +122,8 @@ def movie_data(page):
     for movie_dict in response.get('results'):
         if not movie_dict.get('release_date'): continue   # 없는 필드 skip
         try:
-        # 유튜브 key 조회
-            data_en = requests.get(
-                f'https://api.themoviedb.org/3/movie/{movie_dict.get("id")}',
-                params={
-                    'api_key': API_KEY,
-                    'language': 'en-US',     
-                    'page': page,       
-                }
-            ).json().get('overview')
-            if not data_en: continue
-            vector = getvector(data_en)
+            # vector = getvector(movie_dict, page)
+            # if not vector: continue
             youtube_key = get_youtube_key(movie_dict)
 
             if movie_dict.get('poster_path'):
@@ -149,17 +152,9 @@ def movie_data(page):
         except: continue
 
 
-
-
 def tmdb_data(request):
-    # Genre.objects.all().delete()
-    # Actor.objects.all().delete()
-    # Movie.objects.all().delete()
-
     tmdb_genres()
     for i in range(1, 501):
         movie_data(i)
         print('page : ', i)
-
-    # Movie.objects.filter(vector__isnull=True).delete()
     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
