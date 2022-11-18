@@ -38,7 +38,7 @@ INSTALLED_APPS = [
 
     # third party apps
     'rest_framework',
-    'drf_spectacular',
+    'imagekit',
 
     # auth
     'rest_framework.authtoken',
@@ -73,19 +73,17 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny',
     ],
-
-    # spectacular Settings
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Your Project API',
-    'DESCRIPTION': 'Your project description',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
 }
 
+# REST_AUTH_SERIALIZERS = {
+#     'USER_DETAILS_SERIALIZER' : 'accounts.serializers.CustomRegisterSerializer',
+# }
+
+ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -172,6 +170,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Media files
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

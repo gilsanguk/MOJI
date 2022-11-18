@@ -12,3 +12,10 @@ def profile(request, username):
     user = get_user_model().objects.get(username=username)
     serializer = ProfileSerializer(user)
     return Response(serializer.data)
+
+
+@api_view(['POST',])
+@permission_classes([IsAuthenticated])
+def signout(request):
+    request.user.auth_token.delete()
+    return Response(status=204)

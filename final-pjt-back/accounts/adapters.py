@@ -11,5 +11,6 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         profile_image = data.get('profile_image')
         if profile_image:
             user.profile_image = profile_image
+        print(user)
         user.save()
         return user
