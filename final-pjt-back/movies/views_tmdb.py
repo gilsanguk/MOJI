@@ -126,9 +126,8 @@ def tmdb_data(request):
     Movie.objects.all().delete()
 
     tmdb_genres()
-    for i in range(1, 2):
+    for i in range(1, 3):
         movie_data(i)
         print('page : ', i)
 
-    Movie.objects.filter(overview__isnull=True).delete()
     return HttpResponse('OK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')

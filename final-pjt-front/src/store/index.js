@@ -9,7 +9,7 @@ Vue.use(Vuex)
   
 const ls = new SecureLS({ isCompression: false })
 
-const API_URL = 'http://127.0.0.1:8000'
+const API_URL = 'http://127.0.0.1:8000/moji'
 
 export default new Vuex.Store({
   plugins: [

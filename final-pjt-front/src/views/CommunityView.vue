@@ -20,7 +20,7 @@
 import axios from 'axios'
 import ReviewItem from '@/components/ReviewItem'
 import ReviewCreateForm from '@/components/ReviewCreateForm'
-const API_URL = 'http://127.0.0.1:8000'
+const API_URL = 'http://127.0.0.1:8000/moji'
 
 export default {
   name: 'CommunityView',

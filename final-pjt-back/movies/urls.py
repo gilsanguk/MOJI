@@ -4,7 +4,7 @@ from . import views
 
 app_name = 'movies'
 urlpatterns = [
-    # path('tmdb/', views_tmdb.tmdb_data),
+    path('tmdb/', views_tmdb.tmdb_data),
     
     path('', views.index, name='index'),
 
