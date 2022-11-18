@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LogInView from '@/views/LogInView'
 import SignUpView from '@/views/SignUpView'
+import LoginView from '@/views/LoginView'
 import MoviesView from '@/views/MoviesView'
 import CommunityView from '@/views/CommunityView'
+import SelectMovieView from '@/views/SelectMovieView'
 import NotFound404 from '@/views/NotFound404'
 
 Vue.use(VueRouter)
@@ -19,14 +20,19 @@ const routes = [
     component: NotFound404,
   },
   {
-    path: '/login',
-    name: 'LogInView',
-    component: LogInView
-  },
-  {
     path: '/signup',
     name: 'SignUpView',
     component: SignUpView
+  },
+  {
+    path: '/login',
+    name: 'LoginView',
+    component: LoginView
+  },
+  {
+    path: '/selectmovie',
+    name: 'SelectMovieView',
+    component: SelectMovieView
   },
   {
     path: '/movies',

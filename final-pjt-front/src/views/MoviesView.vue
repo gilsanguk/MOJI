@@ -96,9 +96,10 @@ export default {
     },
   },
   created() {
-    this.getMovies();
     if (!this.$store.getters.isLogin) {
-      this.$router.push({ name: "LogInView" });
+      this.$router.push({ name: "LoginView" })
+    } else {
+      this.getMovies();
     }
   },
   computed: {
