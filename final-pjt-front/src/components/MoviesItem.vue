@@ -33,6 +33,7 @@ export default {
             width: "60%",
             adaptive: true,
             scrollable: true,
+            shiftY: 0,
             styles: {
               'backgroundColor': "#141619",
               'color': "white",
