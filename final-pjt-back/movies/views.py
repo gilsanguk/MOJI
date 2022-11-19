@@ -8,7 +8,6 @@ from .serializers import (
     MovieSerializer,
 )
 from .models import Movie, Genre
-from accounts.models import User
 import random
 import datetime
 import sqlite3
@@ -61,11 +60,16 @@ def movie_list(request):
     return Response(serializer.data)
 
 @api_view(['GET',])
-def recommend_movie_list(request, username):
+def recommend_movie_list(request):
     movies = get_list_or_404(Movie)[:10]
-    # user = get_object_or_404(User, username=username)
-    # prefer_movies = user.prefer_movies.all()
-    # 버트를 통해 추천받은 영화 리스트
+    user = request.user
+    prefer_movies = user.prefer_movies.all()
+    if prefer_movies:
+        prefer_movies_ids = [movie.id for movie in prefer_movies]
+        recommend_movies_ids = get_recomandation(prefer_movies_ids)
+        movies = Movie.objects.filter(id__in=recommend_movies_ids)
+    else:
+        movies = Movie.objects.all()[:10]
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
 
@@ -104,9 +108,8 @@ def movie_detail(request, movie_pk):
 @api_view(['POST',])
 @permission_classes([IsAuthenticated])
 def reset_prefer(request):
-    print(request.data.get('movies'))
     user = request.user
-    User.prefer_movies.through.objects.filter(user_id=user.id).delete()
+    user.prefer_movies.clear()
     for movie in request.data.get('movies'):
         user.prefer_movies.add(movie.get('id'))
     return Response(status=status.HTTP_200_OK)

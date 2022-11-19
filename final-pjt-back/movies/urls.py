@@ -4,7 +4,7 @@ from . import views
 app_name = 'movies'
 urlpatterns = [
     path('', views.movie_list, name='movie_list'),
-    path('recommend/<str:username>/', views.recommend_movie_list),
+    path('recommend/', views.recommend_movie_list),
     path('liked/', views.liked_movie_list),
     path('recent/', views.recent_movie_list),
     path('random_genre/', views.random_genre_movie_list),

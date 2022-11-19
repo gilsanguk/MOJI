@@ -1,7 +1,7 @@
 <template>
   <div id="bgdiv">
     <div id="bgdivdiv">
-    <h1><b>보고 싶은 영화를 선택하세요</b></h1>
+    <h1><b>비슷한 영화를 추천해드릴게요!</b></h1>
     <div id="searchdiv">
       <autocomplete
         :search="search"

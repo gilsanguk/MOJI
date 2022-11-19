@@ -148,7 +148,7 @@ export default new Vuex.Store({
 
     getMovies(context) {
       const axiosrecommend = axios.get(
-        `${API_URL}/movies/recommend/${context.state.user.username}/`,
+        `${API_URL}/movies/recommend/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
       const axiosliked = axios.get(
         `${API_URL}/movies/liked/`,
