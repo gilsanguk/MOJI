@@ -72,7 +72,6 @@ export default {
         effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: 7,
         // loopAdditionalSlides: 5,
         // autoplay: {
         //   delay: 2500,
@@ -111,6 +110,20 @@ export default {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         },
+        breakpoints: {
+          1024: {
+            slidesPerView: 5,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          640: {
+            slidesPerView: 2,
+          },
+          320: {
+            slidesPerView: 1,
+          }
+        }
       },
     };
   },
@@ -148,7 +161,7 @@ export default {
   align-items: center;
 }
 .smallimgdiv {
-  margin: 50px;
+  margin: 10px;
 }
 
 .smallimgdiv:hover {
