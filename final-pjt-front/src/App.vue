@@ -38,6 +38,11 @@ nav a.router-link-exact-active {
 
 <script>
 import AppNav from '@/components/AppNav'
+import Vue from 'vue'
+import Autocomplete from '@trevoreyre/autocomplete-vue'
+import '@trevoreyre/autocomplete-vue/dist/style.css'
+
+Vue.use(Autocomplete)
 
 export default {
   name: 'App',
@@ -48,6 +53,14 @@ export default {
     isLogin() {
       return this.$store.getters.isLogin
     },
+  },
+  created() {
+    if (!this.$store.getters.isLogin) {
+      this.$router.push({ name: "LoginView" });
+    } else {
+      this.$store.dispatch("getAllMovies");
+      this.$store.dispatch("getMovies");
+    }
   },
 }
 </script>

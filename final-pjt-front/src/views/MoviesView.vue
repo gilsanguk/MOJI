@@ -1,15 +1,17 @@
 <template>
   <div>
     <h1>Movies</h1>
+    <h2>Hello {{isModalAct}}</h2>
+    <h2>2 : {{detailmovie}}</h2>
     <div id="recommend">
       <swiper class="swiper" :options="swiperOption3D">
         <swiper-slide
           style="height: 700px"
-          v-for="movie in recommendMovies"
+          v-for="movie in recommend"
           :key="movie.id"
         >
           <div class="imgdiv">
-            <MoviesItem :movie="movie" style="width: 400px; height: 600px" />
+            <MoviesItem :movie="movie" style="width: 400px; height: 600px" @open-modal="openModal"/>
           </div>
         </swiper-slide>
         <div class="swiper-pagination"></div>
@@ -18,7 +20,7 @@
 
     <div id="liked">
       <swiper class="swiper" :options="swiperOption2D">
-        <swiper-slide v-for="movie in likedMovies" :key="movie.id">
+        <swiper-slide v-for="movie in liked" :key="movie.id">
           <div class="smallimgdiv">
             <MoviesItem :movie="movie" />
           </div>
@@ -30,7 +32,7 @@
 
     <div id="recent">
       <swiper class="swiper" :options="swiperOption2D">
-        <swiper-slide v-for="movie in recentMovies" :key="movie.id">
+        <swiper-slide v-for="movie in recent" :key="movie.id">
           <div class="smallimgdiv">
             <MoviesItem :movie="movie" />
           </div>
@@ -42,7 +44,7 @@
 
     <div id="random-genre">
       <swiper class="swiper" :options="swiperOption2D">
-        <swiper-slide v-for="movie in randomGenreMovies" :key="movie.id">
+        <swiper-slide v-for="movie in randomGenre" :key="movie.id">
           <div class="smallimgdiv">
             <MoviesItem :movie="movie" />
           </div>
@@ -58,11 +60,14 @@
 import MoviesItem from "@/components/MoviesItem";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MoviesView",
   data() {
     return {
+      isModalAct: false,
+      detailmovie: {},
       swiperOption3D: {
         pagination: ".swiper-pagination",
         effect: "coverflow",
@@ -70,10 +75,10 @@ export default {
         grabCursor: true,
         slidesPerView: 5,
         // loopAdditionalSlides: 5,
-        // autoplay: {
-        //   delay: 2500,
-        //   disableOnInteraction: false,
-        // },
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
         coverflowEffect: {
           rotate: 0,
           stretch: 0,
@@ -102,30 +107,14 @@ export default {
     SwiperSlide,
   },
   methods: {
-    getMovies() {
-      this.$store.dispatch("getMovies");
+    openModal(movie) {
+      this.isModalAct = true;
+      this.detailmovie = movie;
+      console.log(this.detailmovie);
     },
-  },
-  created() {
-    if (!this.$store.getters.isLogin) {
-      this.$router.push({ name: "LoginView" });
-    } else {
-      this.getMovies();
-    }
   },
   computed: {
-    recommendMovies() {
-      return this.$store.state.recommendMovies;
-    },
-    likedMovies() {
-      return this.$store.state.likedMovies;
-    },
-    recentMovies() {
-      return this.$store.state.recentMovies;
-    },
-    randomGenreMovies() {
-      return this.$store.state.randomGenreMovies;
-    },
+    ...mapGetters(["recommend", "liked", "recent", "randomGenre"]),
   },
 };
 </script>

@@ -51,17 +51,16 @@ id_to_index = {row[0]: i for i, row in enumerate(data)}
 index = faiss.IndexFlatL2(768)
 index.add(xb_norm)
 
+
 @api_view(['GET'])
-def popular_movie_list(request):
-    movies = Movie.objects.all().order_by('-popularity')[:10]
-    filtered_movies = [movie for movie in movies if movie.vote_average >= 7]
+def movie_list(request):
+    movies = get_list_or_404(Movie)
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
 
-
 @api_view(['GET',])
 def recommend_movie_list(request, username):
-    movies = Movie.objects.all()[:10]
+    movies = get_list_or_404(Movie)[:10]
     # user = get_object_or_404(User, username=username)
     # prefer_movies = user.prefer_movies.all()
     # 버트를 통해 추천받은 영화 리스트

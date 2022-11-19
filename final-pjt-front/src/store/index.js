@@ -23,12 +23,12 @@ export default new Vuex.Store({
     })
   ],
   state: {
-    popularMovies: [],
-    recommendMovies: [],
-    likedMovies: [],
-    recentMovies: [],
-    randomGenreMovies: [],
-    preferMovies: [],
+    all: [],
+    recommend: [],
+    liked: [],
+    recent: [],
+    randomGenre: [],
+    prefer: [],
     token: null,
     user: {
       id: '',
@@ -41,6 +41,21 @@ export default new Vuex.Store({
     isLogin(state) {
       return state.token !== null
     },
+    all(state) {
+      return state.all
+    },
+    recommend(state) {
+      return state.recommend
+    },
+    liked(state) {
+      return state.liked
+    },
+    recent(state) {
+      return state.recent
+    },
+    randomGenre(state) {
+      return state.randomGenre
+    },
   },
   mutations: {
     SET_USER_DATA(state, userData) {
@@ -50,10 +65,14 @@ export default new Vuex.Store({
       state.user.profileImage = userData.profileImage
     },
     GET_MOVIES(state, movies) {
-      state.recommendMovies = movies.recommend
-      state.likedMovies = movies.liked
-      state.recentMovies = movies.recent
-      state.randomGenreMovies = movies.random_genre
+      state.recommend = movies.recommend
+      state.liked = movies.liked
+      state.recent = movies.recent
+      state.randomGenre = movies.randomGenre
+      state.prefer = movies.prefer
+    },
+    GET_ALL_MOVIES(state, movies) {
+      state.all = movies
     },
     SAVE_TOKEN(state, token) {
       state.token = token
@@ -132,18 +151,19 @@ export default new Vuex.Store({
       const axiosrecent = axios.get(
         `${API_URL}/movies/recent/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
-      const axiosrandom_genre = axios.get(
+      const axiosrandomGenre = axios.get(
         `${API_URL}/movies/random_genre/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
 
-      axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandom_genre])
-        .then(axios.spread((recommend, liked, recent, random_genre) => {
-          context.commit('GET_MOVIES', {
+      axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandomGenre])
+        .then(axios.spread((recommend, liked, recent, randomGenre) => {
+          const movies = {
             recommend: recommend.data,
             liked: liked.data,
             recent: recent.data,
-            random_genre: random_genre.data,
-          })
+            randomGenre: randomGenre.data,
+          }
+          context.commit('GET_MOVIES', movies)
         }))
         .catch(err => {
           if (err.response.status === 401) {
@@ -155,11 +175,16 @@ export default new Vuex.Store({
           }
         });
     },
-
-    getPopularMovies(context) {
-      axios.get(`${API_URL}/movies/popular/`)
+    getAllMovies(context) {
+      axios({
+        method: 'get',
+        url: `${API_URL}/movies/`,
+        headers: {
+          Authorization: `Token ${this.state.token}`
+        }
+      })
         .then((res) => {
-          context.state.popularMovies = res.data
+          context.commit('GET_ALL_MOVIES', res.data)
         })
         .catch((err) => console.log(err));
     }
