@@ -123,17 +123,20 @@ export default new Vuex.Store({
     },
 
     getMovies(context) {
-      axios.all([
-        axios.get(`${API_URL}/movies/recommend/${context.state.user.username}/`),
-        axios.get(`${API_URL}/movies/liked/`),
-        axios.get(`${API_URL}/movies/recent/`),
-        axios.get(`${API_URL}/movies/random_genre/`),
-      ],
-        {
-          headers: {
-            Authorization: `Token ${this.state.token}`
-          }
-        })
+      const axiosrecommend = axios.get(
+        `${API_URL}/movies/recommend/${context.state.user.username}/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosliked = axios.get(
+        `${API_URL}/movies/liked/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosrecent = axios.get(
+        `${API_URL}/movies/recent/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosrandom_genre = axios.get(
+        `${API_URL}/movies/random_genre/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+
+      axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandom_genre])
         .then(axios.spread((recommend, liked, recent, random_genre) => {
           context.commit('GET_MOVIES', {
             recommend: recommend.data,
