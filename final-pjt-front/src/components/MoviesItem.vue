@@ -2,7 +2,7 @@
   <div>
     <img
       :src="movie.poster_path"
-      @click.prevent="openModal"
+      @click="openModal"
       @mouseover="stopAutoPlay"
       @mouseleave="playAutoPlay"
     />
@@ -23,11 +23,10 @@ export default {
   methods: {
     openModal() {
       axios.get(
-          `${API_URL}/movies/detail/${this.movie.id}/`, {
+          `${API_URL}/movies/${this.movie.id}/`, {
           headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         })
         .then((res) => {
-          console.log(res.data);
           this.$modal.show(MovieDetail, { movie: res.data }, {
             height: "auto",
             width: "60%",

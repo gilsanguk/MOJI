@@ -2,6 +2,7 @@
   <div>
     <h1>Movies</h1>
     <div id="recommend">
+      <h2>당신을 위한 추천 영화</h2>
       <swiper class="swiper" :options="swiperOption3D" ref="swiper3D">
         <swiper-slide v-for="movie in recommend" :key="movie.id">
           <MoviesItem
@@ -16,6 +17,7 @@
     </div>
 
     <div id="recent">
+      <h2>최근 개봉 영화</h2>
       <swiper class="swiper" :options="swiperOption2D">
         <swiper-slide v-for="movie in recent" :key="movie.id">
           <MoviesItem :movie="movie" />
@@ -26,8 +28,9 @@
     </div>
 
     <div id="random-genre">
+      <h2>{{ randomGenre[1] }} 영화는 어때요?</h2>
       <swiper class="swiper" :options="swiperOption2D">
-        <swiper-slide v-for="movie in randomGenre" :key="movie.id">
+        <swiper-slide v-for="movie in randomGenre[0]" :key="movie.id">
           <MoviesItem :movie="movie" />
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
@@ -79,8 +82,8 @@ export default {
         effect: "slide",
         grabCursor: true,
         loop: true,
-        slidesPerView: 5,
         slidesPerGroup: 5,
+        initialSlide: 5,
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",

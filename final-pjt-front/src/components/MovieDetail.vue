@@ -19,17 +19,19 @@
           />
         </div>
         <div class="col-12 col-md-8">
-          <h5>{{ movie?.title }}</h5>
-          <p>{{ getyear }}</p>
+          <h5>
+            {{ movie?.title }}
+            <span style="font-size: 80%;">{{ relatedYear }}</span>
+          </h5>
           <p id="overview">{{ movie?.overview }}</p>
           <div class="row">
             <div class="col-12 col-md-6">
               <p>평점: {{ movie?.vote_average }}</p>
-              <p>장르: {{ movie?.genres }}</p>
+              <p>장르: {{ genres }}</p>
             </div>
             <div class="col-12 col-md-6">
-              <p>감독: {{ movie?.director }}</p>
-              <p>출연: {{ movie?.actor }}</p>
+              <p>감독: {{ director }}</p>
+              <p id="in-text">출연: {{ actors }}</p>
             </div>
           </div>
         </div>
@@ -56,10 +58,19 @@ export default {
     youtubeVideo() {
       return `https://www.youtube.com/embed/${this.movie.youtube_key}`;
     },
-    getyear() {
-      return this.movie.release_date.slice(0, 4) + "년";
+    relatedYear() {
+      return this.movie.release_date.slice(0, 4);
     },
-  },
+    actors() {
+      return this.movie.actors.map((actor) => actor.name).join(", ");
+    },
+    director() {
+      return this.movie.directors.map((director) => director.name).join(", ");
+    },
+    genres() {
+      return this.movie.genres.map((genre) => genre.name).join(", ");
+    },
+  }
 };
 </script>
 
@@ -89,6 +100,15 @@ export default {
   line-height: 1.2;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+#in-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 </style>

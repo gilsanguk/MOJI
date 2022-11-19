@@ -9,9 +9,8 @@ urlpatterns = [
     path('recent/', views.recent_movie_list),
     path('random_genre/', views.random_genre_movie_list),
 
-    path('detail/<int:movie_pk>/', views.detail, name='detail'),
-    path('save_prefer', views.save_prefer),
-    
     path('<int:movie_pk>/', views.movie_detail),
     path('<int:movie_pk>/like/', views.like_movie),
+    
+    path('save_prefer', views.save_prefer),
 ]

@@ -6,9 +6,11 @@ from .serializers import (
     MovieListSerializer,
     MovieSerializer,
 )
+from django.db.models import Q
 from .models import Movie, Genre, Actor, Director
 from accounts.models import User
 import random
+import datetime
 import sqlite3
 from sklearn.preprocessing import normalize
 import base64
@@ -77,29 +79,23 @@ def liked_movie_list(request):
 
 @api_view(['GET',])
 def recent_movie_list(request):
-    recent_movies = get_list_or_404(Movie.objects.order_by('-release_date')[:20])
+    recent_movies = get_list_or_404(
+        Movie.objects.filter(release_date__lte=datetime.datetime.now()).order_by('-release_date'))[:30]
     serializers = MovieListSerializer(recent_movies, many=True)
-    return Response(serializers.data or [])
+    return Response(serializers.data)
 
 
 @api_view(['GET',])
 def random_genre_movie_list(request):
     genres = get_list_or_404(Genre)
     genre = random.choice(genres)
-    movies = Movie.objects.filter(genres=genre)[:20]
+    movies = Movie.objects.filter(genres=genre)[:30]
     serializers = MovieListSerializer(movies, many=True)
-    return Response(serializers.data or [])
+    return Response([serializers.data, genre.name])
 
 
 @api_view(['GET',])
 def movie_detail(request, movie_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    serializer = MovieSerializer(movie)
-    return Response(serializer.data)
-
-
-@api_view(['GET',])
-def detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
