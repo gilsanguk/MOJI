@@ -12,6 +12,7 @@ Django==3.2.13
 django-allauth==0.50.0
 django-appconf==1.0.5
 django-cors-headers==3.13.0
+django-extensions==3.2.1
 django-imagekit==4.1.0
 djangorestframework==3.14.0
 drf-spectacular==0.24.2

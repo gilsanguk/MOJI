@@ -3,6 +3,7 @@ node_modules
 /dist
 venv/
 db.sqlite3
+movies.json
 
 # local env files
 .env.local
