@@ -3,9 +3,13 @@
     <h1>Movies</h1>
     <div id="recommend">
       <swiper class="swiper" :options="swiperOption3D">
-        <swiper-slide style="height:700px;" v-for="movie in recommendMovies" :key="movie.id">
-          <div class="imgdiv" >
-            <MoviesItem :movie="movie"/>
+        <swiper-slide
+          style="height: 700px"
+          v-for="movie in recommendMovies"
+          :key="movie.id"
+        >
+          <div class="imgdiv">
+            <MoviesItem :movie="movie" style="width: 400px; height: 600px" />
           </div>
         </swiper-slide>
         <div class="swiper-pagination"></div>
@@ -15,7 +19,9 @@
     <div id="liked">
       <swiper class="swiper" :options="swiperOption2D">
         <swiper-slide v-for="movie in likedMovies" :key="movie.id">
-          <MoviesItem :movie="movie" />
+          <div class="smallimgdiv">
+            <MoviesItem :movie="movie" />
+          </div>
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
@@ -25,7 +31,9 @@
     <div id="recent">
       <swiper class="swiper" :options="swiperOption2D">
         <swiper-slide v-for="movie in recentMovies" :key="movie.id">
-          <MoviesItem :movie="movie" />
+          <div class="smallimgdiv">
+            <MoviesItem :movie="movie" />
+          </div>
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
@@ -35,7 +43,9 @@
     <div id="random-genre">
       <swiper class="swiper" :options="swiperOption2D">
         <swiper-slide v-for="movie in randomGenreMovies" :key="movie.id">
-          <MoviesItem :movie="movie" />
+          <div class="smallimgdiv">
+            <MoviesItem :movie="movie" />
+          </div>
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
@@ -54,8 +64,8 @@ export default {
   data() {
     return {
       swiperOption3D: {
-        pagination: '.swiper-pagination',
-        effect: 'coverflow',
+        pagination: ".swiper-pagination",
+        effect: "coverflow",
         loop: true,
         grabCursor: true,
         slidesPerView: 5,
@@ -69,12 +79,12 @@ export default {
           stretch: 0,
           depth: 150,
           modifier: 1,
-          slideShadows : true
+          slideShadows: true,
         },
       },
       swiperOption2D: {
-        pagination: '.swiper-pagination',
-        effect: 'slide',
+        pagination: ".swiper-pagination",
+        effect: "slide",
         grabCursor: true,
         loop: true,
         slidesPerView: 5,
@@ -85,7 +95,6 @@ export default {
         },
       },
     };
-    
   },
   components: {
     MoviesItem,
@@ -99,7 +108,7 @@ export default {
   },
   created() {
     if (!this.$store.getters.isLogin) {
-      this.$router.push({ name: "LoginView" })
+      this.$router.push({ name: "LoginView" });
     } else {
       this.getMovies();
     }
@@ -117,7 +126,7 @@ export default {
     randomGenreMovies() {
       return this.$store.state.randomGenreMovies;
     },
-  },  
+  },
 };
 </script>
 
@@ -136,10 +145,13 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
-.imgdiv:hover {
-  transform: scale(1.1);
-  transition: all 0.5s;
+.smallimgdiv {
+  margin: 50px;
 }
 
+.smallimgdiv:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+  z-index: 1;
+}
 </style>
