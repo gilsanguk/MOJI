@@ -1,10 +1,12 @@
 <template>
   <div>
+    <h1>Movies</h1>
     <div id="recommend">
-      <h1>Movies</h1>
       <swiper class="swiper" :options="swiperOption3D">
-        <swiper-slide v-for="movie in recommendMovies" :key="movie.id">
-          <MoviesItem :movie="movie" />
+        <swiper-slide style="height:700px;" v-for="movie in recommendMovies" :key="movie.id">
+          <div class="imgdiv" >
+            <MoviesItem :movie="movie"/>
+          </div>
         </swiper-slide>
         <div class="swiper-pagination"></div>
       </swiper>
@@ -54,18 +56,18 @@ export default {
       swiperOption3D: {
         pagination: '.swiper-pagination',
         effect: 'coverflow',
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 5,
         loop: true,
-        autoplay: {
-          delay: 2500,
-          disableOnInteraction: false,
-        },
+        grabCursor: true,
+        slidesPerView: 5,
+        // loopAdditionalSlides: 5,
+        // autoplay: {
+        //   delay: 2500,
+        //   disableOnInteraction: false,
+        // },
         coverflowEffect: {
-          rotate: 20,
-          stretch: 50,
-          depth: 100,
+          rotate: 0,
+          stretch: 0,
+          depth: 150,
           modifier: 1,
           slideShadows : true
         },
@@ -120,4 +122,24 @@ export default {
 </script>
 
 <style>
+#recommend,
+#lidked,
+#recent,
+#random-genre {
+  padding: 50px;
+}
+
+.imgdiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgdiv:hover {
+  transform: scale(1.1);
+  transition: all 0.5s;
+}
+
 </style>
