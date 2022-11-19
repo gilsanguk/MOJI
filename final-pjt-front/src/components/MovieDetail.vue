@@ -1,28 +1,63 @@
 <template>
   <div id="moviedetail">
-    {{ movie.title }}
+    <div id="video-box">
+      <iframe
+        id="video"
+        :src="youtubeVideo"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div class="container pt-3">
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <img
+            :src="movie.poster_path"
+            alt="poster"
+            style="heigt: 100%; width: 100%"
+          />
+        </div>
+        <div class="col-12 col-md-8">
+          <h5>{{ movie?.title }}</h5>
+          <p>{{ getyear }}</p>
+          <p id="overview">{{ movie?.overview }}</p>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <p>평점: {{ movie?.vote_average }}</p>
+              <p>장르: {{ movie?.genres }}</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p>감독: {{ movie?.director }}</p>
+              <p>출연: {{ movie?.actor }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-const API_URL = "http://www.googleapis.com/youtube/v3/search";
-
 export default {
   name: "MovieDetail",
   props: {
     movie: Object,
   },
-  data() {
-    return {
-      videoUrl: "",
-    };
-  },
   methods: {
-    show () {
-        this.$modal.show('example')
+    show() {
+      this.$modal.show("example");
     },
-    hide () {
-        this.$modal.hide('my-first-modal');
+    hide() {
+      this.$modal.hide("my-first-modal");
+    },
+  },
+  computed: {
+    youtubeVideo() {
+      return `https://www.youtube.com/embed/${this.movie.youtube_key}`;
+    },
+    getyear() {
+      return this.movie.release_date.slice(0, 4) + "년";
     },
   },
 };
@@ -31,7 +66,29 @@ export default {
 <style scoped>
 #moviedetail {
   width: 100%;
-  height: 100%;
+  height: auto;
   background-color: #141619;
+  color: white;
+}
+
+#video-box {
+  width: 100%;
+  position: relative;
+  padding-bottom: 56.25%;
+}
+
+#video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#overview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 </style>

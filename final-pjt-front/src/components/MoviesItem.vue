@@ -28,7 +28,18 @@ export default {
         })
         .then((res) => {
           console.log(res.data);
-          this.$modal.show(MovieDetail, { movie: res.data });
+          this.$modal.show(MovieDetail, { movie: res.data }, {
+            height: "auto",
+            width: "60%",
+            adaptive: true,
+            scrollable: true,
+            styles: {
+              'backgroundColor': "#141619",
+              'color': "white",
+              'border-radius': "30px",
+              'margin-top': "10%",
+            },
+          });
         })
         .catch(err => {
           if (err.response.status === 401) {

@@ -28,8 +28,9 @@ nav a.router-link-exact-active {
 }
 
 .appbody {
-  height: 100%;
-  background-color: rgba(22, 22, 22, 0.872);
+  min-height: 100vh;
+  /* background-color: rgba(22, 22, 22, 0.872); */
+  background-color: #141619;
   scroll-behavior: smooth;
 }
 

@@ -34,7 +34,7 @@
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
-    <modal name="movie-detail"> </modal>
+    <modal name="movie-detail"></modal>
   </div>
 </template>
 
@@ -164,11 +164,5 @@ export default {
   transform: scale(1.1);
   transition: 0.5s;
   z-index: 1;
-}
-
-#moviedetail {
-  width: 100%;
-  height: 100%;
-  background-color: #141619;
 }
 </style>
