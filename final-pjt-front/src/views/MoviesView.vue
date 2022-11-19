@@ -69,16 +69,15 @@ export default {
       isModalAct: false,
       detailmovie: {},
       swiperOption3D: {
-        pagination: ".swiper-pagination",
         effect: "coverflow",
-        loop: true,
         grabCursor: true,
-        slidesPerView: 5,
+        centeredSlides: true,
+        slidesPerView: 7,
         // loopAdditionalSlides: 5,
-        autoplay: {
-          delay: 2500,
-          disableOnInteraction: false,
-        },
+        // autoplay: {
+        //   delay: 2500,
+        //   disableOnInteraction: false,
+        // },
         coverflowEffect: {
           rotate: 0,
           stretch: 0,
@@ -86,7 +85,21 @@ export default {
           modifier: 1,
           slideShadows: true,
         },
-      },
+        breakpoints: {
+          1024: {
+            slidesPerView: 5,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          640: {
+            slidesPerView: 2,
+          },
+          320: {
+            slidesPerView: 1,
+          }
+        }
+  },
       swiperOption2D: {
         pagination: ".swiper-pagination",
         effect: "slide",
