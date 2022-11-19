@@ -51,16 +51,17 @@ span {
 }
 
 button {
-   border-radius: 5px;
-   height: 50%;
-   font-size: 200%;
-   color: whitesmoke;
-   display: flex;
-   align-items:center;
-   justify-content: center;
-   transition-duration: 0.7s;
-   background-color: rgba(140, 154, 168, 0.537);
-   border: 0.5px solid black;
+  border-radius: 5px;
+  height: 50%;
+  font-size: 200%;
+  color: whitesmoke;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: 0.7s;
+  background-color: rgba(140, 154, 168, 0.537);
+  border: 0.5px solid black;
 }
 
 button:hover {
