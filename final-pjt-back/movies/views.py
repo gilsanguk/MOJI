@@ -1,13 +1,13 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import (
     MovieListSerializer,
     MovieSerializer,
 )
-from django.db.models import Q
-from .models import Movie, Genre, Actor, Director
+from .models import Movie, Genre
 from accounts.models import User
 import random
 import datetime
@@ -103,14 +103,13 @@ def movie_detail(request, movie_pk):
 
 @api_view(['POST',])
 @permission_classes([IsAuthenticated])
-def save_prefer(request, datas):
-    movies = [Movie.objects.get(pk=data['movie_pk']) for data in datas]
-    for movie in movies:
-        request.user.prefer_movies.add(movie)
-    # 버트를 이용해 추천 영화를 받아온다.
-
-    serializer = MovieSerializer(movies, many=True)
-    return Response(serializer.data)
+def reset_prefer(request):
+    print(request.data.get('movies'))
+    user = request.user
+    User.prefer_movies.through.objects.filter(user_id=user.id).delete()
+    for movie in request.data.get('movies'):
+        user.prefer_movies.add(movie.get('id'))
+    return Response(status=status.HTTP_200_OK)
 
 
 @api_view(['POST',])

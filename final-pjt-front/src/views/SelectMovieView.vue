@@ -27,7 +27,7 @@
         <SelectedMovieItem :movie="movie" @delete-movie="deleteMovie"/>
       </div>
     </div>
-    <button @click="setPrefer" id="clickbutton">추천받기</button>
+    <button @click="resetPrefer" id="clickbutton">추천받기</button>
     </div>
   </div>
 </template>
@@ -72,13 +72,14 @@ export default {
     deleteMovie(movie) {
       this.selectmovies = this.selectmovies.filter((m) => m.id !== movie.id);
     },
-    setPrefer() {
+    resetPrefer() {
       if (this.selectmovies.length == 0) {
         alert("영화를 선택해주세요.");
       } else {
-        // this.$store.dispatch("setPrefer", this.selectmovies);
-        // this.$router.push("/MoviesView");
-        console.log(this.selectmovies);
+        this.$store.dispatch("resetPrefer", this.selectmovies)
+        .then(() => {
+          this.$router.push({ name: "MoviesView" });
+        })
       }
     },
   },

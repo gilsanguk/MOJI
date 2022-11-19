@@ -12,5 +12,5 @@ urlpatterns = [
     path('<int:movie_pk>/', views.movie_detail),
     path('<int:movie_pk>/like/', views.like_movie),
     
-    path('save_prefer', views.save_prefer),
+    path('reset/', views.reset_prefer),
 ]

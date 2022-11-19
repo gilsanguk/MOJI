@@ -200,7 +200,31 @@ export default new Vuex.Store({
             console.log(err)
           }
         });
-    }
+    },
+    resetPrefer(context, movies) {
+      axios({
+        method: 'POST',
+        url: `${API_URL}/movies/reset/`,
+        headers: {
+          Authorization: `Token ${this.state.token}`
+        },
+        data: {
+          movies: movies
+        }
+      })
+        .then(() => {
+          context.dispatch('getMovies')
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            router.push({ name: 'LoginView' })
+          } else if (err.response.status === 404) {
+            router.push({ name: 'NotFound404' })
+          } else {
+            console.log(err)
+          }
+        });
+      },
   },
   modules: {
   }
