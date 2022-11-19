@@ -1,16 +1,15 @@
 <template>
   <div>
     <h1>Movies</h1>
-    <h2>Hello {{ isModalAct }}</h2>
-    <h2>2 : {{ detailmovie }}</h2>
     <div id="recommend">
-      <swiper class="swiper" :options="swiperOption3D">
-        <swiper-slide
-          v-for="movie in recommend"
-          :key="movie.id"
-          @mouseover="stopAutoPlay"
-        >
-          <MoviesItem class="imgdiv" :movie="movie" @open-modal="openModal" />
+      <swiper class="swiper" :options="swiperOption3D" ref="swiper3D">
+        <swiper-slide v-for="movie in recommend" :key="movie.id">
+          <MoviesItem
+            class="imgdiv"
+            :movie="movie"
+            @stop-auto-play="stopAutoPlay"
+            @play-auto-play="playAutoPlay"
+          />
         </swiper-slide>
         <div class="swiper-pagination"></div>
       </swiper>
@@ -35,51 +34,42 @@
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
+    <modal name="movie-detail"> </modal>
   </div>
 </template>
 
 <script>
-import MoviesItem from "@/components/MoviesItem";
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import { mapGetters } from "vuex";
+
+import MoviesItem from "@/components/MoviesItem";
 
 export default {
   name: "MoviesView",
   data() {
     return {
-      isModalAct: false,
-      detailmovie: {},
-
       swiperOption3D: {
         effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
         loop: true,
-        initialSlide: 5,
+        slidesPerView: 1,
+        initialSlide: 3,
         autoplay: {
           delay: 2500,
           disableOnInteraction: false,
         },
         coverflowEffect: {
-          rotate: 0,
+          rotate: 50,
           stretch: 0,
-          depth: 200,
+          depth: 100,
           modifier: 1,
-          slideShadows: false,
+          slideShadows: true,
         },
         breakpoints: {
-          1024: {
-            slidesPerView: 5,
-          },
           768: {
             slidesPerView: 3,
-          },
-          640: {
-            slidesPerView: 2,
-          },
-          320: {
-            slidesPerView: 1,
           },
         },
       },
@@ -118,18 +108,18 @@ export default {
     SwiperSlide,
   },
   methods: {
-    openModal(movie) {
-      this.isModalAct = true;
-      this.detailmovie = movie;
-      console.log(this.detailmovie);
-    },
     stopAutoPlay() {
-      console.log('!!');
-      // this.$refs.swiper3D.swiper.autoplay.stop();
+      this.$refs.swiper3D.$swiper.autoplay.stop();
+    },
+    playAutoPlay() {
+      this.$refs.swiper3D.$swiper.autoplay.start();
     },
   },
   computed: {
     ...mapGetters(["recommend", "liked", "recent", "randomGenre"]),
+    swiper() {
+      return this.$refs.swiper3D.$swiper;
+    },
   },
 };
 </script>
@@ -141,41 +131,13 @@ export default {
   padding: 50px;
 }
 
-#recommend .swiper-slide-active:hover {
-  transform: scale(1.1) !important;
+#recommend .swiper-slide-active {
+  transform: scale(1.2) !important;
   transition: 0.5s !important;
 }
 
 #recommend .swiper-slide {
   padding: 5%;
-}
-
-@media screen and (min-width: 320px) {
-  #recommend img {
-    height: 150%;
-    width: 150%;
-  }
-}
-
-@media screen and (min-width: 640px) {
-  #recommend img {
-    height: 170%;
-    width: 170%;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  #recommend img {
-    height: 250%;
-    width: 250%;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  #recommend img {
-    height: 300%;
-    width: 300%;
-  }
 }
 
 .imgdiv {
@@ -202,5 +164,11 @@ export default {
   transform: scale(1.1);
   transition: 0.5s;
   z-index: 1;
+}
+
+#moviedetail {
+  width: 100%;
+  height: 100%;
+  background-color: #141619;
 }
 </style>

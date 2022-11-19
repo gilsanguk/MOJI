@@ -1,29 +1,37 @@
 <template>
-  <div>
-    <h1>{{ movie.title }}</h1>
-    <div class="movie">
-      <img :src="movie.poster_path" alt="movie poster">
-      <div class="movie-info">
-        <h2>영화 정보</h2>
-        <p>개봉일: {{ movie.release_date }}</p>
-        <p>평점: {{ movie.vote_average }}</p>
-        <p>장르: {{ movie.genres }}</p>
-        <p>상영시간: {{ movie.runtime }}</p>
-        <p>개요: {{ movie.overview }}</p>
-      </div>
-    </div>
+  <div id="moviedetail">
+    {{ movie.title }}
   </div>
 </template>
 
 <script>
+const API_URL = "http://www.googleapis.com/youtube/v3/search";
+
 export default {
-  name: 'MovieDetail',
+  name: "MovieDetail",
   props: {
     movie: Object,
   },
-}
+  data() {
+    return {
+      videoUrl: "",
+    };
+  },
+  methods: {
+    show () {
+        this.$modal.show('example')
+    },
+    hide () {
+        this.$modal.hide('my-first-modal');
+    },
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+#moviedetail {
+  width: 100%;
+  height: 100%;
+  background-color: #141619;
+}
 </style>

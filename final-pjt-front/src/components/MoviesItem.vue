@@ -1,29 +1,53 @@
-	
-오후 6:29
 <template>
   <div>
-    <img :src="movie.poster_path" @click.prevent="openModal">
-    <ModalView/>
+    <img
+      :src="movie.poster_path"
+      @click.prevent="openModal"
+      @mouseover="stopAutoPlay"
+      @mouseleave="playAutoPlay"
+    />
   </div>
 </template>
 
 <script>
-import ModalView from "@/components/ModalView";
+import axios from "axios";
+import MovieDetail from "@/components/MovieDetail";
+
+const API_URL = "http://127.0.0.1:8000/moji";
 
 export default {
-  name: 'MoviesItem',
+  name: "MoviesItem",
   props: {
     movie: Object,
   },
-  components: {
-    ModalView
-  },
-  methods : {
-    openModal(){
-      this.$emit('open-modal', this.movie);
+  methods: {
+    openModal() {
+      axios.get(
+          `${API_URL}/movies/detail/${this.movie.id}/`, {
+          headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+        })
+        .then((res) => {
+          console.log(res.data);
+          this.$modal.show(MovieDetail, { movie: res.data });
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            this.$router.push({ name: 'LoginView' })
+          } else if (err.response.status === 404) {
+            this.$router.push({ name: 'NotFound404' })
+          } else {
+            console.log(err)
+          }
+        });
+    },
+    stopAutoPlay() {
+      this.$emit("stop-auto-play");
+    },
+    playAutoPlay() {
+      this.$emit("play-auto-play");
     },
   },
-}
+};
 </script>
 
 <style scoped>

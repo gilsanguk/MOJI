@@ -4,8 +4,10 @@ import axios from 'axios'
 import router from '../router'
 import createPersistedState from 'vuex-persistedstate'
 import SecureLS from "secure-ls"
+import VModal from 'vue-js-modal'
 
 Vue.use(Vuex)
+Vue.use(VModal)
 
 const ls = new SecureLS({ isCompression: false })
 
@@ -40,6 +42,9 @@ export default new Vuex.Store({
   getters: {
     isLogin(state) {
       return state.token !== null
+    },
+    getToken(state) {
+      return state.token
     },
     all(state) {
       return state.all
@@ -186,7 +191,15 @@ export default new Vuex.Store({
         .then((res) => {
           context.commit('GET_ALL_MOVIES', res.data)
         })
-        .catch((err) => console.log(err));
+        .catch(err => {
+          if (err.response.status === 401) {
+            router.push({ name: 'LoginView' })
+          } else if (err.response.status === 404) {
+            router.push({ name: 'NotFound404' })
+          } else {
+            console.log(err)
+          }
+        });
     }
   },
   modules: {
