@@ -1,5 +1,7 @@
 <template>
-  <div style="min-height: 100vh;">
+  <div id="bgdiv">
+    <div id="bgdivdiv">
+    <h1><b>보고 싶은 영화를 선택하세요</b></h1>
     <div id="searchdiv">
       <autocomplete
         :search="search"
@@ -19,13 +21,14 @@
       </autocomplete>
     </div>
 
-    <div id="selecteddiv" style="color:white;">
-      <h2>선택한 영화들</h2>
-      <div v-for="movie in selectmovies" :key="movie.id">
+    <div id="selecteddiv">
+      <h2>선택한 영화 ({{selectmovies.length}}/5)</h2>
+      <div v-for="movie in selectmovies" :key="movie.id" >
         <SelectedMovieItem :movie="movie" @delete-movie="deleteMovie"/>
       </div>
     </div>
-    <button @click="setPrefer">추천받기</button>
+    <button @click="setPrefer" id="clickbutton">추천받기</button>
+    </div>
   </div>
 </template>
 
@@ -88,19 +91,65 @@ export default {
 </script>
 
 <style scoped>
+#bgdiv {
+  min-height: 100vh;
+  padding: 2rem 5rem
+}
+
+#bgdivdiv {
+  margin: 0% 15%
+}
+
 #searchdiv {
-  max-width: 600px;
   margin: 0 auto;
+  font-size: 40px;
 }
 
 .result {
   display: flex;
   align-items: center;
+  color: black;
 }
 
 .result img {
   width: 10%;
   height: 10%;
   margin-right: 20px;
+}
+
+#selecteddiv {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+#selecteddiv div {
+  margin: 2rem 1rem ;
+}
+
+#clickbutton {
+  border-radius: 10px;
+  padding: 0.5rem 1.5rem;
+  margin-top: 2rem;
+  background-color: white;
+  color: black;
+  font-size: large;
+  outline-style: none;
+  cursor: pointer;
+}
+
+#clickbutton:hover{
+  outline-style: none;
+  background-color: #ff8223;
+  color: white;
+  animation: tutsFade 2s 1s linear alternate;
+}
+
+@keyframes tutsFade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 </style>

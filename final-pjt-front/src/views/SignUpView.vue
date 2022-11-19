@@ -169,6 +169,6 @@ input#nickname {
 
 #clickbutton:hover {
   transform: scale(1.1);
-  background-color: #3cb371
+  background-color: #ff8223;
 }
 </style>

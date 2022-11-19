@@ -135,20 +135,14 @@ input#password {
   background-color: white;
   color: black;
   font-size: 20px;
-  display:table;
-  text-align:center;
   outline-style: none;
   cursor: pointer;
 }
 
 .clickbutton:hover{
-  /* transform: scale(1.1); */
   outline-style: none;
-  background-color: #3cb371;
+  background-color: #ff8223;
   animation: tutsFade 2s 1s linear alternate;
-  /* animation-name: tuusFade;
-  animation-duration:2s;
-  animation-direction: normal; */
 }
 
 @keyframes tutsFade {
@@ -159,5 +153,4 @@ input#password {
     opacity: 0;
   }
 }
-
 </style>
