@@ -4,7 +4,14 @@
       <img :src="movie.poster_path" />
       <figcaption id="movie-detail">
         <div id="detail-div">
-          <h5 style="word-break: keep-all;">{{ movie.title }}</h5>
+          <h5 style="word-break: keep-all">{{ movie.title }}</h5>
+          <!-- 좋아요 -->
+          <i
+            class="heart far fa-heart fa-4x"
+          >
+            <span>{{ likeUsers }}</span>
+          </i>
+          <!-- 평점 -->
           <div class="star-ratings">
             <div
               class="star-ratings-fill space-x-2 text-lg"
@@ -19,7 +26,9 @@
               ><span>★</span>
             </div>
           </div>
-          <span id="detail-footer">영화 정보 더보기 <i class="bi bi-arrow-right"></i></span>
+          <span id="detail-footer"
+            >영화 정보 더보기 <i class="bi bi-arrow-right"></i
+          ></span>
         </div>
       </figcaption>
     </figure>
@@ -27,6 +36,7 @@
 </template>
 
 <script>
+
 export default {
   name: "MoviesItem",
   props: {
@@ -47,6 +57,11 @@ export default {
       return score;
     },
   },
+  computed: {
+    likeUsers() {
+      return this.movie.like_users.length;
+    },
+  },
 };
 </script>
 
@@ -54,6 +69,24 @@ export default {
 img {
   width: 100%;
   height: 100%;
+}
+
+.heart{
+  position: relative;
+}
+.heart > span {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  left: 0px;
+  top: 0px;
+  width: 5em;
+  line-height: 5em;
+  font-size: 0.2em;
+  color: white;
+  display: block;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .star-ratings {
@@ -94,13 +127,13 @@ img {
 #movie-detail:hover #detail-div {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   height: 100%;
 }
 
 figure.snip1384 {
-  font-family: 'Raleway', Arial, sans-serif;
+  font-family: "Raleway", Arial, sans-serif;
   position: relative;
   overflow: hidden;
   margin: 10px;
@@ -132,7 +165,7 @@ figure.snip1384 figcaption {
   right: 0;
 }
 figure.snip1384:after {
-  content: '';
+  content: "";
   background-color: rgba(0, 0, 0, 0.65);
   -webkit-transition: all 0.35s ease;
   transition: all 0.35s ease;
@@ -164,7 +197,7 @@ figure.snip1384 p {
   -webkit-transform: translateY(40px);
   transform: translateY(40px);
 }
-#detail-footer{
+#detail-footer {
   position: absolute;
   bottom: 10px;
   right: 10px;

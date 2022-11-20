@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Movies</h1>
     <div id="recommend">
       <h2>당신을 위한 추천 영화</h2>
       <swiper class="swiper" :options="swiperOption3D" ref="swiper3D">
@@ -13,7 +12,6 @@
               @play-auto-play="playAutoPlay"
             />
         </swiper-slide>
-        <div class="swiper-pagination"></div>
       </swiper>
     </div>
 
@@ -142,7 +140,6 @@ export default {
               height: "80%",
               width: "60%",
               adaptive: true,
-              scrollable: true,
               shiftY: 0.5,
             }
           );

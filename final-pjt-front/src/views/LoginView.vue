@@ -91,7 +91,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: relative;
   margin-right: 15rem;
 }
 
@@ -145,12 +145,12 @@ input#password {
   animation: tutsFade 2s 1s linear alternate;
 }
 
-@keyframes tutsFade {
+/* @keyframes tutsFade {
   from {
     opacity: 1;
   }
   to {
     opacity: 0;
   }
-}
+} */
 </style>

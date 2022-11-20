@@ -113,7 +113,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: relative;
   margin-left: 15rem;
 }
 

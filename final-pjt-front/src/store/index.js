@@ -27,7 +27,6 @@ export default new Vuex.Store({
   state: {
     all: [],
     recommend: [],
-    liked: [],
     recent: [],
     randomGenre: [],
     prefer: [],
@@ -71,7 +70,6 @@ export default new Vuex.Store({
     },
     GET_MOVIES(state, movies) {
       state.recommend = movies.recommend
-      state.liked = movies.liked
       state.recent = movies.recent
       state.randomGenre = movies.randomGenre
       state.prefer = movies.prefer
@@ -104,7 +102,7 @@ export default new Vuex.Store({
         .then(() => {
           router.push({ name: 'MoviesView' })
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data))
     },
     logIn(context, user) {
       axios({
@@ -150,9 +148,6 @@ export default new Vuex.Store({
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
-      const axiosliked = axios.get(
-        `${API_URL}/movies/liked/`,
-        {headers: { Authorization: `Token ${this.state.token}`}})
       const axiosrecent = axios.get(
         `${API_URL}/movies/recent/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
@@ -160,11 +155,10 @@ export default new Vuex.Store({
         `${API_URL}/movies/random_genre/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
 
-      axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandomGenre])
-        .then(axios.spread((recommend, liked, recent, randomGenre) => {
+      axios.all([axiosrecommend, axiosrecent, axiosrandomGenre])
+        .then(axios.spread((recommend, recent, randomGenre) => {
           const movies = {
             recommend: recommend.data,
-            liked: liked.data,
             recent: recent.data,
             randomGenre: randomGenre.data,
           }

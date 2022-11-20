@@ -7,6 +7,7 @@ import CommunityView from '@/views/CommunityView'
 import SelectMovieView from '@/views/SelectMovieView'
 import NotFound404 from '@/views/NotFound404'
 import TestView from '@/views/TestView'
+import RecommendView from '@/views/RecommendView'
 
 Vue.use(VueRouter)
 
@@ -49,6 +50,11 @@ const routes = [
     path: '/test',
     name: 'TestView',
     component: TestView,
+  },
+  {
+    path: '/movies/:id/recommend',
+    name: 'RecommendView',
+    component: RecommendView,
   },
   {
     path: '*',

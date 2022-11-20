@@ -47,7 +47,8 @@ export default {
 nav {
   display: flex;
   justify-content: space-between;
-  background-color: #141619;
+  background-color: black;
+  opacity: 0.8;
 }
 
 img {
@@ -66,6 +67,7 @@ img {
 
 .link:hover {
   color: white;
+  transition: 0.4s;
 }
 
 .menu-expand {
@@ -103,7 +105,8 @@ img {
 }
 
 .dropdown-btn {
-  background-color: #141619;
+  background-color: black;
+  opacity: 0.8;
   border: none;
   color: white;
   cursor: pointer;

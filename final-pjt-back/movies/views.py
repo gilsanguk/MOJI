@@ -1,6 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view
 from rest_framework import status
 from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import (
@@ -8,6 +7,8 @@ from .serializers import (
     MovieSerializer,
 )
 from .models import Movie, Genre
+
+
 import random
 import datetime
 import sqlite3
@@ -16,10 +17,22 @@ import base64
 import numpy as np
 import faiss
 
+
 def row_to_numpy(row):
     vector_str = row[2]
     vector = np.frombuffer(base64.b64decode(vector_str), dtype=np.float32)
     return vector
+    
+con = sqlite3.connect("db.sqlite3")
+cur = con.cursor()
+res = cur.execute("SELECT id, overview, vector, title FROM movies_movie")
+data = list(res)
+xb = np.array([row_to_numpy(row) for row in data])
+xb_norm = normalize(xb, axis=1, norm='l2')
+id_to_index = {row[0]: i for i, row in enumerate(data)}
+
+index = faiss.IndexFlatL2(768)
+index.add(xb_norm)
     
 def get_recomandation(requestes_ids):
     requested_indices = [id_to_index[movie_id] for movie_id in requestes_ids]
@@ -41,16 +54,6 @@ def get_recomandation(requestes_ids):
             founded_index_set.add(idx)
     return [data[idx][0] for idx in result_indices]
 
-con = sqlite3.connect("db.sqlite3")
-cur = con.cursor()
-res = cur.execute("SELECT id, overview, vector, title FROM movies_movie")
-data = list(res)
-xb = np.array([row_to_numpy(row) for row in data])
-xb_norm = normalize(xb, axis=1, norm='l2')
-id_to_index = {row[0]: i for i, row in enumerate(data)}
-
-index = faiss.IndexFlatL2(768)
-index.add(xb_norm)
 
 
 @api_view(['GET'])
@@ -61,7 +64,6 @@ def movie_list(request):
 
 @api_view(['GET',])
 def recommend_movie_list(request):
-    movies = get_list_or_404(Movie)[:10]
     user = request.user
     prefer_movies = user.prefer_movies.all()
     if prefer_movies:
@@ -73,12 +75,12 @@ def recommend_movie_list(request):
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
 
-
 @api_view(['GET',])
-def liked_movie_list(request):
-    movies = request.user.like_movies.all()
-    serializers = MovieListSerializer(movies, many=True)
-    return Response(serializers.data or [])
+def recommend_movie(request, movie_pk):
+    recommend_movies_ids = get_recomandation([movie_pk])
+    movies = Movie.objects.filter(id__in=recommend_movies_ids)
+    serializer = MovieListSerializer(movies, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET',])
@@ -106,7 +108,6 @@ def movie_detail(request, movie_pk):
 
 
 @api_view(['POST',])
-@permission_classes([IsAuthenticated])
 def reset_prefer(request):
     user = request.user
     user.prefer_movies.clear()
@@ -116,16 +117,19 @@ def reset_prefer(request):
 
 
 @api_view(['POST',])
-@permission_classes([IsAuthenticated])
 def like_movie(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    if request.method == 'POST':
-        if movie.like_users.filter(pk=request.user.pk).exists():
-            movie.like_users.remove(request.user)
-        else:
-            movie.like_users.add(request.user)
-        context = {
-            'like_count': movie.like_users.count(),
-            'is_liked': movie.like_users.filter(pk=request.user.pk).exists(),
-        }
-        return Response(context)
+    if movie.like_users.filter(pk=request.user.pk).exists():
+        movie.like_users.remove(request.user)
+        if request.user.prefer_movies.filter(pk=movie.pk).exists():
+            request.user.prefer_movies.remove(movie)
+    else:
+        movie.like_users.add(request.user)
+        request.user.prefer_movies.add(movie)
+        if request.user.prefer_movies.count() > 5:
+            request.user.prefer_movies.first().delete()
+    context = {
+        'like_count': movie.like_users.count(),
+        'is_liked': movie.like_users.filter(pk=request.user.pk).exists(),
+    }
+    return Response(context)
