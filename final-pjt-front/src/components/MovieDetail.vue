@@ -26,7 +26,7 @@
             }}</span>
           </h2>
           <p id="overview">{{ movie?.overview }}</p>
-          <div class="row">
+          <div class="row pb-3">
             <div class="col-12 col-lg-6">
               <p>평점: {{ movie?.vote_average }}</p>
               <p>장르: {{ genres }}</p>
@@ -38,8 +38,11 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer pt-4" @click="goReview">
+      <div class="modal-footer py-4" @click="goReview">
         <h3>리뷰 작성하러 가기</h3>
+      </div>
+      <div title="영화추천 받기" class="modal-footer pt-4" @click="goRecommend">
+        <h3>이 영화가 좋았다면?</h3>
       </div>
     </div>
   </div>
@@ -112,7 +115,7 @@ p {
   text-overflow: ellipsis;
   line-height: 1.2;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 }
 

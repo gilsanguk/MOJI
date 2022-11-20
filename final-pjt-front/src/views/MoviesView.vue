@@ -38,7 +38,7 @@
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
-    <modal name="movie-detail"> </modal>
+    <modal name="movie-detail"></modal>
   </div>
 </template>
 
@@ -81,12 +81,11 @@ export default {
           },
         },
       },
-
       swiperOption2D: {
-        pagination: ".swiper-pagination",
         effect: "slide",
         grabCursor: true,
         loop: true,
+        slidesPerView: 'auto',
         slidesPerGroup: 5,
         initialSlide: 5,
         navigation: {
@@ -95,7 +94,7 @@ export default {
         },
         breakpoints: {
           1024: {
-            slidesPerView: 5,
+            slidesPerView: 4,
           },
           768: {
             slidesPerView: 3,
@@ -172,7 +171,7 @@ export default {
 #recommend,
 #recent,
 #random-genre {
-  padding: 50px;
+  padding: 50px 0px 50px 0px;
 }
 
 #recommend .swiper-slide-active {
@@ -180,51 +179,9 @@ export default {
   transition: 0.5s !important;
 }
 
-#recommend .swiper-slide {
+.swiper-slide {
   padding: 5%;
 }
-/* 
-.imgdiv {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-wrapper {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.swiper-slide {
-  display: flex;
-  align-items: center;
-  padding: 2%;
-} */
-
-/* #swiperslide:hover { 
-  transform: scale(1.1);
-  transition: 0.5s;
-  z-index: 1;
-  opacity: 0.3;
-} */
-/* 
-#titlediv {
-  position: absolute;
-  color: white;
-  font-size: 250%;
-  padding: 3%;
-  opacity: 0;
-  width: 100%;
-}
-
-.swiper-slide:hover #titlediv {
-  display: inline-block;
-  opacity: 1;
-  z-index: 2;
-} */
 
 
 .vm--modal {
@@ -234,5 +191,10 @@ export default {
 
 .vm--modal::-webkit-scrollbar {
   display: none;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #404040;
 }
 </style>

@@ -18,8 +18,8 @@
               <span>★</span><span>★</span><span>★</span><span>★</span
               ><span>★</span>
             </div>
-            <i class="bi bi-arrow-right"></i>
           </div>
+          <span id="detail-footer">영화 정보 더보기 <i class="bi bi-arrow-right"></i></span>
         </div>
       </figcaption>
     </figure>
@@ -51,9 +51,6 @@ export default {
 </script>
 
 <style scoped>
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,700);
-@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
-
 img {
   width: 100%;
   height: 100%;
@@ -88,6 +85,10 @@ img {
 
 #detail-div {
   display: none;
+}
+
+#detail-footer {
+  color: #aaa9a9;
 }
 
 #movie-detail:hover #detail-div {
@@ -163,17 +164,17 @@ figure.snip1384 p {
   -webkit-transform: translateY(40px);
   transform: translateY(40px);
 }
-figure.snip1384 i {
+#detail-footer{
   position: absolute;
   bottom: 10px;
   right: 10px;
   padding: 20px 25px;
-  font-size: 34px;
   opacity: 0;
   -webkit-transform: translateX(-10px);
   transform: translateX(-10px);
-  color: #ffffff;
+  color: #aaa9a9;
 }
+
 figure.snip1384 a {
   position: absolute;
   top: 0;
@@ -190,6 +191,7 @@ figure.snip1384.hover img {
   -webkit-opacity: 0.5;
   opacity: 0.5;
 }
+
 figure.snip1384:hover:after,
 figure.snip1384.hover:after {
   opacity: 1;
@@ -203,12 +205,9 @@ figure.snip1384:hover h3,
 figure.snip1384.hover h3,
 figure.snip1384:hover p,
 figure.snip1384.hover p,
-figure.snip1384:hover i,
-figure.snip1384.hover i {
+figure.snip1384:hover #detail-footer {
   -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
   opacity: 1;
 }
-
-
 </style>

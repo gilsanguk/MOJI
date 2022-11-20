@@ -6,8 +6,10 @@
 </template>
 
 <style>
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,700);
+
 #app {
-  font-family: 'Hi Melody', cursive;
+  font-family: 'Raleway', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
