@@ -10,11 +10,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import MovieDetail from "@/components/MovieDetail";
-
-const API_URL = "http://127.0.0.1:8000/moji";
-
 export default {
   name: "MoviesItem",
   props: {
@@ -22,34 +17,7 @@ export default {
   },
   methods: {
     openModal() {
-      axios.get(
-          `${API_URL}/movies/${this.movie.id}/`, {
-          headers: { Authorization: `Token ${this.$store.getters.getToken}` },
-        })
-        .then((res) => {
-          this.$modal.show(MovieDetail, { movie: res.data }, {
-            height: "auto",
-            width: "60%",
-            adaptive: true,
-            scrollable: true,
-            shiftY: 0,
-            styles: {
-              'backgroundColor': "#141619",
-              'color': "white",
-              'border-radius': "30px",
-              'margin-top': "10%",
-            },
-          });
-        })
-        .catch(err => {
-          if (err.response.status === 401) {
-            this.$router.push({ name: 'LoginView' })
-          } else if (err.response.status === 404) {
-            this.$router.push({ name: 'NotFound404' })
-          } else {
-            console.log(err)
-          }
-        });
+      this.$emit("open-modal", this.movie.id);
     },
     stopAutoPlay() {
       this.$emit("stop-auto-play");

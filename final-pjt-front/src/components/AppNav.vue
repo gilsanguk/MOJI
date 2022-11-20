@@ -1,7 +1,7 @@
 <template>
   <nav>
     <button @click="logOut" id="clickbutton">Log Out</button>
-    <button @click="goSelectMovie" id="clickbutton">마음에 드는 영화가 없다면?</button>
+    <button title="추천받기" @click="goSelectMovie" id="clickbutton">마음에 드는 영화가 없다면?</button>
   </nav>
 </template>
 

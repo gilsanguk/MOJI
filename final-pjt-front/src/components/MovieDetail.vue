@@ -9,32 +9,37 @@
         allowfullscreen
       ></iframe>
     </div>
-    <div class="container pt-3">
+    <div class="container p-4">
       <div class="row">
-        <div class="col-12 col-md-3">
+        <div class="col-12 mb-3 mb-lg-0 col-lg-3">
           <img
             :src="movie.poster_path"
             alt="poster"
             style="heigt: 100%; width: 100%"
           />
         </div>
-        <div class="col-12 col-md-8">
-          <h5>
-            {{ movie?.title }}
-            <span style="font-size: 80%;">{{ relatedYear }}</span>
-          </h5>
+        <div class="col-12 col-lg-9">
+          <h2>
+            <b>{{ movie?.title }}</b>
+            <span style="font-size: 80%; margin-left: 2%">{{
+              relatedYear
+            }}</span>
+          </h2>
           <p id="overview">{{ movie?.overview }}</p>
           <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
               <p>평점: {{ movie?.vote_average }}</p>
               <p>장르: {{ genres }}</p>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
               <p>감독: {{ director }}</p>
               <p id="in-text">출연: {{ actors }}</p>
             </div>
           </div>
         </div>
+      </div>
+      <div class="modal-footer pt-4" @click="goReview">
+        <h3>리뷰 작성하러 가기</h3>
       </div>
     </div>
   </div>
@@ -47,11 +52,11 @@ export default {
     movie: Object,
   },
   methods: {
-    show() {
-      this.$modal.show("example");
-    },
-    hide() {
-      this.$modal.hide("my-first-modal");
+    goReview() {
+      this.$modal.hideAll();
+      this.$router.push({
+        path: `community/${this.movie.id}/review`,
+      })
     },
   },
   computed: {
@@ -70,16 +75,24 @@ export default {
     genres() {
       return this.movie.genres.map((genre) => genre.name).join(", ");
     },
-  }
+  },
 };
 </script>
 
 <style scoped>
+p {
+  font-size: 125%;
+}
+
 #moviedetail {
   width: 100%;
   height: auto;
   background-color: #141619;
-  color: white;
+  color: #a5a5a5
+}
+
+#moviedetail-webkit-scrollbar {
+  display: none !important;
 }
 
 #video-box {
@@ -110,5 +123,18 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #404040;
+  color: #a5a5a5;
+}
+
+.modal-footer:hover {
+  color: #FFFFFF;
+  cursor: pointer;
 }
 </style>

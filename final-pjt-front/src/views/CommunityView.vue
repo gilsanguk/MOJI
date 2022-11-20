@@ -40,7 +40,10 @@ export default {
       this.showCreateForm = false
     },
     getReviews() {
-      axios.get(`${API_URL}/community/${this.$route.params.id}/reviews/`)
+      axios.get(
+        `${API_URL}/community/${this.$route.params.id}/reviews`, {
+        headers: { Authorization: `Token ${this.$store.getters.getToken}` }
+        })
         .then(res => {
           this.reviews = res.data
           console.log(this.reviews);
@@ -55,8 +58,13 @@ export default {
           }
         })
     },
-    createReview() {
-      axios.get(`${API_URL}/community/${this.$route.params.id}/reviews/create/`)
+    // createReview() {
+    //   this.$router.push(`community/${this.$router.params.id}/reviews/create/`)
+    // },
+      createReview() {
+      axios.get(`${API_URL}/community/${this.$route.params.id}/reviews/create/`, {
+        headers: { Authorization: `Token ${this.$store.getters.getToken}` }
+      })
         .then(res => {
           this.createForm = res.data
           this.showCreateForm = true
@@ -77,9 +85,9 @@ export default {
       const movie = this.$store.state.movies.find(movie => movie.id === Number(this.$route.params.id))
       return movie
     },
-    movieId() {
-      return this.$route.params.id
-    }
+    // movieId() {
+    //   return this.$route.params.id
+    // }
   },
   created() {
     this.getReviews()
