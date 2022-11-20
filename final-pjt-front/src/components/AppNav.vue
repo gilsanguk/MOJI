@@ -1,9 +1,9 @@
 <template>
   <nav class="row sticky-top py-2">
-    <div class="d-flex col-6">
-      <img src="@/assets/logo.png" alt="logo" width="50" height="50" />
+    <div class="d-flex col-8 col-lg-6 col-xxl-8">
+      <img src="@/assets/logo.png" alt="logo" height="50" @click="goHome" />
     </div>
-    <div class="menu-expand col-6">
+    <div class="menu-expand col-6 col-xxl-4">
        <router-link :to="{ name: 'MoviesView'}" class="link">홈</router-link>
       <router-link :to="{ name: 'SelectMovieView'}" class="link">마음에 드는 영화가 없다면?</router-link>
       <router-link :to="{ name: 'SelectMovieView'}" class="link">내 프로필</router-link>
@@ -11,7 +11,7 @@
       <img src="@/assets/no_profile.png" alt="profile" width="50" height="50">
     </div>
 
-    <div class="menu-dropdown col-6">
+    <div class="menu-dropdown col-4">
       <button class="dropdown-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
         메뉴
       </button>
@@ -34,6 +34,11 @@ export default {
     logOut() {
       this.$store.dispatch("logOut");
     },
+    goHome() {
+      this.$router.push({
+        name: "MoviesView",
+      });
+    },
   },
 };
 </script>
@@ -43,6 +48,11 @@ nav {
   display: flex;
   justify-content: space-between;
   background-color: #141619;
+}
+
+img {
+  cursor: pointer;
+  -webkit-user-drag: none; 
 }
 
 .link {
@@ -68,7 +78,7 @@ nav {
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   .menu-expand {
     display: none;
   }
