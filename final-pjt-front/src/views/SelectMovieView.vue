@@ -48,6 +48,13 @@ export default {
     Autocomplete,
     SelectedMovieItem,
   },
+  created() {
+    if (!this.$store.getters.isLogin) {
+      this.$router.push({ name: "LoginView" });
+    } else {
+      this.$store.dispatch("getAllMovies");
+    }
+  },
   methods: {
     search(input) {
       if (input.length < 1) {

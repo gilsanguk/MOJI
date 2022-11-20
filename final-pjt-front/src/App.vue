@@ -11,7 +11,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #a5a5a5;
+  color: #a7a7a7;
 }
 
 nav {
@@ -24,7 +24,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: white;
 }
 
 .appbody {
@@ -54,14 +54,6 @@ export default {
     isLogin() {
       return this.$store.getters.isLogin
     },
-  },
-  created() {
-    if (!this.$store.getters.isLogin) {
-      this.$router.push({ name: "LoginView" });
-    } else {
-      this.$store.dispatch("getAllMovies");
-      this.$store.dispatch("getMovies");
-    }
   },
 }
 </script>

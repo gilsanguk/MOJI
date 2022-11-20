@@ -116,6 +116,14 @@ export default {
     Swiper,
     SwiperSlide,
   },
+  created() {
+    if (!this.$store.getters.isLogin) {
+      this.$router.push({ name: "LoginView" });
+    } else {
+      this.$store.dispatch("getAllMovies");
+      this.$store.dispatch("getMovies");
+    }
+  },
   methods: {
     stopAutoPlay() {
       this.$refs.swiper3D.$swiper.autoplay.stop();
