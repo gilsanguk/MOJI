@@ -1,10 +1,10 @@
 <template>
   <div>
     <div id="recommend">
-      <h2>당신을 위한 추천 영화</h2>
-      <swiper class="swiper" :options="swiperOption3D" ref="swiper3D">
+      <h2 class="pb-4">당신을 위한 추천 영화</h2>
+      <swiper class="swiper swiper3D" :options="swiperOption3D" ref="swiper3D">
         <swiper-slide v-for="movie in recommend" :key="movie.id">
-            <MoviesItem
+            <MoviesMainItem
               class="imgdiv"
               :movie="movie"
               @open-modal="openModal"
@@ -46,8 +46,9 @@ import "swiper/css/swiper.css";
 import { mapGetters } from "vuex";
 import axios from "axios";
 
-import MovieDetail from "@/components/MovieDetail";
+import MoviesMainItem from "@/components/MoviesMainItem";
 import MoviesItem from "@/components/MoviesItem";
+import MovieDetail from "@/components/MovieDetail";
 
 const API_URL = "http://127.0.0.1:8000/moji";
 
@@ -60,8 +61,6 @@ export default {
         grabCursor: true,
         centeredSlides: true,
         loop: true,
-        slidesPerView: 1,
-        initialSlide: 3,
         autoplay: {
           delay: 2500,
           disableOnInteraction: false,
@@ -74,16 +73,38 @@ export default {
           slideShadows: false,
         },
         breakpoints: {
-          768: {
+          1600: {
+            slidesPerView: 4,
+            initialSlide: 4,
+            coverflowEffect: {
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+            },
+          },
+          1024: {
             slidesPerView: 3,
+            initialSlide: 3,
+            coverflowEffect: {
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: false,
+            },
+          },
+          768: {
+            slidesPerView: 1,
+            initialSlide: 1,
           },
         },
       },
       swiperOption2D: {
         effect: "slide",
         grabCursor: true,
-        loop: true,
-        initialSlide: 5,
+        loop: true, 
         spaceBetween: 50,
         navigation: {
           nextEl: ".swiper-button-next",
@@ -92,40 +113,38 @@ export default {
         breakpoints: {
           1400: {
             slidesPerView: 5,
-            slidesPerGroup: 4,
+            slidesPerGroup: 5,
+            initialSlide: 5,
           },
-          1024: {
+          1200: {
             slidesPerView: 4,
             slidesPerGroup: 4,
+            initialSlide: 4,
           },
-          768: {
+          850: {
             slidesPerView: 3,
             slidesPerGroup: 3,  
+            initialSlide: 3,
           },
           640: {
             slidesPerView: 2,
-            slidesPerGroup: 2,  
+            slidesPerGroup: 2,
+            initialSlide: 2,  
           },
           320: {
             slidesPerView: 1,
-            slidesPerGroup: 1,  
+            slidesPerGroup: 1,
+            initialSlide: 1, 
           },
         },
       },
     };
   },
   components: {
+    MoviesMainItem,
     MoviesItem,
     Swiper,
     SwiperSlide,
-  },
-  created() {
-    if (!this.$store.getters.isLogin) {
-      this.$router.push({ name: "LoginView" });
-    } else {
-      this.$store.dispatch("getAllMovies");
-      this.$store.dispatch("getMovies");
-    }
   },
   methods: {
     stopAutoPlay() {
@@ -168,6 +187,10 @@ export default {
       return this.$refs.swiper3D.$swiper;
     },
   },
+  created() {
+    this.$store.dispatch("getAllMovies");
+    this.$store.dispatch("getMovies");
+  },
 };
 </script>
 
@@ -184,7 +207,13 @@ export default {
 }
 
 .swiper {
-  padding: 3.3% 3.5% 3.3% 2%;
+  padding: 3.3%;
+}
+
+@media screen and (max-width: 768px) {
+  .swiper3D {
+    padding: 7% 3.3%;
+  }
 }
 
 .swiper-slide {
@@ -203,6 +232,6 @@ export default {
 
 .swiper-button-prev,
 .swiper-button-next {
-  color: #404040;
+  color: #a7a7a7
 }
 </style>

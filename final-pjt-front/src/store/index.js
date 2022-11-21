@@ -122,8 +122,8 @@ export default new Vuex.Store({
         .then(() => {
           router.push({ name: 'MoviesView' })
         })
-        .catch(() => 
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.')
+        .catch((err) => 
+        console.log(err.response.data)
         );
     },
     logOut({ commit }) {

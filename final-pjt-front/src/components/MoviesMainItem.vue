@@ -1,6 +1,6 @@
 <template>
   <div @click="openModal" id="posterdiv">
-    <figure class="snip1384">
+    <figure class="snip1384" @mouseover="stopAutoPlay" @mouseleave="playAutoPlay">
       <img :src="movie.poster_path" />
       <figcaption id="movie-detail">
         <div id="detail-div">
@@ -65,12 +65,7 @@ export default {
 </script>
 
 <style scoped>
-#posterdiv {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+figure {
   cursor: pointer;
 }
 

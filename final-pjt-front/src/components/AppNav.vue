@@ -1,13 +1,13 @@
 <template>
-  <nav class="row sticky-top py-2">
+  <nav class="row sticky-top py-2 px-1">
     <div class="d-flex col-8 col-lg-6 col-xxl-8">
       <img src="@/assets/logo.png" alt="logo" height="50" @click="goHome" />
     </div>
     <div class="menu-expand col-6 col-xxl-4">
       <router-link :to="{ name: 'MoviesView'}" class="link">홈</router-link>
-      <div @mouseover="changeMent" @mouseleave="resetMent">
-        <router-link :to="{ name: 'SelectMovieView'}" class="link" v-if="!isOvered">마음에 드는 영화가 없다면??</router-link>
-        <router-link :to="{ name: 'SelectMovieView'}" class="link" v-if="isOvered">새로운 영화 추천받으러 가기</router-link>
+      <div @mouseover="changeMent" @mouseleave="resetMent" class="ment">
+        <router-link :to="{ name: 'SelectMovieView'}" class="link" v-if="!isOvered">보고싶은 영화가 없다면??</router-link>
+        <router-link :to="{ name: 'SelectMovieView'}" class="link" v-else>다른 영화 추천받으러 가기</router-link>
       </div>
       <router-link :to="{ name: 'SelectMovieView'}" class="link">내 프로필</router-link>
        <a @click.prevent="logOut" class="link">로그아웃</a>
@@ -63,6 +63,7 @@ nav {
   justify-content: space-between;
   background-color: black;
   opacity: 0.8;
+  margin: 0 !important;
 }
 
 img {
@@ -75,7 +76,7 @@ img {
   font-size: large;
   outline-style: none;
   cursor: pointer;
-  color: #a5a5a5;
+  color: #a7a7a7;
   text-decoration-line: none;
 }
 

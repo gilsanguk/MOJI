@@ -1,5 +1,6 @@
 <template>
   <div id="logindiv">
+    <img src="@/assets/logo.png" alt="logo" height="100"/>
     <div id="loginformdiv">
       <div>
         <h1 style="font-size: 50px"><b>LogIn</b></h1>
@@ -55,31 +56,26 @@ export default {
       this.$router.push("/signup");
     },
   },
-  created() {
-    if (this.$store.getters.isLogin) {
-      this.$router.push({ name: "MoviesView" });
-    }
-  },
 };
 </script>
 
 <style scoped>
 #logindiv {
-  height: 1000px;
-  background: url("https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/945eec79-6856-4d95-b4c6-83ff5292f33d/KR-ko-20220111-popsignuptwoweeks-perspective_alpha_website_large.jpg");
+  background: url("https://assets.nflxext.com/ffe/siteui/vlv3/5aecc44d-2a1f-4313-8399-98df20908b64/47e9a72c-4e54-4be7-993f-91413ee2dd47/KR-ko-20221114-popsignuptwoweeks-perspective_alpha_website_large.jpg");
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 #logindiv:before {
-  margin: 0;
   content: "";
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.733), transparent);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.700), rgba(0, 0, 0, 0.222));
   position: absolute;
   left: 0;
-  height: 1000px;
-  width: 100%;
+  height: 100vh;
+  min-width: 100vw;
 }
 
 #loginformdiv {
@@ -92,11 +88,10 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
-  margin-right: 15rem;
 }
 
 #loginform {
-  color: white;
+  color: #a7a7a7;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -126,31 +121,29 @@ input#password {
 }
 
 .clickbutton {
-  width: 110px;
-  height: 45px;
-  border-radius: 10px;
+  margin-top: 10%;
+  font-size: x-large;
+  padding: 0.3% 2%;
+  letter-spacing: 1px;
+  background-color:transparent;
+  color: #a7a7a7;
+  border: 0;
+  outline: 0;
+  font-weight: 600;
   margin-right: 1.5rem;
-  padding: 0rem 1rem;
-  margin-top: 2rem;
-  background-color: white;
-  color: black;
-  font-size: 20px;
-  outline-style: none;
-  cursor: pointer;
 }
 
 .clickbutton:hover{
-  outline-style: none;
-  background-color: #ff8223;
-  animation: tutsFade 2s 1s linear alternate;
+  cursor: pointer;
+  color: white;
+  transition: 0.4s;
 }
 
-/* @keyframes tutsFade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-} */
+img {
+  position: absolute;
+  top: 3.3%;
+  left: 3.3%;
+  object-fit: cover;
+  z-index: 1;
+}
 </style>

@@ -13,6 +13,11 @@
       :createForm="this.createForm"
       @close="closeCreateForm"
     /> 
+    <div class="btn-cover" >
+      <button :disabled="pageNum === 0" @click="prevPage" id="page-btn"> &lt; </button>
+      <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" id="page-btn"> &gt;</button>
+    </div>
   </div>
 </template>
 
@@ -33,6 +38,8 @@ export default {
       reviews: null,
       showCreateForm: false,
       createForm: null,
+      pageNum: 0,
+      pagesize: 10,
     }
   },
   methods: {
@@ -77,6 +84,12 @@ export default {
             console.log(err)
           }
         })
+    },
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
     }
   },
   computed: {
@@ -84,9 +97,22 @@ export default {
       const movie = this.$store.state.movies.find(movie => movie.id === Number(this.$route.params.id))
       return movie
     },
-    // movieId() {
-    //   return this.$route.params.id
-    // }
+    pageCount() {
+      let listLeng = this.reviews.length,
+      listSize = this.pageSize,
+      page = Math.floor(listLeng/listSize);
+      if (listLeng % listSize > 0) page += 1;
+      return page;
+    },
+    paginatedData() {
+      if (this.reviews.length >= 1){
+        const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+        return this.reviews.slice(start, end);
+      } else {
+        return 0
+      }
+    }
   },
   created() {
     this.getReviews()
@@ -95,5 +121,23 @@ export default {
 </script>
 
 <style>
+.btn-cover {
+  margin-top: 1.5rem;
+  text-align: center;
+}
 
+button,
+.btn-cover #page-btn {
+  padding: 0.3% 2%;
+  letter-spacing: 1px;
+  background-color:transparent;
+  color: #ffffff;
+  border: 0;
+  outline: 0;
+}
+
+button:hover,
+.btn-cover #page-btn:hover {
+  cursor: pointer;
+}
 </style>

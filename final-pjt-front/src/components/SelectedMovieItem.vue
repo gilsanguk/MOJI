@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <div id="container">
-      <div id="selecteddiv"> 
-        <img :src="movie.poster_path" />
-        <span>{{ movie.title }}</span>
+  <div class="card h-100">
+      <img v-if="!movie" src="@/assets/logo_col.png" class="default-img"/>
+      <div v-if="!movie" class="card-body">
+        <h5 class="card-title m-0 text-center">SELECT MOVIE</h5>
       </div>
-      <button @click="deleteMovie">x</button>
+    <button v-if="movie" @click="deleteMovie">x</button>
+    <img v-if="movie" :src="movie.poster_path" />
+    <div v-if="movie" class="card-body d-flex align-items-center">
+      <h5 class="text-truncate card-title m-0">{{ movie?.title }}</h5>
     </div>
   </div>
 </template>
@@ -25,6 +27,15 @@ export default {
 </script>
 
 <style scoped>
+.default-img {
+  padding: 11% 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #container {
   display: flex;
   align-items: center;
@@ -34,39 +45,42 @@ export default {
   background-color: gray;
 }
 
-#selecteddiv {
-  display: flex;
-  align-items: center;
+.card {
+  width: 18rem;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0);
+  padding: 0.7rem;
+  padding-top: 0.8rem;
+  opacity: 0.8;
+  position: relative;
+}
+
+.card-title {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 img {
-  width: 15%;
-  height: 15%;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
-}
-span {
-  margin-left: 2rem;
-  margin-right: 2rem;
-  font-size: 200%;
+  cursor: default !important;
 }
 
 button {
-  border-radius: 5px;
-  height: 50%;
-  font-size: 200%;
-  color: whitesmoke;
-  display: flex;
-  align-items:center;
-  justify-content: center;
+  position: absolute;
+  top: 0.2rem;
+  right: 0.7rem;
+  border: none;
+  background-color: transparent;
+  color: #a7a7a7;
+  font-size: 2rem;
   cursor: pointer;
-  transition-duration: 0.7s;
-  background-color: rgba(140, 154, 168, 0.537);
-  border: 0.5px solid black;
 }
 
 button:hover {
-  background: #ff8223; 
   color: white;
+  transition: 0.4s;
 }
-
 </style>

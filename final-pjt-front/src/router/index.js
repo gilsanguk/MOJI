@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import SignUpView from '@/views/SignUpView'
 import LoginView from '@/views/LoginView'
 import MoviesView from '@/views/MoviesView'
@@ -7,14 +8,18 @@ import CommunityView from '@/views/CommunityView'
 import SelectMovieView from '@/views/SelectMovieView'
 import NotFound404 from '@/views/NotFound404'
 import TestView from '@/views/TestView'
-import RecommendView from '@/views/RecommendView'
 
 Vue.use(VueRouter)
-
 const routes = [
   {
     path: '/',
-    redirect: '/movies',
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        next('/movies')
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/notfound404',
@@ -24,37 +29,67 @@ const routes = [
   {
     path: '/signup',
     name: 'SignUpView',
-    component: SignUpView
+    component: SignUpView,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        next('/movies')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/login',
     name: 'LoginView',
-    component: LoginView
-  },
-  {
-    path: '/selectmovie',
-    name: 'SelectMovieView',
-    component: SelectMovieView
+    component: LoginView,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        next('/movies')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: '/movies',
     name: 'MoviesView',
-    component: MoviesView
+    component: MoviesView,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/selectmovie',
+    name: 'SelectMovieView',
+    component: SelectMovieView,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/community/:id/reviews',
     name: 'CommunityView',
-    component: CommunityView
+    component: CommunityView,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/test',
     name: 'TestView',
     component: TestView,
-  },
-  {
-    path: '/movies/:id/recommend',
-    name: 'RecommendView',
-    component: RecommendView,
   },
   {
     path: '*',

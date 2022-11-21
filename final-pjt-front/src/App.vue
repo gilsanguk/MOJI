@@ -13,7 +13,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #a7a7a7;
+  color: rgba(255, 255, 255, 0.879)
 }
 
 nav {
@@ -31,21 +31,36 @@ nav a.router-link-exact-active {
 
 .appbody {
   min-height: 100vh;
+  max-width: 100vw;
   /* background-color: rgba(22, 22, 22, 0.872); */
   background-color: #141619;
   scroll-behavior: smooth;
 }
+
+.autocomplete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.autocomplete-input {
+  max-width: 850px;
+  padding: 20px 50px;
+}
+
+.autocomplete-result-list {
+  max-width: 850px;
+  max-height: 40vh !important;
+}
+
 
 
 </style>
 
 <script>
 import AppNav from '@/components/AppNav'
-import Vue from 'vue'
-import Autocomplete from '@trevoreyre/autocomplete-vue'
 import '@trevoreyre/autocomplete-vue/dist/style.css'
-
-Vue.use(Autocomplete)
 
 export default {
   name: 'App',

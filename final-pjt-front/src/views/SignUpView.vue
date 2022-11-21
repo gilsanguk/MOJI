@@ -1,12 +1,13 @@
 <template>
   <div id="signupdiv">
+    <img src="@/assets/logo.png" alt="logo" height="100" @click="goLogin"/>
     <div id="signupformdiv">
       <div>
         <h1 style="font-size:50px"><b>Sign Up</b></h1>
       </div>
       <form @submit.prevent="signUp" id="signupform">
         <div class="d-flex flex-column">
-          <label for="username" id="username"><b>username :</b></label>
+          <label for="username" id="username">username :</label>
           <input
             type="text"
             id="username"
@@ -15,7 +16,7 @@
           /><br />
         </div>
         <div class="d-flex flex-column">
-          <label for="nickname" id="nickname"><b>nickname :</b></label>
+          <label for="nickname" id="nickname">nickname :</label>
           <input
             type="text"
             id="nickname"
@@ -24,7 +25,7 @@
           /><br />
         </div>
         <div class="d-flex flex-column">
-          <label for="password1" id="password1"><b>password : </b></label>
+          <label for="password1" id="password1">password : </label>
           <input
             type="password"
             id="password1"
@@ -34,7 +35,7 @@
         </div>
         <div class="d-flex flex-column">
           <label for="password2" id="password2">
-            <b>password confirmation :</b>
+            password confirmation :
           </label>
           <input
             type="password"
@@ -43,9 +44,7 @@
             v-model="password2"
           />
         </div>
-        <div>
-          <input type="submit" value="SignUp" id="clickbutton" />
-        </div>
+        <button class="clickbutton mt-4">SignUp</button>
       </form>
     </div>
   </div>
@@ -76,11 +75,9 @@ export default {
       };
       this.$store.dispatch("signUp", user);
     },
-  },
-  created() {
-    if (this.$store.getters.isLogin) {
-      this.$router.push({ name: "MoviesView" });
-    }
+    goLogin() {
+      this.$router.push("/login");
+    },
   },
 };
 </script>
@@ -88,16 +85,16 @@ export default {
 <style scoped>
 #signupdiv {
   height: 1000px;
-  background: url("https://assets.nflxext.com/ffe/siteui/vlv3/9737377e-a430-4d13-ad6c-874c54837c49/945eec79-6856-4d95-b4c6-83ff5292f33d/KR-ko-20220111-popsignuptwoweeks-perspective_alpha_website_large.jpg");
+  background: url("https://assets.nflxext.com/ffe/siteui/vlv3/5aecc44d-2a1f-4313-8399-98df20908b64/47e9a72c-4e54-4be7-993f-91413ee2dd47/KR-ko-20221114-popsignuptwoweeks-perspective_alpha_website_large.jpg");
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
+  width: 100%;
 }
 
 #signupdiv:before {
-  margin: 0;
   content: "";
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.733), transparent);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.700), rgba(0, 0, 0, 0.222));
   position: absolute;
   left: 0;
   height: 1000px;
@@ -114,11 +111,10 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
-  margin-left: 15rem;
 }
 
 #signupform {
-  color: white;
+  color: #a7a7a7;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -133,7 +129,7 @@ export default {
   width: 500px;
   border-radius: 10px;
   padding-left: 1rem;
-  margin-top: 1rem;
+  margin-top: 1%;
   display: inline-block;
   text-align: left;
   vertical-align: middle;
@@ -144,7 +140,7 @@ label#username,
 label#password1,
 label#password2,
 label#nickname {
-  margin-top: 1.5rem;
+  margin-top: 1%;
   font-size: 27px;
 }
 
@@ -155,20 +151,38 @@ input#nickname {
   height: 55px;
 }
 
-#clickbutton {
-  width: 110px;
-  height: 45px;
-  border-radius: 10px;
-  padding: 0rem 1rem;
-  margin-top: 2rem;
-  background-color: white;
-  font-size: 20px;
-  cursor:pointer;
-  transition: all 0.2s ease-in-out;
+.clickbutton {
+  font-size: x-large;
+  padding: 0.3% 2%;
+  letter-spacing: 1px;
+  background-color:transparent;
+  color: #a7a7a7;
+  border: 0;
+  outline: 0;
+  font-weight: 600;
 }
 
-#clickbutton:hover {
-  transform: scale(1.1);
-  background-color: #ff8223;
+.clickbutton:hover{
+  cursor: pointer;
+  color: white;
+  transition: 0.4s;
+}
+
+
+img {
+  position: absolute;
+  top: 3.3%;
+  left: 3.3%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+i {
+  font-size: 3rem;
+  margin-right: 1rem;
+  color: #a7a7a7;
+  position: absolute;
+  top: 85%;
+  left: 15%;
 }
 </style>

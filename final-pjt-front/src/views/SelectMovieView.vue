@@ -1,46 +1,49 @@
 <template>
   <div id="bgdiv">
     <div id="bgdivdiv">
-    <h1><b>비슷한 영화를 추천해드릴게요!</b></h1>
-    <div id="searchdiv">
-      <autocomplete
-        :search="search"
-        placeholder="Search for a movie"
-        aria-label="Search for a movie"
-        :get-result-value="getResultValue"
-        @submit="onSubmit"
-      >
-        <template #result="{ result, props }">
-          <li v-bind="props">
-            <div class="result">
-              <img :src="result.poster_path" />
-              <div class="result-title">{{ result.title }}</div>
-            </div>
-          </li>
-        </template>
-      </autocomplete>
-    </div>
-
-    <div id="selecteddiv">
-      <h2>선택한 영화 ({{selectmovies.length}}/5)</h2>
-      <div v-for="movie in selectmovies" :key="movie.id" >
-        <SelectedMovieItem :movie="movie" @delete-movie="deleteMovie"/>
+      <h1 class="text-truncate m-3 pb-3 text-white"><b>비슷한 영화를 추천해드릴게요!</b></h1>
+      <div id="searchdiv">
+        <autocomplete
+          :search="search"
+          placeholder="Search for a movie"
+          aria-label="Search for a movie"
+          :get-result-value="getResultValue"
+          @submit="onSubmit"
+        >
+          <template #result="{ result, props }">
+            <li class="result-li" v-bind="props">
+              <div class="result">
+                <img :src="result.poster_path" />
+                <span class="result-title text-truncate">{{
+                  result.title
+                }}</span>
+              </div>
+            </li>
+          </template>
+        </autocomplete>
       </div>
-    </div>
-    <button @click="resetPrefer" id="clickbutton">추천받기</button>
+      <!-- 장바구니 -->
+      <h2 class="m-3 p-3 text-white">선택한 영화 ({{ selectmovies.length }}/6)
+         <button @click="resetPrefer" id="clickbutton">추천받기</button>
+      </h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <div class="centered col" v-for="i in 6" :key="i">
+          <SelectedMovieItem :movie="selectmovies[i-1]" @delete-movie="deleteMovie" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Autocomplete from "@trevoreyre/autocomplete-vue";
-import "@trevoreyre/autocomplete-vue/dist/style.css";
-import SelectedMovieItem from "../components/SelectedMovieItem.vue";
+import SelectedMovieItem from "@/components/SelectedMovieItem";
 
 export default {
   name: "SelectMovieView",
   data() {
     return {
+      // indexs: [0, 1, 2, 3, 4, 5],
       selectmovies: [],
     };
   },
@@ -48,32 +51,27 @@ export default {
     Autocomplete,
     SelectedMovieItem,
   },
-  created() {
-    if (!this.$store.getters.isLogin) {
-      this.$router.push({ name: "LoginView" });
-    } else {
-      this.$store.dispatch("getAllMovies");
-    }
-  },
   methods: {
     search(input) {
       if (input.length < 1) {
         return [];
       }
       return this.movies.filter((movie) => {
-        return (movie.title.toLowerCase().startsWith(input.toLowerCase()) ||
-          movie.title.toLowerCase().includes(input.toLowerCase())) &&
-          !this.selectmovies.includes(movie);
+        return (
+          (movie.title.toLowerCase().startsWith(input.toLowerCase()) ||
+            movie.title.toLowerCase().includes(input.toLowerCase())) &&
+          !this.selectmovies.includes(movie)
+        );
       });
     },
     getResultValue() {
-      return '';
+      return "";
     },
     onSubmit(result) {
-      if (this.selectmovies.length < 5) {
+      if (this.selectmovies.length < 6) {
         this.selectmovies.push(result);
       } else {
-        alert("5개까지만 선택 가능합니다.");
+        alert("6개까지만 선택 가능합니다.");
       }
     },
     deleteMovie(movie) {
@@ -83,12 +81,14 @@ export default {
       if (this.selectmovies.length == 0) {
         alert("영화를 선택해주세요.");
       } else {
-        this.$store.dispatch("resetPrefer", this.selectmovies)
-        .then(() => {
+        this.$store.dispatch("resetPrefer", this.selectmovies).then(() => {
           this.$router.push({ name: "MoviesView" });
-        })
+        });
       }
     },
+  },
+  created() {
+    this.$store.dispatch("getAllMovies");
   },
   computed: {
     movies() {
@@ -99,13 +99,19 @@ export default {
 </script>
 
 <style scoped>
+.centered {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 #bgdiv {
   min-height: 100vh;
-  padding: 2rem 5rem
+  padding: 2rem 5rem;
 }
 
 #bgdivdiv {
-  margin: 0% 15%
+  margin: 0% 15%;
 }
 
 #searchdiv {
@@ -120,9 +126,14 @@ export default {
 }
 
 .result img {
-  width: 10%;
-  height: 10%;
+  min-width: 40px;
+  width: 5%;
+  height: 5%;
   margin-right: 20px;
+}
+
+.result-title {
+  font-size: 1rem;
 }
 
 #selecteddiv {
@@ -131,33 +142,15 @@ export default {
 }
 
 #selecteddiv div {
-  margin: 2rem 1rem ;
+  margin: 2rem 1rem;
 }
 
 #clickbutton {
-  border-radius: 10px;
-  padding: 0.5rem 1.5rem;
-  margin-top: 2rem;
-  background-color: white;
-  color: black;
-  font-size: large;
-  outline-style: none;
-  cursor: pointer;
+  color: #a7a7a7;
 }
 
-#clickbutton:hover{
-  outline-style: none;
-  background-color: #ff8223;
+#clickbutton:hover {
   color: white;
-  animation: tutsFade 2s 1s linear alternate;
-}
-
-@keyframes tutsFade {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+  transition: 0.4s;
 }
 </style>
