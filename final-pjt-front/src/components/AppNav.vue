@@ -115,8 +115,7 @@ img {
 }
 
 .dropdown-menu {
-  background-color: black;
-  opacity: 0.8;
+  background-color: rgb(0, 0, 0);
 }
 
 .dropdown-btn {

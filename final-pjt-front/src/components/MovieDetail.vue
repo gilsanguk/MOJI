@@ -19,17 +19,19 @@
           />
         </div>
         <div class="col-12 col-lg-9 col-xxl-10">
-          <h2>
-            <b>{{ movie?.title }}</b>
-            <span style="font-size: 80%; margin-left: 2%">{{
-              relatedYear
-            }}</span>
+          <div class="d-flex justify-content-between me-3">
+            <h2 class="text-truncate">
+              <b>{{ movie?.title }}</b>
+            </h2>
             <i
-              class="heart fa-heart"
+              class="heart fa-heart fa-3x"
               @click="changeLike"
               :class="isLiked ? 'fas' : 'far'"
             ></i>
-          </h2>
+          </div>
+          <h5>
+            <b>{{ relatedYear }}</b>
+          </h5>
           <p id="overview">{{ movie?.overview }}</p>
           <div class="row pb-3">
             <div class="col-12 col-lg-6">
@@ -45,10 +47,12 @@
                     class="star-ratings-fill space-x-2 text-lg"
                     :style="{ width: ratingToPercent() + '%' }"
                   >
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    <span>★</span><span>★</span><span>★</span><span>★</span
+                    ><span>★</span>
                   </div>
                   <div class="star-ratings-base space-x-2 text-lg">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    <span>★</span><span>★</span><span>★</span><span>★</span
+                    ><span>★</span>
                   </div>
                 </div>
               </div>
@@ -63,7 +67,7 @@
         <h5>리뷰 작성하러 가기</h5>
       </div>
       <div class="modal-footer pt-4">
-        <MovieCard v-for="movie in recommend" :key="movie.id" :movie="movie"/>
+        <MovieCard v-for="movie in recommend" :key="movie.id" :movie="movie" />
       </div>
     </div>
   </div>
@@ -128,7 +132,7 @@ export default {
         });
     },
     ratingToPercent() {
-      const score = + this.movie.vote_average * 10;
+      const score = +this.movie.vote_average * 10;
       return score;
     },
   },
