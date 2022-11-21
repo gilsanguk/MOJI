@@ -6,7 +6,7 @@ from django.core.validators import MinValueValidator
 
 # Create your models here.
 class User(AbstractUser):
-    nickname = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=20, unique=True)
     profile_image = ProcessedImageField(
         blank=True,
         upload_to='profile_images',

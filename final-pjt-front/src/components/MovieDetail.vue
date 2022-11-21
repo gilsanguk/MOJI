@@ -11,28 +11,24 @@
     </div>
     <div class="container p-4">
       <div class="row">
-        <div class="col-12 mb-3 mb-lg-0 col-lg-3">
-          <figure class="snip1384">
-            <img
-              :src="movie.poster_path"
-              alt="poster"
-              style="heigt: 100%; width: 100%"
-            />
-            <figcaption id="movie-detail">
-              <i
-                class="heart fa-heart fa-3x"
-                @click="changeLike"
-                :class="isLiked ? 'fas' : 'far'"
-              ></i>
-            </figcaption>
-          </figure>
+        <div class="col-12 mb-3 col-lg-3 col-xxl-2">
+          <img
+            :src="movie.poster_path"
+            alt="poster"
+            style="heigt: 100%; width: 100%"
+          />
         </div>
-        <div class="col-12 col-lg-9">
+        <div class="col-12 col-lg-9 col-xxl-10">
           <h2>
             <b>{{ movie?.title }}</b>
             <span style="font-size: 80%; margin-left: 2%">{{
               relatedYear
             }}</span>
+            <i
+              class="heart fa-heart"
+              @click="changeLike"
+              :class="isLiked ? 'fas' : 'far'"
+            ></i>
           </h2>
           <p id="overview">{{ movie?.overview }}</p>
           <div class="row pb-3">
@@ -41,26 +37,33 @@
               <p>감독: {{ director }}</p>
             </div>
             <div class="col-12 col-lg-6">
-              <p>평점: {{ movie?.vote_average }}</p>
+              <!-- 평점 -->
+              <div class="d-flex">
+                <p class="me-2">평점:</p>
+                <div class="star-ratings">
+                  <div
+                    class="star-ratings-fill space-x-2 text-lg"
+                    :style="{ width: ratingToPercent() + '%' }"
+                  >
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                  </div>
+                  <div class="star-ratings-base space-x-2 text-lg">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                  </div>
+                </div>
+              </div>
+
               <p id="in-text">출연: {{ actors }}</p>
             </div>
-            <div>
-            </div>
+            <div></div>
           </div>
         </div>
       </div>
-      <div class="modal-footer py-4" @click="goReview">
+      <div class="modal-footer footer-review py-4" @click="goReview">
         <h5>리뷰 작성하러 가기</h5>
       </div>
-      <div
-        @mouseover="changeMent"
-        @mouseleave="resetMent"
-        title="영화추천 받기"
-        class="modal-footer pt-4"
-        @click="goRecommend"
-      >
-        <h5 v-if="!isOvered">이 영화가 좋았다면?</h5>
-        <h5 v-if="isOvered">비슷한 영화 추천받으러 가기</h5>
+      <div class="modal-footer pt-4">
+        <MovieCard v-for="movie in recommend" :key="movie.id" :movie="movie"/>
       </div>
     </div>
   </div>
@@ -68,6 +71,7 @@
 
 <script>
 import axios from "axios";
+import MovieCard from "@/components/MovieCard";
 
 const API_URL = "http://127.0.0.1:8000/moji";
 
@@ -76,11 +80,14 @@ export default {
   props: {
     movie: Object,
   },
+  components: {
+    MovieCard,
+  },
   data() {
     return {
-      isOvered: false,
       isLiked: false,
       likeCount: 0,
+      recommend: [],
     };
   },
   methods: {
@@ -90,17 +97,19 @@ export default {
         path: `community/${this.movie.id}/reviews`,
       });
     },
-    goRecommend() {
-      this.$modal.hideAll();
-      this.$router.push({
-        path: `movies/${this.movie.id}/recommend`,
-      });
-    },
-    changeMent() {
-      this.isOvered = true;
-    },
-    resetMent() {
-      this.isOvered = false;
+    getRecommend() {
+      const movieId = this.movie.id;
+      const Token = this.$store.getters.getToken;
+      axios
+        .get(`${API_URL}/movies/recommend/${movieId}/`, {
+          headers: { Authorization: `Token ${Token}` },
+        })
+        .then((res) => {
+          this.recommend = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     changeLike() {
       axios({
@@ -118,9 +127,14 @@ export default {
           console.log(err);
         });
     },
+    ratingToPercent() {
+      const score = + this.movie.vote_average * 10;
+      return score;
+    },
   },
   created() {
     this.isLiked = this.movie.like_users.includes(this.$store.state.user.id);
+    this.getRecommend();
   },
   computed: {
     youtubeVideo() {
@@ -153,11 +167,11 @@ export default {
   transition-duration: 0.4s;
 }
 
-@media screen and (max-width: 992px) {
+/* @media screen and (max-width: 992px) {
   .heart {
     transform: scale(2.3);
   }
-}
+} */
 
 .heart:hover:before {
   color: crimson;
@@ -213,45 +227,36 @@ export default {
   color: #a5a5a5;
 }
 
-.modal-footer:hover {
+.footer-review:hover {
   color: #ffffff;
   cursor: pointer;
   transition: 0.4s;
 }
 
-
-figure.snip1384 {
+.star-ratings {
+  color: #aaa9a9;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: gold;
 }
 
-
-figure.snip1384 * {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
-}
-
-
-figure.snip1384 img {
-  max-width: 100%;
-  backface-visibility: hidden;
-  vertical-align: top;
-}
-
-figure.snip1384 figcaption {
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   z-index: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
 }
 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
 </style>

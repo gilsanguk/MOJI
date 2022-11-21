@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import (
+    MovieAllListSerializer,
     MovieListSerializer,
     MovieSerializer,
 )
@@ -59,7 +60,7 @@ def get_recomandation(requestes_ids):
 @api_view(['GET'])
 def movie_list(request):
     movies = get_list_or_404(Movie)
-    serializer = MovieListSerializer(movies, many=True)
+    serializer = MovieAllListSerializer(movies, many=True)
     return Response(serializer.data)
 
 @api_view(['GET',])

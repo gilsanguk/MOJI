@@ -17,7 +17,6 @@
               class="star-ratings-fill space-x-2 text-lg"
               :style="{ width: ratingToPercent(movie) + '%' }"
             >
-              <div></div>
               <span>★</span><span>★</span><span>★</span><span>★</span
               ><span>★</span>
             </div>

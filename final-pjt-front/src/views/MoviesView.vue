@@ -83,25 +83,32 @@ export default {
         effect: "slide",
         grabCursor: true,
         loop: true,
-        slidesPerView: 'auto',
-        slidesPerGroup: 5,
         initialSlide: 5,
+        spaceBetween: 50,
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         },
         breakpoints: {
+          1400: {
+            slidesPerView: 5,
+            slidesPerGroup: 4,
+          },
           1024: {
             slidesPerView: 4,
+            slidesPerGroup: 4,
           },
           768: {
             slidesPerView: 3,
+            slidesPerGroup: 3,  
           },
           640: {
             slidesPerView: 2,
+            slidesPerGroup: 2,  
           },
           320: {
             slidesPerView: 1,
+            slidesPerGroup: 1,  
           },
         },
       },
@@ -165,10 +172,10 @@ export default {
 </script>
 
 <style>
-#recommend,
 #recent,
-#random-genre {
-  padding: 50px 0px 50px 0px;
+#random-genre,
+#recommend {
+  padding: 3.3% 0;
 }
 
 #recommend .swiper-slide-active {
@@ -176,10 +183,14 @@ export default {
   transition: 0.5s !important;
 }
 
-.swiper-slide {
-  padding: 5%;
+.swiper {
+  padding: 3.3% 3.5% 3.3% 2%;
 }
 
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
 
 .vm--modal {
   border-radius: 10px !important;
