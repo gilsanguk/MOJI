@@ -1,8 +1,10 @@
 <template>
   <div id="reviewform">
+    <!-- 영화 정보 -->
     <div>
       
     </div>
+    <!-- 리뷰 작성 폼 -->
     <form @submit.prevent>
       <div class="form-group">
         <label>제목</label>
@@ -26,6 +28,7 @@
         등록
       </button>
     </form>
+    <!-- 창 닫기 -->
     <button @click="closeModal">X</button>
   </div>
 </template>
@@ -49,6 +52,7 @@ export default {
     };
   },
   methods: {
+    // 리뷰 생성 요청
     createReview() {
       const data = {
         title: this.title,
@@ -81,6 +85,7 @@ export default {
 </script>
 
 <style>
+/* 기본 */
 .vm--modal {
   border-radius: 10px !important;
   overflow-y: scroll !important;

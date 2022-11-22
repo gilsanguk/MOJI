@@ -5,28 +5,32 @@
         <b>{{ movie?.title }}</b>
       </h1>
       <h3 class="english m-3 pb-3"><b>Review</b></h3>
-      <div v-for="review in reviews" :key="review.id"></div>
       <button @click="openModal">리뷰 작성</button>
-      <ReviewItem
-        v-for="review in paginatedData"
-        :key="review.id" 
-        :review="review"
-      />
-      <div class="btn-cover">
-        <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
-          &lt;
-        </button>
-        <span class="page-count"
-          ><span class="number">{{ pageNum + 1 }} / {{ pageCount }}</span>
-          페이지</span
-        >
-        <button
-          :disabled="pageNum >= pageCount - 1"
-          @click="nextPage"
-          id="page-btn"
-        >
-          &gt;
-        </button>
+      <div v-if="reviews.length">
+        <ReviewItem
+          v-for="review in paginatedData"
+          :key="review.id"
+          :review="review"
+        />
+        <div class="btn-cover">
+          <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
+            &lt;
+          </button>
+          <span class="page-count"
+            ><span class="number">{{ pageNum + 1 }} / {{ pageCount }}</span>
+            페이지</span
+          >
+          <button
+            :disabled="pageNum >= pageCount - 1"
+            @click="nextPage"
+            id="page-btn"
+          >
+            &gt;
+          </button>
+        </div>
+      </div>
+      <div v-else class="mt-5 text-center">
+        <h3>작성된 리뷰가 없습니다.</h3>
       </div>
     </div>
   </div>
@@ -54,8 +58,8 @@ export default {
   methods: {
     // 영화정보, 리뷰 가져오기
     getMovies() {
-      axios.get(
-        `${API_URL}/movies/${this.$route.params.id}/`, {
+      axios
+        .get(`${API_URL}/movies/${this.$route.params.id}/`, {
           headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         })
         .then((res) => {
@@ -64,7 +68,8 @@ export default {
         });
     },
     getReviews() {
-      axios.get(
+      axios
+        .get(
           `${API_URL}/community/${this.$route.params.id}/reviews/?page=${this.pageNum}&page_size=${this.pageSize}`,
           {
             headers: { Authorization: `Token ${this.$store.getters.getToken}` },
@@ -116,7 +121,6 @@ export default {
     pageCount() {
       let page = Math.floor(this.reviews.length / this.pageSize);
       if (this.reviews.length % this.pageSize > 0) page++;
-      else if (page === 0) page = 1;
       return page;
     },
     paginatedData() {

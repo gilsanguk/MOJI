@@ -1,8 +1,11 @@
 <template>
   <nav class="row sticky-top py-2 px-1">
+    <!-- 로고 -->
     <div class="d-flex col-8 col-lg-6 col-xxl-8">
       <img src="@/assets/logo.png" alt="logo" height="50" @click="goHome" />
     </div>
+    
+    <!-- 넓은 화면 -->
     <div class="menu-expand col-6 col-xxl-4">
       <router-link :to="{ name: 'MoviesView'}" class="link">홈</router-link>
       <div @mouseover="changeMent" @mouseleave="resetMent" class="ment">
@@ -14,6 +17,7 @@
       <img src="@/assets/no_profile.png" alt="profile" width="50" height="50">
     </div>
 
+    <!-- 좁은 화면 -->
     <div class="menu-dropdown col-4">
       <button class="dropdown-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
         메뉴
@@ -26,6 +30,7 @@
       </ul>
       <img src="@/assets/no_profile.png" alt="profile" width="50" height="50">
     </div>
+
   </nav>
       
 </template>
@@ -47,6 +52,7 @@ export default {
         name: "MoviesView",
       });
     },
+    // 마우스 올렸을 때
     changeMent() {
       this.isOvered = true;
     },
@@ -58,6 +64,7 @@ export default {
 </script>
 
 <style>
+/* 기본 */
 nav {
   display: flex;
   justify-content: space-between;
@@ -69,41 +76,6 @@ nav {
 img {
   cursor: pointer;
   -webkit-user-drag: none; 
-}
-
-.link {
-  border-radius: 10px;
-  font-size: large;
-  outline-style: none;
-  cursor: pointer;
-  color: #a7a7a7;
-  text-decoration-line: none;
-}
-
-.link:hover {
-  color: white;
-  transition: 0.4s;
-}
-
-.menu-expand {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.menu-dropdown {
-  display: none;
-}
-
-@media screen and (max-width: 992px) {
-  .menu-expand {
-    display: none;
-  }
-  .menu-dropdown{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
 }
 
 .menu {
@@ -128,12 +100,43 @@ img {
   outline-style: none;
 }
 
-/* @keyframes tutsFade {
-  from {
-    opacity: 1;
+/* 라우터 링크 */
+.link {
+  border-radius: 10px;
+  font-size: large;
+  outline-style: none;
+  cursor: pointer;
+  color: #a7a7a7;
+  text-decoration-line: none;
+}
+
+.link:hover {
+  color: white;
+  transition: 0.4s;
+}
+
+/* 넓은 화면 */
+.menu-expand {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-dropdown {
+  display: none;
+}
+
+/* 좁은 화면 */
+@media screen and (max-width: 992px) {
+  .menu-expand {
+    display: none;
   }
-  to {
-    opacity: 0;
+  .menu-dropdown{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
-} */
+}
+
+
 </style>

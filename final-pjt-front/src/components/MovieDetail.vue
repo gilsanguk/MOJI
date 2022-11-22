@@ -1,5 +1,6 @@
 <template>
   <div id="moviedetail">
+    <!-- 유튜브 -->
     <div id="video-box">
       <iframe
         id="video"
@@ -9,8 +10,12 @@
         allowfullscreen
       ></iframe>
     </div>
+
+    <!-- 내용 -->
     <div class="container p-4">
       <div class="row">
+
+        <!-- 영화 포스터 -->
         <div class="col-12 mb-3 col-lg-3 col-xxl-2">
           <img
             :src="movie.poster_path"
@@ -18,11 +23,14 @@
             style="heigt: 100%; width: 100%"
           />
         </div>
+
+        <!-- 영화 정보 -->
         <div class="col-12 col-lg-9 col-xxl-10">
           <div class="d-flex justify-content-between me-3">
             <h2 class="text-truncate">
               <b>{{ movie?.title }}</b>
             </h2>
+            <!-- 하트 -->
             <i
               class="heart fa-heart fa-3x"
               @click="changeLike"
@@ -39,6 +47,7 @@
               <p>감독: {{ director }}</p>
             </div>
             <div class="col-12 col-lg-6">
+
               <!-- 평점 -->
               <div class="d-flex">
                 <p class="me-2">평점:</p>
@@ -63,11 +72,13 @@
           </div>
         </div>
       </div>
+
+      <!-- 모달 푸터 -->
       <div class="modal-footer footer-review py-4" @click="goReview">
         <h5>리뷰 작성하러 가기</h5>
       </div>
-      <div v-if="recommend" class="modal-footer pt-4">
-        <h1>추천 영화</h1>
+      <h3 class="innerfooter">추천 콘텐츠</h3>
+      <div v-if="recommend.length" class="modal-footer pt-4">
         <MovieCard
           v-for="movie in paginatedData"
           :key="movie.id"
@@ -75,23 +86,23 @@
         />
       </div>
       <div v-else class="modal-footer mt-5 text-center">
-        <h3>추천 영화가 없습니다.</h3>
+        <h3>추천 콘텐츠가 없습니다.</h3>
       </div>
-        <div class="btn-cover">
-          <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
-            &lt;
-          </button>
-          <span class="page-count"
-            >{{ pageNum + 1 }} / {{ pageCount }} 페이지</span
-          >
-          <button
-            :disabled="pageNum >= pageCount - 1"
-            @click="nextPage"
-            id="page-btn"
-          >
-            &gt;
-          </button>
-        </div>
+      <div v-if="recommend.length" class="btn-cover">
+        <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
+          &lt;
+        </button>
+        <span class="page-count"
+          >{{ pageNum + 1 }} / {{ pageCount }} 페이지</span
+        >
+        <button
+          :disabled="pageNum >= pageCount - 1"
+          @click="nextPage"
+          id="page-btn"
+        >
+          &gt;
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -120,12 +131,14 @@ export default {
     };
   },
   methods: {
+    // 리뷰 작성 페이지로 이동
     goReview() {
       this.$modal.hideAll();
       this.$router.push({
         path: `community/${this.movie.id}/reviews`,
       });
     },
+    // 추천 영화 가져오기
     getRecommend() {
       const movieId = this.movie.id;
       const Token = this.$store.getters.getToken;
@@ -140,6 +153,7 @@ export default {
           console.log(err);
         });
     },
+    // 좋아요
     changeLike() {
       axios({
         method: "post",
@@ -156,20 +170,21 @@ export default {
           console.log(err);
         });
     },
+    // 평점을 퍼센트로 변환
     ratingToPercent() {
       const score = +this.movie.vote_average * 10;
       return score;
     },
-
+    // 페이지네이션
     nextPage() {
       this.pageNum += 1;
     },
     prevPage() {
       this.pageNum -= 1;
-    }
-
+    },
   },
   computed: {
+    // 영화정보 가공
     youtubeVideo() {
       return `https://www.youtube.com/embed/${this.movie.youtube_key}`;
     },
@@ -188,6 +203,7 @@ export default {
     getToken() {
       return this.$store.getters.getToken;
     },
+    // 페이지네이션
     pageCount() {
       let page = Math.floor(this.recommend.length / this.pageSize);
       if (this.recommend.length % this.pageSize >= 0) page++;
@@ -202,7 +218,6 @@ export default {
         return 0;
       }
     },
-
   },
   created() {
     this.isLiked = this.movie.like_users.includes(this.$store.state.user.id);
@@ -212,33 +227,7 @@ export default {
 </script>
 
 <style scoped>
-.heart {
-  color: rgba(255, 255, 255, 0.9);
-  cursor: pointer;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-}
-
-/* @media screen and (max-width: 992px) {
-  .heart {
-    transform: scale(2.3);
-  }
-} */
-
-.fas {
-  color: crimson;
-}
-
-.fas:hover:before {
-  transition: 0.4s;
-  color: red;
-}
-
-.far:hover:before {
-  color: crimson;
-  transition: 0.4s;
-}
-
+/* 기본 */
 #moviedetail {
   width: 100%;
   height: auto;
@@ -279,20 +268,7 @@ export default {
   -webkit-box-orient: vertical;
 }
 
-.modal-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-top: 1px solid #404040;
-  color: #a5a5a5;
-}
-
-.footer-review:hover {
-  color: #ffffff;
-  cursor: pointer;
-  transition: 0.4s;
-}
-
+/* 평점 */
 .star-ratings {
   color: #aaa9a9;
   position: relative;
@@ -320,23 +296,71 @@ export default {
   padding: 0;
 }
 
-/* .btn-cover {
+/* 하트 */
+.heart {
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+.fas {
+  color: crimson;
+}
+
+.fas:hover:before {
+  transition: 0.4s;
+  color: red;
+}
+
+.far:hover:before {
+  color: crimson;
+  transition: 0.4s;
+}
+
+/* 모달 푸터 */
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-review {
+  border-top: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+  color: #a7a7a7
+}
+
+.footer-review:hover {
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.innerfooter {
   margin-top: 1.5rem;
   text-align: center;
 }
 
-button,
+/* 페이지네이션*/
+.btn-cover {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+
 .btn-cover #page-btn {
   padding: 0.3% 2%;
   letter-spacing: 1px;
   background-color:transparent;
-  color: #ffffff;
+  color: #a7a7a7;
   border: 0;
   outline: 0;
 }
 
 button:hover,
 .btn-cover #page-btn:hover {
+  color: #ffffff;
   cursor: pointer;
-} */
+}
 </style>

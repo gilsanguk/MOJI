@@ -1,14 +1,19 @@
 <template>
+  <!-- 고른 영화 정보들 -->
   <div class="card h-100">
+      <!-- 고르지 않았을때 -->
       <img v-if="!movie" src="@/assets/logo_col.png" class="default-img"/>
       <div v-if="!movie" class="card-body">
         <h5 class="card-title m-0 text-center">SELECT MOVIE</h5>
       </div>
+
+    <!-- 고른 이후 -->
     <button v-if="movie" @click="deleteMovie">x</button>
     <img v-if="movie" :src="movie.poster_path" />
     <div v-if="movie" class="card-body d-flex align-items-center">
       <h5 class="text-truncate card-title m-0">{{ movie?.title }}</h5>
     </div>
+
   </div>
 </template>
 
@@ -19,6 +24,7 @@ export default {
     movie: Object,
   },
   methods: {
+    // 영화 삭제
     deleteMovie() {
       this.$emit("delete-movie", this.movie);
     },
@@ -27,15 +33,7 @@ export default {
 </script>
 
 <style scoped>
-.default-img {
-  padding: 11% 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* 기본 */
 #container {
   display: flex;
   align-items: center;
@@ -68,6 +66,17 @@ img {
   cursor: default !important;
 }
 
+/* 안고른 이미지 */
+.default-img {
+  padding: 11% 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 삭제 버튼 */
 button {
   position: absolute;
   top: 0.2rem;

@@ -1,10 +1,12 @@
 <template>
   <div class="movie-card card m-2" style="width: 18rem" @click="openModal">
+    <!-- 내용 -->
     <img :src="movie.poster_path" class="card-img-top card-img" alt="..." />
     <div class="card-body">
       <h5 class="card-title text-truncate">
         <b>{{ movie.title }}</b>
       </h5>
+
       <!-- 평점 -->
       <div class="d-flex align-items-center">
         <span class="me-2 mt-1">평점:</span>
@@ -22,6 +24,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -38,9 +41,11 @@ export default {
     movie: Object,
   },
   methods: {
+    // 평점을 퍼센트로 변환
     ratingToPercent() {
       return this.movie.vote_average * 10;
     },
+    // 모달창 열기
     openModal() {
       axios.get(`${API_URL}/movies/${this.movie.id}/`, {
           headers: { Authorization: `Token ${this.$store.getters.getToken}` },
@@ -80,11 +85,13 @@ export default {
   outline: none;
   color: rgba(255, 255, 255, 0.9);
 }
+
 .card-img {
   height: 25rem;
   border-radius: 10px 10px 0 0 !important;
 }
 
+/* 평점 */
 .star-ratings {
   color: #a7a7a7;
   position: relative;
@@ -111,6 +118,7 @@ export default {
   z-index: 0;
   padding: 0;
 }
+
 .star-ratings-base > span,
 .star-ratings-fill > span {
   margin-right: 0.3rem;

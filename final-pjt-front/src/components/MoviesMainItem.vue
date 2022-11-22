@@ -1,16 +1,23 @@
 <template>
   <div @click="openModal" id="posterdiv">
-    <figure class="snip1384" @mouseover="stopAutoPlay" @mouseleave="playAutoPlay">
+    <!-- 호버 -->
+    <figure
+      class="snip1384"
+      @mouseover="stopAutoPlay"
+      @mouseleave="playAutoPlay"
+    >
       <img :src="movie.poster_path" />
       <figcaption id="movie-detail">
         <div id="detail-div">
-          <h5 style="word-break: keep-all" class="english text-center">{{ movie.title }}</h5>
-          <!-- 좋아요 -->
-          <i
-            class="heart far fa-heart fa-4x"
-          >
+          <h5 style="word-break: keep-all" class="english text-center">
+            {{ movie.title }}
+          </h5>
+
+          <!-- 좋아요 수 -->
+          <i class="heart far fa-heart fa-4x">
             <span>{{ likeUsers }}</span>
           </i>
+
           <!-- 평점 -->
           <div class="star-ratings">
             <div
@@ -25,38 +32,43 @@
               ><span>★</span>
             </div>
           </div>
+
           <span id="detail-footer"
             >영화 정보 더보기 <i class="bi bi-arrow-right"></i
           ></span>
         </div>
       </figcaption>
     </figure>
+
   </div>
 </template>
 
 <script>
-
 export default {
   name: "MoviesItem",
   props: {
     movie: Object,
   },
   methods: {
+    // 모달 열기
     openModal() {
       this.$emit("open-modal", this.movie.id);
     },
+    // 스와이퍼 멈추기
     stopAutoPlay() {
       this.$emit("stop-auto-play");
     },
     playAutoPlay() {
       this.$emit("play-auto-play");
     },
+    // 평점 계산
     ratingToPercent(movie) {
       const score = +movie.vote_average * 10;
       return score;
     },
   },
   computed: {
+    // 좋아요 수
     likeUsers() {
       return this.movie.like_users.length;
     },
@@ -65,16 +77,14 @@ export default {
 </script>
 
 <style scoped>
-figure {
-  cursor: pointer;
-}
-
+/* 기본 */
 img {
   width: 100%;
   height: 100%;
 }
 
-.heart{
+/* 하트 */
+.heart {
   position: relative;
 }
 .heart > span {
@@ -92,6 +102,7 @@ img {
   white-space: nowrap;
 }
 
+/* 평점 */
 .star-ratings {
   color: #aaa9a9;
   position: relative;
@@ -119,6 +130,7 @@ img {
   padding: 0;
 }
 
+/* 호버시 정보 */
 #detail-div {
   display: none;
 }
@@ -133,6 +145,11 @@ img {
   justify-content: space-evenly;
   align-items: center;
   height: 100%;
+}
+
+/* 호버 */
+figure {
+  cursor: pointer;
 }
 
 figure.snip1384 {

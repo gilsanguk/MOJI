@@ -7,7 +7,7 @@
 
 <style>
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,700);
-
+/* 전체 페이지 */
 #app {
   font-family: 'Raleway', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -16,6 +16,13 @@
   color: rgba(255, 255, 255, 0.879)
 }
 
+.appbody {
+  min-height: 100vh;
+  max-width: 100vw;
+  background-color: #141619;
+  scroll-behavior: smooth;
+}
+/* 영어, 숫자 폰트 */
 #app .english {
   font-family: 'Archivo', sans-serif !important;
 }
@@ -37,14 +44,9 @@ nav a.router-link-exact-active {
   color: white;
 }
 
-.appbody {
-  min-height: 100vh;
-  max-width: 100vw;
-  /* background-color: rgba(22, 22, 22, 0.872); */
-  background-color: #141619;
-  scroll-behavior: smooth;
-}
 
+
+/* 검색창 */
 .autocomplete {
   display: flex;
   flex-direction: column;
@@ -62,8 +64,6 @@ nav a.router-link-exact-active {
   max-height: 40vh !important;
 }
 
-
-
 </style>
 
 <script>
@@ -79,9 +79,6 @@ export default {
     isLogin() {
       return this.$store.getters.isLogin
     },
-  },
-  created() {
-    this.$modal.hideAll()
   },
 }
 </script>
