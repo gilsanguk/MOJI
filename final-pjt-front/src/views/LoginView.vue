@@ -1,10 +1,12 @@
 <template>
   <div id="logindiv">
+    <!-- 로고 -->
     <img src="@/assets/logo.png" alt="logo" height="100"/>
     <div id="loginformdiv">
       <div>
         <h1 style="font-size: 50px"><b>LogIn</b></h1>
       </div>
+      <!-- 로그인 창 -->
       <form @submit.prevent="logIn" id="loginform">
         <div class="d-flex flex-column">
           <label for="username" id="username">username : </label>
@@ -25,10 +27,10 @@
             v-model="password"
           />
         </div>
+        <!-- 푸터 -->
         <div class="d-flex flex-row justify-content-right">
           <input type="submit" value="Login" class="clickbutton"/>
           <input type="submit" value="SignUp" class="clickbutton" @click.prevent="goSignUp"/>
-          <!-- <p class="clickbutton">회원가입</p> -->
         </div>
       </form>
     </div>
@@ -45,6 +47,7 @@ export default {
     };
   },
   methods: {
+    // 로그인
     logIn() {
       const user = {
         username: this.username,
@@ -52,6 +55,7 @@ export default {
       };
       this.$store.dispatch("logIn", user);
     },
+    // 회원가입 페이지로 이동
     goSignUp() {
       this.$router.push("/signup");
     },

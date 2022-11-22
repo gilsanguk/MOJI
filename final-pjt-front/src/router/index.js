@@ -5,6 +5,7 @@ import SignUpView from '@/views/SignUpView'
 import LoginView from '@/views/LoginView'
 import MoviesView from '@/views/MoviesView'
 import CommunityView from '@/views/CommunityView'
+import ReviewDetailView from '@/views/ReviewDetailView'
 import SelectMovieView from '@/views/SelectMovieView'
 import NotFound404 from '@/views/NotFound404'
 import TestView from '@/views/TestView'
@@ -79,6 +80,18 @@ const routes = [
     path: '/community/:id/reviews',
     name: 'CommunityView',
     component: CommunityView,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/community/:movieId/reviews/:reviewId',
+    name: 'ReviewDetailView',
+    component: ReviewDetailView,
     beforeEnter: (to, from, next) => {
       if (store.getters.isLogin) {
         next()

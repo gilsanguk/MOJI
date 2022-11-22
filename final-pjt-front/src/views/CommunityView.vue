@@ -4,6 +4,7 @@
       <h1>
         <b>{{ movie?.title }}</b>
       </h1>
+      <!-- 리뷰 -->
       <h3 class="english m-3 pb-3"><b>Review</b></h3>
       <button @click="openModal">리뷰 작성</button>
       <div v-if="reviews.length">
@@ -11,7 +12,9 @@
           v-for="review in paginatedData"
           :key="review.id"
           :review="review"
+          :movie="movie"
         />
+        <!-- 버튼 -->
         <div class="btn-cover">
           <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
             &lt;
@@ -68,8 +71,7 @@ export default {
         });
     },
     getReviews() {
-      axios
-        .get(
+      axios.get(
           `${API_URL}/community/${this.$route.params.id}/reviews/?page=${this.pageNum}&page_size=${this.pageSize}`,
           {
             headers: { Authorization: `Token ${this.$store.getters.getToken}` },
@@ -77,7 +79,6 @@ export default {
         )
         .then((res) => {
           this.reviews = res.data;
-          console.log(this.reviews);
         })
         .catch((err) => {
           if (err.response.status === 401) {
@@ -135,18 +136,18 @@ export default {
   },
   created() {
     this.getMovies();
-    // this.getReviews();
     this.$modal.hideAll();
   },
 };
 </script>
 
 <style>
+/* 기본 */
 #bgdiv {
   min-height: 100vh;
   padding: 2rem 5rem;
 }
-
+/* 버튼 */
 .btn-cover {
   margin-top: 1.5rem;
   text-align: center;
