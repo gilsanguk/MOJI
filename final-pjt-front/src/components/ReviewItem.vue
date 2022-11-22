@@ -3,13 +3,13 @@
     <div class="row">
       <div class="d-flex">
         <!-- 제목 간략히 -->
-        <div class="col-1">{{ review.user }}</div>
+        <div class="text-truncate col-1">{{ review.user.nickname }}</div>
         <div class="text-truncate col-5">
           <b>{{ review.title }}</b>
         </div>
-        <h5 class="col-3">
-          <b>{{ displayedAt() }}</b>
-        </h5>
+        <span class="text-truncate col-3 number">
+          <b>{{ displayedAt()}}</b>
+        </span>
 
         <!-- 평점 -->
         <div class="star-ratings col-2">
@@ -25,6 +25,13 @@
             ><span>★</span>
           </div>
         </div>
+
+        <!-- 좋아요 -->
+        <div class="col-1 number">
+            <i class="fas fa-heart"></i>
+            {{ review.like_users.length }}
+        </div>
+      
       </div>
     </div>
   </div>
@@ -45,8 +52,7 @@ export default {
   methods: {
     // 평점 계산
     ratingToPercent() {
-      this.date = new Date(this.review.created_at).toLocaleString();
-      const score = 5 * 10;
+      const score = 5 * 10 - 3;
       return score;
     },
     // 리뷰 디테일
@@ -55,7 +61,7 @@ export default {
     },
     // 날짜 표시
     displayedAt() {
-      const seconds = (new Date() - new Date(this.review.created_at)) / 1000
+      const seconds = (new Date() - new Date(this.review.updated_at)) / 1000
       if (seconds < 60) return `방금 전`
       const minutes = seconds / 60
       if (minutes < 60) return `${Math.floor(minutes)}분 전`
@@ -74,7 +80,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+/* 기본 */
+.container {
+  border-top: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
 /* 평점 */
 .star-ratings {
   color: #aaa9a9;

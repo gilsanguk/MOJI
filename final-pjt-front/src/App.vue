@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="appbody">
     <AppNav v-if="isLogin"/>
+    <!-- <img src="@/assets/logo.png" @click="goHome"  class="bg-img"/> -->
     <router-view/>
   </div>
 </template>
@@ -21,6 +22,16 @@
   max-width: 100vw;
   background-color: #141619;
   scroll-behavior: smooth;
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.5;
 }
 /* 영어, 숫자 폰트 */
 #app .english {

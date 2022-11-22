@@ -6,7 +6,9 @@
       </h1>
       <!-- 리뷰 -->
       <h3 class="english m-3 pb-3"><b>Review</b></h3>
-      <button @click="openModal">리뷰 작성</button>
+      <div id="reviewbtn">
+        <button style="color: #a7a7a7 !important;" @click="openModal">리뷰 작성</button>
+      </div>
       <div v-if="reviews.length">
         <ReviewItem
           v-for="review in paginatedData"
@@ -147,6 +149,19 @@ export default {
   min-height: 100vh;
   padding: 2rem 5rem;
 }
+
+/* 리뷰 작성 버튼 */
+#reviewbtn {
+  text-align: right;
+  margin-bottom: 2rem;
+}
+
+.reviewbtn:hover {
+  color: #ffffff !important;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
 /* 버튼 */
 .btn-cover {
   margin-top: 1.5rem;

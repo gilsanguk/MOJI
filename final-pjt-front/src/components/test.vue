@@ -203,12 +203,6 @@ export default {
   transition-duration: 0.4s;
 }
 
-/* @media screen and (max-width: 992px) {
-  .heart {
-    transform: scale(2.3);
-  }
-} */
-
 .heart:hover:before {
   color: crimson;
   transition: 0.4s;
