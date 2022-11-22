@@ -1,6 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.decorators import api_view
 from rest_framework import status
 from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import (
@@ -31,7 +30,7 @@ def create_review(request, movie_pk):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
-def review_detail(request, movie_pk, review_pk):
+def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
 
     if request.method == 'GET':

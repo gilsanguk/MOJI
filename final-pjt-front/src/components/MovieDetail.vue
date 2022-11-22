@@ -172,7 +172,7 @@ export default {
     },
     // 평점을 퍼센트로 변환
     ratingToPercent() {
-      const score = +this.movie.vote_average * 10;
+      const score = +this.movie.vote_average * 10 - 3;
       return score;
     },
     // 페이지네이션

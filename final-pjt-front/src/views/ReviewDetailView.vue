@@ -21,7 +21,8 @@ export default {
     getReview() {
       axios({
         method: 'get',
-        url: `${API_URL}/community/${this.$route.params.movieId}/reivews/${this.$route.params.reviewId}/`,
+        url: `${API_URL}/community/reviews/${this.$route.params.reviewId}/`,
+        headers: { Authorization: `Token ${this.$store.getters.getToken}`},
       })
         .then((res) => {
           console.log(res.data);
@@ -53,6 +54,9 @@ export default {
       };
       this.$store.dispatch("deleteReview", review);
     },
+  },
+  created() {
+    this.getReview();
   },
 }
 </script>

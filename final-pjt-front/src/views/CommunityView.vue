@@ -12,7 +12,6 @@
           v-for="review in paginatedData"
           :key="review.id"
           :review="review"
-          :movie="movie"
         />
         <!-- 버튼 -->
         <div class="btn-cover">
@@ -63,7 +62,7 @@ export default {
     getMovies() {
       axios
         .get(`${API_URL}/movies/${this.$route.params.id}/`, {
-          headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+          headers: { Authorization: `Token ${this.$store.getters.getToken}`},
         })
         .then((res) => {
           this.movie = res.data;

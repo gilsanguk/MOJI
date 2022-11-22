@@ -63,7 +63,7 @@ export default {
     },
     // 평점 계산
     ratingToPercent(movie) {
-      const score = +movie.vote_average * 10;
+      const score = +movie.vote_average * 10 - 3;
       return score;
     },
   },
