@@ -74,14 +74,19 @@ export default {
 
 <style>
 .movie-card {
-  background-color: #2f2f2f;
+  background-color: #3b3b3b;
+  border-radius: 10px 10px 10px 10px !important;
+  border: 0;
+  outline: none;
+  color: rgba(255, 255, 255, 0.9);
 }
 .card-img {
   height: 25rem;
+  border-radius: 10px 10px 0 0 !important;
 }
 
 .star-ratings {
-  color: #aaa9a9;
+  color: #a7a7a7;
   position: relative;
   unicode-bidi: bidi-override;
   width: max-content;

@@ -66,32 +66,17 @@
       <div class="modal-footer footer-review py-4" @click="goReview">
         <h5>리뷰 작성하러 가기</h5>
       </div>
-      <div v-if="recommend" class="modal-footer pt-4">
-        <h1>추천 영화</h1>
-        <MovieCard
-          v-for="movie in paginatedData"
-          :key="movie.id"
-          :movie="movie"
-        />
+      <div v-if="recommend" class="modal-footer pt-4" >
+        <MovieCard v-for="movie in paginatedData" :key="movie.id" :movie="movie" />
+        <div class="btn-cover" >
+          <button :disabled="pageNum === 0" @click="prevPage" id="page-btn"> &lt; </button>
+          <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+          <button :disabled="pageNum >= pageCount - 1" @click="nextPage" id="page-btn"> &gt;</button>
+        </div>
       </div>
       <div v-else class="modal-footer mt-5 text-center">
-        <h3>추천 영화가 없습니다.</h3>
+        <h3> 추천 영화가 없습니다. </h3>
       </div>
-        <div class="btn-cover">
-          <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
-            &lt;
-          </button>
-          <span class="page-count"
-            >{{ pageNum + 1 }} / {{ pageCount }} 페이지</span
-          >
-          <button
-            :disabled="pageNum >= pageCount - 1"
-            @click="nextPage"
-            id="page-btn"
-          >
-            &gt;
-          </button>
-        </div>
     </div>
   </div>
 </template>
@@ -160,14 +145,16 @@ export default {
       const score = +this.movie.vote_average * 10;
       return score;
     },
-
     nextPage() {
       this.pageNum += 1;
     },
     prevPage() {
       this.pageNum -= 1;
     }
-
+  },
+  created() {
+    this.isLiked = this.movie.like_users.includes(this.$store.state.user.id);
+    this.getRecommend();
   },
   computed: {
     youtubeVideo() {
@@ -190,6 +177,8 @@ export default {
     },
     pageCount() {
       let page = Math.floor(this.recommend.length / this.pageSize);
+      console.log('l',this.recommend.length);
+      console.log('s',this.pageSize);
       if (this.recommend.length % this.pageSize >= 0) page++;
       return page;
     },
@@ -202,18 +191,13 @@ export default {
         return 0;
       }
     },
-
-  },
-  created() {
-    this.isLiked = this.movie.like_users.includes(this.$store.state.user.id);
-    this.getRecommend();
   },
 };
 </script>
 
 <style scoped>
 .heart {
-  color: rgba(255, 255, 255, 0.9);
+  color: white;
   cursor: pointer;
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
@@ -225,16 +209,7 @@ export default {
   }
 } */
 
-.fas {
-  color: crimson;
-}
-
-.fas:hover:before {
-  transition: 0.4s;
-  color: red;
-}
-
-.far:hover:before {
+.heart:hover:before {
   color: crimson;
   transition: 0.4s;
 }
@@ -242,7 +217,8 @@ export default {
 #moviedetail {
   width: 100%;
   height: auto;
-  color: rgba(255, 255, 255, 0.9);
+  background-color: #141619;
+  color: #a5a5a5;
 }
 
 #moviedetail-webkit-scrollbar {
@@ -319,24 +295,4 @@ export default {
   z-index: 0;
   padding: 0;
 }
-
-/* .btn-cover {
-  margin-top: 1.5rem;
-  text-align: center;
-}
-
-button,
-.btn-cover #page-btn {
-  padding: 0.3% 2%;
-  letter-spacing: 1px;
-  background-color:transparent;
-  color: #ffffff;
-  border: 0;
-  outline: 0;
-}
-
-button:hover,
-.btn-cover #page-btn:hover {
-  cursor: pointer;
-} */
 </style>

@@ -8,7 +8,7 @@
       <div v-for="review in reviews" :key="review.id"></div>
       <button @click="openModal">리뷰 작성</button>
       <ReviewItem
-        v-for="review in reviews"
+        v-for="review in paginatedData"
         :key="review.id" 
         :review="review"
       />
@@ -48,7 +48,7 @@ export default {
       movie: {},
       reviews: [],
       pageNum: 0,
-      pageSize: 10,
+      pageSize: 5,
     };
   },
   methods: {
@@ -115,7 +115,8 @@ export default {
     // 페이지네이션
     pageCount() {
       let page = Math.floor(this.reviews.length / this.pageSize);
-      if (this.reviews.length % this.pageSize >= 0) page++;
+      if (this.reviews.length % this.pageSize > 0) page++;
+      else if (page === 0) page = 1;
       return page;
     },
     paginatedData() {
