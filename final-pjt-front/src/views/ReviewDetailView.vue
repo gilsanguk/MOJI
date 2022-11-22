@@ -28,7 +28,13 @@ export default {
           this.review = res.data;
         })
         .catch((err) => {
-          console.log(err);
+          if (err.response.status === 401) {
+            this.$router.push({ name: "LoginView" });
+          } else if (err.response.status === 404) {
+            this.$router.push({ name: "NotFound404" });
+          } else {
+            console.log(err);
+          }
         });
     },
     // 리뷰 수정

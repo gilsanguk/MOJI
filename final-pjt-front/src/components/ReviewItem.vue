@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-4 btn" @click="goDetail">
+  <div class="container p-4" @click="goDetail">
     <div class="row">
       <div class="d-flex">
         <!-- 제목 간략히 -->
