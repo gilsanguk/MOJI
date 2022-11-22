@@ -31,8 +31,10 @@ def create_review(request, movie_pk):
 
 @api_view(['GET', 'DELETE', 'PUT'])
 def review_detail(request, movie_pk, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
+    if not Movie.objects.filter(pk=movie_pk).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
+    review = get_object_or_404(Review, pk=review_pk)
     if request.method == 'GET':
         serializer = ReviewSerializer(review)
         return Response(serializer.data)

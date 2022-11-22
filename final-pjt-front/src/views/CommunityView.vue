@@ -62,7 +62,7 @@ export default {
     // 영화정보, 리뷰 가져오기
     getMovies() {
       axios
-        .get(`${API_URL}/movies/${this.$route.params.id}/`, {
+        .get(`${API_URL}/movies/${this.$route.params.movieId}/`, {
           headers: { Authorization: `Token ${this.$store.getters.getToken}`},
         })
         .then((res) => {
@@ -72,7 +72,7 @@ export default {
     },
     getReviews() {
       axios.get(
-          `${API_URL}/community/${this.$route.params.id}/reviews/?page=${this.pageNum}&page_size=${this.pageSize}`,
+          `${API_URL}/community/${this.$route.params.movieId}/reviews/?page=${this.pageNum}&page_size=${this.pageSize}`,
           {
             headers: { Authorization: `Token ${this.$store.getters.getToken}` },
           }

@@ -77,7 +77,7 @@ const routes = [
     }
   },
   {
-    path: '/community/:id/reviews',
+    path: '/community/:movieId/reviews',
     name: 'CommunityView',
     component: CommunityView,
     beforeEnter: (to, from, next) => {
