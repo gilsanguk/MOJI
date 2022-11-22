@@ -14,7 +14,7 @@ from movies.models import Movie
 @api_view(['GET',])
 def review_list(request, movie_pk):
     if Movie.objects.filter(pk=movie_pk).exists():
-        reviews = Review.objects.filter(movie_id=movie_pk)
+        reviews = Review.objects.filter(movie_id=movie_pk).order_by('-created_at')
         serializers = ReviewListSerializer(reviews, many=True)
         return Response(serializers.data)
     else:
