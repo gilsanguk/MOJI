@@ -16,6 +16,14 @@
   color: rgba(255, 255, 255, 0.879)
 }
 
+#app .english {
+  font-family: 'Archivo', sans-serif !important;
+}
+
+#app .number {
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif' !important;
+}
+
 nav {
   padding: 30px;
 }
@@ -71,6 +79,9 @@ export default {
     isLogin() {
       return this.$store.getters.isLogin
     },
+  },
+  created() {
+    this.$modal.hideAll()
   },
 }
 </script>

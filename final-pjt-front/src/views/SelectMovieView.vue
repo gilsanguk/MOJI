@@ -23,7 +23,7 @@
         </autocomplete>
       </div>
       <!-- 장바구니 -->
-      <h2 class="m-3 p-3 text-white">선택한 영화 ({{ selectmovies.length }}/6)
+      <h2 class="m-3 p-3 text-white">선택한 영화 <span class="number">({{ selectmovies.length }}/6)</span>
          <button @click="resetPrefer" id="clickbutton">추천받기</button>
       </h2>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
@@ -43,7 +43,6 @@ export default {
   name: "SelectMovieView",
   data() {
     return {
-      // indexs: [0, 1, 2, 3, 4, 5],
       selectmovies: [],
     };
   },
@@ -87,13 +86,14 @@ export default {
       }
     },
   },
-  created() {
-    this.$store.dispatch("getAllMovies");
-  },
   computed: {
     movies() {
       return this.$store.getters.all;
     },
+  },
+  created() {
+    this.$store.dispatch("getAllMovies");
+    this.$modal.hideAll()
   },
 };
 </script>

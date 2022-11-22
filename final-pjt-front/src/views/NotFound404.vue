@@ -22,7 +22,10 @@ export default {
     goToHome () {
       this.$router.push({ name: 'MoviesView' })
     }
-  }
+  },
+  created() {
+    this.$modal.hideAll()
+  },
 }
 </script>
 

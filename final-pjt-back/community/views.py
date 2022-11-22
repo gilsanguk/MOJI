@@ -16,13 +16,12 @@ def review_list(request, movie_pk):
     if Movie.objects.filter(pk=movie_pk).exists():
         reviews = Review.objects.filter(movie_id=movie_pk)
         serializers = ReviewListSerializer(reviews, many=True)
-        return Response(serializers.data or [])
+        return Response(serializers.data)
     else:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['POST',])
-@permission_classes([IsAuthenticated])
 def create_review(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = ReviewSerializer(data=request.data)
@@ -32,7 +31,6 @@ def create_review(request, movie_pk):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
-@permission_classes([IsAuthenticatedOrReadOnly])
 def review_detail(request, movie_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
 
@@ -52,7 +50,6 @@ def review_detail(request, movie_pk, review_pk):
 
 
 @api_view(['GET', 'POST',])
-@permission_classes([IsAuthenticatedOrReadOnly])
 def create_comment(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     if request.method == 'GET':
@@ -67,7 +64,6 @@ def create_comment(request, review_pk):
 
 
 @api_view(['POST',])
-@permission_classes([IsAuthenticated])
 def like_review(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     if request.method == 'POST':

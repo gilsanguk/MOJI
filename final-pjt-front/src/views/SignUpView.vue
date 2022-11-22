@@ -1,9 +1,9 @@
 <template>
   <div id="signupdiv">
-    <img src="@/assets/logo.png" alt="logo" height="100" @click="goLogin"/>
+    <img src="@/assets/logo.png" alt="logo" height="100" @click="goLogin" />
     <div id="signupformdiv">
       <div>
-        <h1 style="font-size:50px"><b>Sign Up</b></h1>
+        <h1 style="font-size: 50px"><b>Sign Up</b></h1>
       </div>
       <form @submit.prevent="signUp" id="signupform">
         <div class="d-flex flex-column">
@@ -71,12 +71,15 @@ export default {
         username: this.username,
         password1: this.password1,
         password2: this.password2,
-        nickname: this.nickname
+        nickname: this.nickname,
       };
       this.$store.dispatch("signUp", user);
     },
     goLogin() {
       this.$router.push("/login");
+    },
+    created() {
+      this.$modal.hideAll();
     },
   },
 };
@@ -94,7 +97,11 @@ export default {
 
 #signupdiv:before {
   content: "";
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.700), rgba(0, 0, 0, 0.222));
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.222)
+  );
   position: absolute;
   left: 0;
   height: 1000px;
@@ -121,7 +128,6 @@ export default {
   align-items: center;
 }
 
-
 #username,
 #password1,
 #password2,
@@ -134,7 +140,6 @@ export default {
   text-align: left;
   vertical-align: middle;
 }
-
 
 label#username,
 label#password1,
@@ -155,19 +160,18 @@ input#nickname {
   font-size: x-large;
   padding: 0.3% 2%;
   letter-spacing: 1px;
-  background-color:transparent;
+  background-color: transparent;
   color: #a7a7a7;
   border: 0;
   outline: 0;
   font-weight: 600;
 }
 
-.clickbutton:hover{
+.clickbutton:hover {
   cursor: pointer;
   color: white;
   transition: 0.4s;
 }
-
 
 img {
   position: absolute;

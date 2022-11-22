@@ -136,10 +136,6 @@ export default {
       return score;
     },
   },
-  created() {
-    this.isLiked = this.movie.like_users.includes(this.$store.state.user.id);
-    this.getRecommend();
-  },
   computed: {
     youtubeVideo() {
       return `https://www.youtube.com/embed/${this.movie.youtube_key}`;
@@ -160,6 +156,10 @@ export default {
       return this.$store.getters.getToken;
     },
   },
+  created() {
+    this.isLiked = this.movie.like_users.includes(this.$store.state.user.id);
+    this.getRecommend();
+  },
 };
 </script>
 
@@ -177,6 +177,10 @@ export default {
   }
 } */
 
+.fas {
+  color: #ff0000;
+}
+
 .heart:hover:before {
   color: crimson;
   transition: 0.4s;
@@ -185,7 +189,6 @@ export default {
 #moviedetail {
   width: 100%;
   height: auto;
-  background-color: #141619;
   color: #a5a5a5;
 }
 

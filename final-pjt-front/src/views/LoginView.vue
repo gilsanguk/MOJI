@@ -56,6 +56,9 @@ export default {
       this.$router.push("/signup");
     },
   },
+  created() {
+    this.$modal.hideAll()
+  },
 };
 </script>
 

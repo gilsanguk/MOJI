@@ -15,6 +15,7 @@ const routes = [
     path: '/',
     beforeEnter: (to, from, next) => {
       if (store.getters.isLogin) {
+        if (store.getters)
         next('/movies')
       } else {
         next('/login')

@@ -4,7 +4,7 @@
       <img :src="movie.poster_path" />
       <figcaption id="movie-detail">
         <div id="detail-div">
-          <h5 style="word-break: keep-all">{{ movie.title }}</h5>
+          <h5 style="word-break: keep-all" class="english text-center">{{ movie.title }}</h5>
           <!-- 좋아요 -->
           <i
             class="heart far fa-heart fa-4x"

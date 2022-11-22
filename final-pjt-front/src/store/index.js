@@ -29,7 +29,6 @@ export default new Vuex.Store({
     recommend: [],
     recent: [],
     randomGenre: [],
-    prefer: [],
     token: null,
     user: {
       id: '',
@@ -59,6 +58,9 @@ export default new Vuex.Store({
     },
     randomGenre(state) {
       return state.randomGenre
+    },
+    prefer(state) {
+      return state.prefer
     },
   },
   mutations: {
@@ -102,7 +104,7 @@ export default new Vuex.Store({
         .then(() => {
           router.push({ name: 'MoviesView' })
         })
-        .catch((err) => console.log(err.response.data))
+        .catch((err) => console.log(err.response))
     },
     logIn(context, user) {
       axios({
@@ -157,6 +159,9 @@ export default new Vuex.Store({
 
       axios.all([axiosrecommend, axiosrecent, axiosrandomGenre])
         .then(axios.spread((recommend, recent, randomGenre) => {
+          if (recommend.data.length === 0) {
+            router.push({ name: 'SelectMovieView'})
+          }
           const movies = {
             recommend: recommend.data,
             recent: recent.data,
@@ -221,5 +226,5 @@ export default new Vuex.Store({
       },
   },
   modules: {
-  }
+  },
 })

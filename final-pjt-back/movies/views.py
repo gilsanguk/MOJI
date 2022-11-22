@@ -72,7 +72,7 @@ def recommend_movie_list(request):
         recommend_movies_ids = get_recomandation(prefer_movies_ids)
         movies = Movie.objects.filter(id__in=recommend_movies_ids)
     else:
-        movies = Movie.objects.all()[:10]
+        movies = {}
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
 

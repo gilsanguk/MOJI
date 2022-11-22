@@ -36,7 +36,6 @@
         <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
-    <modal name="movie-detail"></modal>
   </div>
 </template>
 
@@ -154,8 +153,8 @@ export default {
       this.$refs.swiper3D.$swiper.autoplay.start();
     },
     openModal(movieId) {
-      axios
-        .get(`${API_URL}/movies/${movieId}/`, {
+      axios.get(
+          `${API_URL}/movies/${movieId}/`, {
           headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         })
         .then((res) => {
@@ -190,6 +189,7 @@ export default {
   created() {
     this.$store.dispatch("getAllMovies");
     this.$store.dispatch("getMovies");
+    this.$modal.hideAll()
   },
 };
 </script>
@@ -224,6 +224,7 @@ export default {
 .vm--modal {
   border-radius: 10px !important;
   overflow-y: scroll !important;
+  background-color: #292929 !important;
 }
 
 .vm--modal::-webkit-scrollbar {
