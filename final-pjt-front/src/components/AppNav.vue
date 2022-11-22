@@ -2,40 +2,95 @@
   <nav class="row sticky-top py-2 px-1">
     <!-- 로고 -->
     <div class="d-flex col-8 col-lg-6 col-xxl-8">
-      <img src="@/assets/logo.png" alt="logo" height="50" @click="goHome" />
+      <img
+        src="@/assets/logo.png"
+        alt="logo"
+        class="me-5"
+        height="50"
+        @click="goHome"
+      />
+      <autocomplete
+        :search="search"
+        placeholder="Search for a movie"
+        aria-label="Search for a movie"
+        :get-result-value="getResultValue"
+      >
+        <template #result="{ result, props }">
+          <li class="result-li" v-bind="props" @click="goDetail(result.id)">
+            <div class="result">
+              <span class="result-title text-truncate">{{ result.title }}</span>
+            </div>
+          </li>
+        </template>
+      </autocomplete>
     </div>
-    
+
     <!-- 넓은 화면 -->
     <div class="menu-expand col-6 col-xxl-4">
-      <router-link :to="{ name: 'MoviesView'}" class="link">홈</router-link>
+      <router-link :to="{ name: 'MoviesView' }" class="link">홈</router-link>
       <div @mouseover="changeMent" @mouseleave="resetMent" class="ment">
-        <router-link :to="{ name: 'SelectMovieView'}" class="link" v-if="!isOvered">보고싶은 영화가 없다면??</router-link>
-        <router-link :to="{ name: 'SelectMovieView'}" class="link" v-else>다른 영화 추천받으러 가기</router-link>
+        <router-link
+          :to="{ name: 'SelectMovieView' }"
+          class="link"
+          v-if="!isOvered"
+          >보고싶은 영화가 없다면??</router-link
+        >
+        <router-link :to="{ name: 'SelectMovieView' }" class="link" v-else
+          >다른 영화 추천받으러 가기</router-link
+        >
       </div>
-      <router-link :to="{ name: 'SelectMovieView'}" class="link">내 프로필</router-link>
-       <a @click.prevent="logOut" class="link">로그아웃</a>
-      <img src="@/assets/no_profile.png" alt="profile" width="50" height="50">
+      <router-link :to="{ name: 'SelectMovieView' }" class="link"
+        >내 프로필</router-link
+      >
+      <a @click.prevent="logOut" class="link">로그아웃</a>
+      <img src="@/assets/no_profile.png" alt="profile" width="50" height="50" />
     </div>
 
     <!-- 좁은 화면 -->
     <div class="menu-dropdown col-4">
-      <button class="dropdown-btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      <button
+        class="dropdown-btn dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
         메뉴
       </button>
       <ul class="dropdown-menu py-0 px-3" aria-labelledby="dropdownMenuButton1">
-        <li class="menu"><router-link :to="{ name: 'MoviesView'}" class="link">홈</router-link></li>
-        <li class="menu"><router-link :to="{ name: 'SelectMovieView'}" class="link" >마음에 드는 영화가 없다면?</router-link></li>
-        <li class="menu"><router-link :to="{ name: 'SelectMovieView'}" class="link">내 프로필</router-link></li>
-        <li class="d-flex justify-content-center align-items-center" style="padding: 10px;"><a @click.prevent="logOut" class="link">로그아웃</a></li>
+        <li class="menu">
+          <router-link :to="{ name: 'MoviesView' }" class="link"
+            >홈</router-link
+          >
+        </li>
+        <li class="menu">
+          <router-link :to="{ name: 'SelectMovieView' }" class="link"
+            >마음에 드는 영화가 없다면?</router-link
+          >
+        </li>
+        <li class="menu">
+          <router-link :to="{ name: 'SelectMovieView' }" class="link"
+            >내 프로필</router-link
+          >
+        </li>
+        <li
+          class="d-flex justify-content-center align-items-center"
+          style="padding: 10px"
+        >
+          <a @click.prevent="logOut" class="link">로그아웃</a>
+        </li>
       </ul>
-      <img src="@/assets/no_profile.png" alt="profile" width="50" height="50">
+      <img src="@/assets/no_profile.png" alt="profile" width="50" height="50" />
     </div>
-
   </nav>
-      
 </template>
 
 <script>
+import axios from "axios";
+import Autocomplete from "@trevoreyre/autocomplete-vue";
+import MovieDetail from "@/components/MovieDetail.vue";
+
+const API_URL = "http://127.0.0.1:8000/moji";
 export default {
   name: "AppNav",
   data() {
@@ -43,7 +98,54 @@ export default {
       isOvered: false,
     };
   },
+  components: {
+    Autocomplete,
+  },
   methods: {
+    // 검색
+    search(input) {
+      if (input.length < 1) {
+        return [];
+      }
+      return this.$store.getters.all.filter((movie) => {
+        return (
+          movie.title.toLowerCase().startsWith(input.toLowerCase()) ||
+          movie.title.toLowerCase().includes(input.toLowerCase())
+        );
+      });
+    },
+    getResultValue() {
+      return "";
+    },
+    // 검색 결과 클릭 시 상세 페이지로 이동
+    goDetail(movieId) {
+      axios
+        .get(`${API_URL}/movies/${movieId}/`, {
+          headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+        })
+        .then((res) => {
+          this.$modal.show(
+            MovieDetail,
+            { movie: res.data },
+            {
+              height: "80%",
+              width: "60%",
+              adaptive: true,
+              shiftY: 0.5,
+            }
+          );
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.$router.push({ name: "LoginView" });
+          } else if (err.response.status === 404) {
+            this.$router.push({ name: "NotFound404" });
+          } else {
+            console.log(err);
+          }
+        });
+    },
+    // 클릭
     logOut() {
       this.$store.dispatch("logOut");
     },
@@ -60,6 +162,9 @@ export default {
       this.isOvered = false;
     },
   },
+  created() {
+    this.$store.dispatch("getAllMovies");
+  },
 };
 </script>
 
@@ -75,7 +180,7 @@ nav {
 
 img {
   cursor: pointer;
-  -webkit-user-drag: none; 
+  -webkit-user-drag: none;
 }
 
 .menu {
@@ -131,12 +236,30 @@ img {
   .menu-expand {
     display: none;
   }
-  .menu-dropdown{
+  .menu-dropdown {
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
 }
 
+/* 검색창 */
+.autocomplete {
+  width: 30vw;
+}
 
+.autocomplete-input {
+  padding: 10px 60px !important;
+}
+
+/* 검색목록 */
+.result {
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+.result-title {
+  font-size: 1rem;
+}
 </style>

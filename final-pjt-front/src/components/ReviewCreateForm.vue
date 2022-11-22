@@ -7,22 +7,31 @@
     <!-- 리뷰 작성 폼 -->
     <form @submit.prevent>
       <div class="form-group">
-        <label>제목</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          placeholder="제목을 입력해 주세요"
-          v-model="title"
-        />
-        <label for="content">내용</label>
-        <textarea
-          class="form-control"
-          id="content"
-          rows="3"
-          placeholder="내용을 입력해 주세요"
-          v-model="content"
-        ></textarea>
+        <div id="title">
+          <p>제목</p>
+          <input
+            class="form-control"
+            placeholder="제목을 입력해 주세요"
+            v-model="title"
+          />
+        </div>
+        <div id="content">
+          <p>내용</p>
+          <textarea
+            class="form-control"
+            rows="3"
+            placeholder="내용을 입력해 주세요"
+            v-model="content"
+          ></textarea>
+        </div>
+        <div id="rank">
+          <div>
+            <span>내가 생각하는 영화 평점</span>       
+            <select id="rate" v-model="rank">
+              <option style="color: black;" class="content-font" :value="rate" v-for="(rate, idx) in this.reviewRate" :key="idx">{{ rate }}</option>
+            </select>
+          </div>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary" @click="createReview">
         등록
@@ -47,8 +56,10 @@ export default {
   },
   data() {
     return {
+      reviewRate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       title: "",
       content: "",
+      rank: 0,
     };
   },
   methods: {
@@ -57,16 +68,18 @@ export default {
       const data = {
         title: this.title,
         content: this.content,
+        rank: this.rank,
       }
       axios({
         method: "post",
-        url: `${API_URL}/community/${this.$route.params.id}/reviews/create/`,
+        url: `${API_URL}/community/${this.$route.params.movieId}/reviews/create/`,
         headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         data: data,
       })
         .then(() => {
           this.title = "";
           this.content = "";
+          this.rank = "";
           this.closeModal();
           this.refresh();
         })
@@ -84,7 +97,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* 기본 */
 .vm--modal {
   border-radius: 10px !important;
@@ -93,8 +106,24 @@ export default {
 }
 
 #reviewform .form-group {
-  padding: 5%;
+  padding-right: 5%;
+  padding-left: 5%;
 }
+
+#title p,
+#content p,
+#rank{
+  color: white;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  font-size: large;
+  font-weight: bold;
+}
+
+#rank span {
+  margin-right: 3%
+}
+
 
 #reviewform .form-control {
   resize: none;

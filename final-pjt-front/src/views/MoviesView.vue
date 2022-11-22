@@ -4,13 +4,13 @@
       <h2 class="pb-4">당신을 위한 추천 영화</h2>
       <swiper class="swiper swiper3D" :options="swiperOption3D" ref="swiper3D">
         <swiper-slide v-for="movie in recommend" :key="movie.id">
-            <MoviesMainItem
-              class="imgdiv"
-              :movie="movie"
-              @open-modal="openModal"
-              @stop-auto-play="stopAutoPlay"
-              @play-auto-play="playAutoPlay"
-            />
+          <MoviesMainItem
+            class="imgdiv"
+            :movie="movie"
+            @open-modal="openModal"
+            @stop-auto-play="stopAutoPlay"
+            @play-auto-play="playAutoPlay"
+          />
         </swiper-slide>
       </swiper>
     </div>
@@ -19,7 +19,7 @@
       <h2>최근 개봉 영화</h2>
       <swiper class="swiper" :options="swiperOption2D">
         <swiper-slide v-for="movie in recent" :key="movie.id">
-            <MoviesItem :movie="movie" @open-modal="openModal" />
+          <MoviesItem :movie="movie" @open-modal="openModal" />
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
@@ -30,7 +30,7 @@
       <h2>{{ randomGenre[1] }} 영화는 어때요?</h2>
       <swiper class="swiper" :options="swiperOption2D">
         <swiper-slide v-for="movie in randomGenre[0]" :key="movie.id">
-            <MoviesItem :movie="movie" @open-modal="openModal" />
+          <MoviesItem :movie="movie" @open-modal="openModal" />
         </swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
@@ -55,6 +55,7 @@ export default {
   name: "MoviesView",
   data() {
     return {
+      // 3D swiper
       swiperOption3D: {
         effect: "coverflow",
         grabCursor: true,
@@ -100,10 +101,11 @@ export default {
           },
         },
       },
+      // 2D swiper
       swiperOption2D: {
         effect: "slide",
         grabCursor: true,
-        loop: true, 
+        loop: true,
         spaceBetween: 50,
         navigation: {
           nextEl: ".swiper-button-next",
@@ -122,18 +124,18 @@ export default {
           },
           850: {
             slidesPerView: 3,
-            slidesPerGroup: 3,  
+            slidesPerGroup: 3,
             initialSlide: 3,
           },
           640: {
             slidesPerView: 2,
             slidesPerGroup: 2,
-            initialSlide: 2,  
+            initialSlide: 2,
           },
           320: {
             slidesPerView: 1,
             slidesPerGroup: 1,
-            initialSlide: 1, 
+            initialSlide: 1,
           },
         },
       },
@@ -146,15 +148,17 @@ export default {
     SwiperSlide,
   },
   methods: {
+    // 스와이프 자동 재생 중지
     stopAutoPlay() {
       this.$refs.swiper3D.$swiper.autoplay.stop();
     },
     playAutoPlay() {
       this.$refs.swiper3D.$swiper.autoplay.start();
     },
+    // 모달창 열기
     openModal(movieId) {
-      axios.get(
-          `${API_URL}/movies/${movieId}/`, {
+      axios
+        .get(`${API_URL}/movies/${movieId}/`, {
           headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         })
         .then((res) => {
@@ -189,18 +193,25 @@ export default {
   created() {
     this.$store.dispatch("getAllMovies");
     this.$store.dispatch("getMovies");
-    this.$modal.hideAll()
+    this.$modal.hideAll();
+  },
+  mounted() {
+    if (!this.$store.getters.prefer) {
+      this.$router.push({ name: "SelectMovieView" });
+    }
   },
 };
 </script>
 
 <style>
+/* 기본 */
 #recent,
 #random-genre,
 #recommend {
   padding: 3.3% 0;
 }
 
+/* 스와이퍼 */
 #recommend .swiper-slide-active {
   transform: scale(1.2) !important;
   transition: 0.5s !important;
@@ -221,6 +232,12 @@ export default {
   justify-content: center;
 }
 
+.swiper-button-prev,
+.swiper-button-next {
+  color: #a7a7a7;
+}
+
+/* 모달 */
 .vm--modal {
   border-radius: 10px !important;
   overflow-y: scroll !important;
@@ -231,8 +248,4 @@ export default {
   display: none;
 }
 
-.swiper-button-prev,
-.swiper-button-next {
-  color: #a7a7a7
-}
 </style>

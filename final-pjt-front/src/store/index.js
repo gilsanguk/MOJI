@@ -16,7 +16,7 @@ const API_URL = 'http://127.0.0.1:8000/moji'
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ['token', 'user'],
+      paths: ['token', 'user', 'prefer'],
       storage: {
         getItem: (key) => ls.get(key),
         setItem: (key, value) => ls.set(key, value),
@@ -30,6 +30,7 @@ export default new Vuex.Store({
     recent: [],
     randomGenre: [],
     token: null,
+    prefer: null, 
     user: {
       id: '',
       username: '',
@@ -88,52 +89,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    // 회원가입
-    signUp(context, user) {
-      axios({
-        method: 'post',
-        url: `${API_URL}/accounts/signup/`,
-        data: {
-          username: user.username,
-          password1: user.password1,
-          password2: user.password2,
-          nickname: user.nickname,
-        }
-      })
-        .then((res) => {
-          context.commit('SAVE_TOKEN', res.data.key)
-        })
-        .then(() => {
-          context.dispatch('setUserData', user.username)
-        })
-        .then(() => {
-          router.push({ name: 'MoviesView' })
-        })
-        .catch((err) => console.log(err.response))
-    },
-    // 로그인
-    logIn(context, user) {
-      axios({
-        method: 'post',
-        url: `${API_URL}/accounts/login/`,
-        data: {
-          username: user.username,
-          password: user.password,
-        }
-      })
-        .then((res) => {
-          context.commit('SAVE_TOKEN', res.data.key)
-        })
-        .then(() => {
-          context.dispatch('setUserData', user.username)
-        })
-        .then(() => {
-          router.push({ name: 'MoviesView' })
-        })
-        .catch((err) => 
-        console.log(err.response.data)
-        );
-    },
     // 로그아웃
     logOut({ commit }) {
       commit('SAVE_TOKEN', null)
@@ -164,9 +119,12 @@ export default new Vuex.Store({
       const axiosrandomGenre = axios.get(
         `${API_URL}/movies/random_genre/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosprefer = axios.get(
+        `${API_URL}/movies/prefer/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
 
-      axios.all([axiosrecommend, axiosrecent, axiosrandomGenre])
-        .then(axios.spread((recommend, recent, randomGenre) => {
+      axios.all([axiosrecommend, axiosrecent, axiosrandomGenre, axiosprefer])
+        .then(axios.spread((recommend, recent, randomGenre, prefer) => {
           if (recommend.data.length === 0) {
             router.push({ name: 'SelectMovieView'})
           }
@@ -174,6 +132,7 @@ export default new Vuex.Store({
             recommend: recommend.data,
             recent: recent.data,
             randomGenre: randomGenre.data,
+            prefer: prefer.data,
           }
           context.commit('GET_MOVIES', movies)
         }))

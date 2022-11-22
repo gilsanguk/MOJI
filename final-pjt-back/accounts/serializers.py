@@ -18,10 +18,3 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'password', 'nickname', 'profile_image', 'prefer_movies']
-
-
-class UserNameSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = User
-        fields = ['id', 'username','nickname']

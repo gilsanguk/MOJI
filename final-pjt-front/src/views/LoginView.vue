@@ -9,22 +9,25 @@
       <!-- 로그인 창 -->
       <form @submit.prevent="logIn" id="loginform">
         <div class="d-flex flex-column">
-          <label for="username" id="username">username : </label>
+          <label for="username" id="username" class="english">username : </label>
           <input
             type="text"
             id="username"
             placeholder="아이디를 입력하시오."
             v-model="username"
+            :class="err ? 'error' : ''"
           />
         </div>
         <div class="d-flex flex-column">
-          <label for="password" id="password"> password : </label>
+          <label for="password" id="password" class="english"> password : </label>
           <input
             data-animate="come-down"
             type="password"
             id="password"
+            autocomplete="on"
             placeholder="비밀번호를 입력하시오."
             v-model="password"
+            :class="err ? 'error' : ''"
           />
         </div>
         <!-- 푸터 -->
@@ -38,22 +41,42 @@
 </template>
 
 <script>
+import axios from 'axios';
+const API_URL = 'http://127.0.0.1:8000/moji'
+
 export default {
   name: "LoginView",
   data() {
     return {
       username: null,
       password: null,
+      err: null,
     };
   },
   methods: {
     // 로그인
+     // 로그인
     logIn() {
-      const user = {
-        username: this.username,
-        password: this.password,
-      };
-      this.$store.dispatch("logIn", user);
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/login/`,
+        data: {
+          username: this.username,
+          password: this.password,
+        }
+      })
+        .then((res) => {
+          this.$store.commit('SAVE_TOKEN', res.data.key)
+        })
+        .then(() => {
+          this.$store.dispatch('setUserData', this.username)
+        })
+        .then(() => {
+          this.$router.push({ name: 'MoviesView' })
+        })
+        .catch(() => {
+          this.err = true;
+        });
     },
     // 회원가입 페이지로 이동
     goSignUp() {
@@ -67,6 +90,7 @@ export default {
 </script>
 
 <style scoped>
+/* 기본 */
 #logindiv {
   background: url("https://assets.nflxext.com/ffe/siteui/vlv3/5aecc44d-2a1f-4313-8399-98df20908b64/47e9a72c-4e54-4be7-993f-91413ee2dd47/KR-ko-20221114-popsignuptwoweeks-perspective_alpha_website_large.jpg");
   display: flex;
@@ -85,6 +109,15 @@ export default {
   min-width: 100vw;
 }
 
+img {
+  position: absolute;
+  top: 3.3%;
+  left: 3.3%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* 로그인 폼 */
 #loginformdiv {
   padding: 3rem 5rem;
   background-color: rgba(0, 0, 0, 0.517);
@@ -105,6 +138,7 @@ export default {
   align-items: end;
 }
 
+/* 인풋, 라벨 */
 #username,
 #password {
   width: 500px;
@@ -127,6 +161,12 @@ input#password {
   height: 55px;
 }
 
+.error {
+  border: 1px solid crimson;
+  box-shadow: 0 0 0 3px rgba(220, 50, 20, 0.5);
+}
+
+/* 버튼 */
 .clickbutton {
   margin-top: 10%;
   font-size: x-large;
@@ -146,11 +186,4 @@ input#password {
   transition: 0.4s;
 }
 
-img {
-  position: absolute;
-  top: 3.3%;
-  left: 3.3%;
-  object-fit: cover;
-  z-index: 1;
-}
 </style>

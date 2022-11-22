@@ -7,6 +7,7 @@ urlpatterns = [
     path('recommend/', views.recommend_movie_list),
     path('recent/', views.recent_movie_list),
     path('random_genre/', views.random_genre_movie_list),
+    path('prefer/', views.prefer_movie_list),
 
 
     path('recommend/<int:movie_pk>/', views.recommend_movie),

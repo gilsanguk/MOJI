@@ -51,6 +51,7 @@ export default {
     SelectedMovieItem,
   },
   methods: {
+    // 검색
     search(input) {
       if (input.length < 1) {
         return [];
@@ -66,15 +67,17 @@ export default {
     getResultValue() {
       return "";
     },
+    // 삭제
+    deleteMovie(movie) {
+      this.selectmovies = this.selectmovies.filter((m) => m.id !== movie.id);
+    },
+    // 영화 추천
     onSubmit(result) {
       if (this.selectmovies.length < 6) {
         this.selectmovies.push(result);
       } else {
         alert("6개까지만 선택 가능합니다.");
       }
-    },
-    deleteMovie(movie) {
-      this.selectmovies = this.selectmovies.filter((m) => m.id !== movie.id);
     },
     resetPrefer() {
       if (this.selectmovies.length == 0) {
@@ -99,6 +102,7 @@ export default {
 </script>
 
 <style scoped>
+/* 기본 */
 .centered {
   display: flex !important;
   justify-content: center !important;
@@ -119,6 +123,7 @@ export default {
   font-size: 40px;
 }
 
+/* 검색목록 */
 .result {
   display: flex;
   align-items: center;
@@ -136,6 +141,7 @@ export default {
   font-size: 1rem;
 }
 
+/* 선택한 영화 */
 #selecteddiv {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -145,6 +151,7 @@ export default {
   margin: 2rem 1rem;
 }
 
+/*  버튼 */
 #clickbutton {
   color: #a7a7a7;
 }

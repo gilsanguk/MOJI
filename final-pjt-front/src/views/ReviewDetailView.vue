@@ -7,24 +7,30 @@
         작성된 시간 : {{ displayedAt() }}
       </p>
       <p v-else id="time" class="number">수정된 시간 : {{ displayedAt() }}</p>
-      <div id="content">{{ review.content }}</div>
-      <label style="margin-right: 15px" class="content-font" for="rank">내가 생각하는 영화 평점</label>
-      <div class="select-wrapper" style="margin-right: 15px; margin-bottom:15px">            
-        <select name="rate" id="rate" v-model="myMovieRate" class="content-font">
-          <option style="color: black;" class="content-font" :value="rate" v-for="(rate, idx) in this.reviewRate" :key="idx">{{ rate }}</option>
-        </select>
+        <!-- 평점 -->
+        <div id="rank" class="star-ratings col-2">
+          <div
+            class="star-ratings-fill space-x-2 text-lg"
+            :style="{ width: ratingToPercent() + '%' }"
+          >
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <div class="star-ratings-base space-x-2 text-lg">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
       </div>
-      <div id="likebtn">
-        <button
+    <div id="likebtn">
+      <button
           class="btn btn-outline-danger"
           @click.prevent="likeReview(review.id)"
         >
           <i class="fas fa-heart"></i>
           <span class="badge badge-light number">{{ review.like_users.length }}</span>
-        </button>
-      </div>
-      <h1>댓글수</h1>
+      </button>
     </div>
+    <div id="content">{{ review.content }}</div>
+    </div>
+    <h1>댓글수</h1>
   </div>
 </template>
 
@@ -37,7 +43,6 @@ export default {
   name: "ReviewDetailView",
   data() {
     return {
-      reviewRate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       review: {},
       time: "",
     };
@@ -46,6 +51,11 @@ export default {
     // 시간 계산
     displayedAt() {
       return new Date(this.review.created_at).toLocaleString();
+    },
+
+    // 평점 계산
+    ratingToPercent() {
+      return this.review.rank * 10 - 3 
     },
 
     // 리뷰 받기
@@ -91,7 +101,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #bg-div {
   width: 60%;
 }
@@ -102,21 +112,22 @@ export default {
   font-weight: bold;
 }
 
+#rank {
+  float: left;
+}
+
 #username {
   text-align: right;
   font-size: medium;
-  margin-right: 1%;
 }
 
 #time {
   text-align: right;
   font-size: small;
-  margin-right: 1%;
 }
 
 #content {
   text-align: left;
-  margin: 2%;
 }
 
 #likebtn {

@@ -13,17 +13,6 @@ import TestView from '@/views/TestView'
 Vue.use(VueRouter)
 const routes = [
   {
-    path: '/',
-    beforeEnter: (to, from, next) => {
-      if (store.getters.isLogin) {
-        if (store.getters)
-        next('/movies')
-      } else {
-        next('/login')
-      }
-    }
-  },
-  {
     path: '/notfound404',
     name: 'NotFound404',
     component: NotFound404,
@@ -82,7 +71,11 @@ const routes = [
     component: CommunityView,
     beforeEnter: (to, from, next) => {
       if (store.getters.isLogin) {
-        next()
+        if (store.getters.prefer) {
+          next()
+        } else {
+          next('/selectmovie')
+        }
       } else {
         next('/login')
       }
@@ -94,7 +87,11 @@ const routes = [
     component: ReviewDetailView,
     beforeEnter: (to, from, next) => {
       if (store.getters.isLogin) {
-        next()
+        if (store.getters.prefer) {
+          next()
+        } else {
+          next('/selectmovie')
+        }
       } else {
         next('/login')
       }

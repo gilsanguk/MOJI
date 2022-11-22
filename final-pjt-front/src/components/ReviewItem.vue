@@ -3,8 +3,8 @@
     <div class="row">
       <div class="d-flex">
         <!-- 제목 간략히 -->
-        <div class="text-truncate col-1">{{ review.user.nickname }}</div>
-        <div class="text-truncate col-5">
+        <div class="text-truncate col-2">{{ review.user.nickname }}</div>
+        <div class="text-truncate col-4">
           <b>{{ review.title }}</b>
         </div>
         <span class="text-truncate col-3 number">
@@ -17,12 +17,10 @@
             class="star-ratings-fill space-x-2 text-lg"
             :style="{ width: ratingToPercent() + '%' }"
           >
-            <span>★</span><span>★</span><span>★</span><span>★</span
-            ><span>★</span>
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
           <div class="star-ratings-base space-x-2 text-lg">
-            <span>★</span><span>★</span><span>★</span><span>★</span
-            ><span>★</span>
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
         </div>
 
@@ -31,7 +29,6 @@
             <i class="fas fa-heart"></i>
             {{ review.like_users.length }}
         </div>
-      
       </div>
     </div>
   </div>
@@ -52,8 +49,7 @@ export default {
   methods: {
     // 평점 계산
     ratingToPercent() {
-      const score = 5 * 10 - 3;
-      return score;
+      return `${this.review.rank}` * 10 - 3;
     },
     // 리뷰 디테일
     goDetail() {
@@ -83,7 +79,6 @@ export default {
 <style scoped>
 /* 기본 */
 .container {
-  border-top: 1px solid #404040;
   border-bottom: 1px solid #404040;
   border-radius: 0.25rem;
   cursor: pointer;
