@@ -2,7 +2,7 @@
 
 ### SSAFY 1학기 최종 프로젝트 - 영화 추천 앱 제작
 #### 계획
-![image](https://user-images.githubusercontent.com/109333410/202400546-7b8757d5-0bd8-47e1-924f-6fc821ef65ee.png)
+![image](https://user-images.githubusercontent.com/109333410/203187803-69c3aa2e-e882-48f4-88e1-1dd8e47222ee.png)
 
 -----
 ### BackEnd
@@ -13,4 +13,3 @@
 
 ---------------
 ### 진행중
-https://app.diagrams.net/#Hgilsanguk%2FMovieRecommendApp%2Fmaster%2FERD.drawio.png
