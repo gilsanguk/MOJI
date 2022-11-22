@@ -21,7 +21,7 @@ export default {
     getReview() {
       axios({
         method: 'get',
-        url: `${API_URL}/community/reviews/${this.$route.params.reviewId}/`,
+        url: `${API_URL}/community/${this.$route.params.movieId}/reviews/${this.$route.params.reviewId}/`,
         headers: { Authorization: `Token ${this.$store.getters.getToken}`},
       })
         .then((res) => {

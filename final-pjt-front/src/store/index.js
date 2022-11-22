@@ -64,26 +64,31 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    // 토큰 저장
+    SAVE_TOKEN(state, token) {
+      state.token = token
+    },
+    // 유저 정보
     SET_USER_DATA(state, userData) {
       state.user.id = userData.id
       state.user.username = userData.username
       state.user.nickname = userData.nickname
       state.user.profileImage = userData.profileImage
     },
+    // 영화 정보
     GET_MOVIES(state, movies) {
       state.recommend = movies.recommend
       state.recent = movies.recent
       state.randomGenre = movies.randomGenre
       state.prefer = movies.prefer
     },
+    // 모든 영화
     GET_ALL_MOVIES(state, movies) {
       state.all = movies
     },
-    SAVE_TOKEN(state, token) {
-      state.token = token
-    },
   },
   actions: {
+    // 회원가입
     signUp(context, user) {
       axios({
         method: 'post',
@@ -106,6 +111,7 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err.response))
     },
+    // 로그인
     logIn(context, user) {
       axios({
         method: 'post',
@@ -128,10 +134,12 @@ export default new Vuex.Store({
         console.log(err.response.data)
         );
     },
+    // 로그아웃
     logOut({ commit }) {
       commit('SAVE_TOKEN', null)
       router.push({ name: 'LoginView' })
     },
+    // 유저 정보
     setUserData({ commit }, username) {
       axios({
         method: 'get',
@@ -145,7 +153,7 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err));
     },
-
+    // 영화 정보
     getMovies(context) {
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
@@ -179,6 +187,7 @@ export default new Vuex.Store({
           }
         });
     },
+    // 모든 영화
     getAllMovies(context) {
       axios({
         method: 'get',
@@ -200,6 +209,7 @@ export default new Vuex.Store({
           }
         });
     },
+    // 선호 영화
     resetPrefer(context, movies) {
       axios({
         method: 'POST',

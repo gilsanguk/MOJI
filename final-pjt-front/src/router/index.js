@@ -89,7 +89,7 @@ const routes = [
     }
   },
   {
-    path: '/community/reviews/:reviewId',
+    path: '/community/:movieId/reviews/:reviewId',
     name: 'ReviewDetailView',
     component: ReviewDetailView,
     beforeEnter: (to, from, next) => {

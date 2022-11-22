@@ -35,6 +35,7 @@ export default {
   name: "ReviewItem",
   props: {
     review: Object,
+    movie: Object,
   },
   data() {
     return {
@@ -50,7 +51,7 @@ export default {
     },
     // 리뷰 디테일
     goDetail() {
-      this.$router.push(`/community/reviews/${this.review.id}`);
+      this.$router.push(`/community/${this.movie.id}/reviews/${this.review.id}`);
     },
     // 날짜 표시
     displayedAt() {

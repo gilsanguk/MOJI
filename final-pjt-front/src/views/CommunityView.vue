@@ -12,6 +12,7 @@
           v-for="review in paginatedData"
           :key="review.id"
           :review="review"
+          :movie="movie"
         />
         <!-- 버튼 -->
         <div class="btn-cover">
