@@ -8,7 +8,7 @@
           <b>{{ review.title }}</b>
         </div>
         <h5 class="col-3">
-          <b>{{ date }}</b>
+          <b>{{ displayedAt() }}</b>
         </h5>
 
         <!-- 평점 -->
@@ -51,6 +51,23 @@ export default {
     // 리뷰 디테일
     goDetail() {
       this.$router.push(`/community/reviews/${this.review.id}`);
+    },
+    // 날짜 표시
+    displayedAt() {
+      const seconds = (new Date() - new Date(this.review.created_at)) / 1000
+      if (seconds < 60) return `방금 전`
+      const minutes = seconds / 60
+      if (minutes < 60) return `${Math.floor(minutes)}분 전`
+      const hours = minutes / 60
+      if (hours < 24) return `${Math.floor(hours)}시간 전`
+      const days = hours / 24
+      if (days < 7) return `${Math.floor(days)}일 전`
+      const weeks = days / 7
+      if (weeks < 5) return `${Math.floor(weeks)}주 전`
+      const months = days / 30
+      if (months < 12) return `${Math.floor(months)}개월 전`
+      const years = days / 365
+      return `${Math.floor(years)}년 전`
     },
   },
 };
