@@ -59,7 +59,7 @@ def get_recomandation(requestes_ids):
 
 @api_view(['GET'])
 def movie_list(request):
-    movies = Movie.objects.all()[:10]
+    movies = Movie.objects.all()
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
 

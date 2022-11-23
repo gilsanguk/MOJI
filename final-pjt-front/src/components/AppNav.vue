@@ -1,7 +1,7 @@
 <template>
   <nav id="nav" class="row sticky-top py-2 px-1">
     <!-- 로고 -->
-    <div class="d-flex col-8 col-lg-6 col-xxl-8">
+    <div class="d-flex col-8 col-lg-6 col-xxl-8 align-items-center">
       <img
         src="@/assets/logo.png"
         alt="logo"

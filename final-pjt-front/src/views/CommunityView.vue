@@ -1,12 +1,14 @@
 <template>
   <div class="bgdiv">
-    <div class="container">
+    <div class="container mt-5">
       <h1>
         <b>{{ movie?.title }}</b>
       </h1>
       <!-- 리뷰 -->
       <h3 class="english m-3 pb-3"><b>Review</b></h3>
-      <button @click="openModal" id="reviewbtn" class="btn-none">리뷰 작성</button>
+      <div class='d-flex' :class="reviews.length ? 'justify-content-end' : 'justify-content-center'">
+        <button @click="openModal" id="reviewbtn" class="btn-none">리뷰 작성</button>
+      </div>
       <div v-if="reviews.length">
         <ReviewItem
           v-for="review in paginatedData"

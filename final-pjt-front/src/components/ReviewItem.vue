@@ -7,8 +7,11 @@
         <div class="text-truncate col-4">
           <b>{{ review.title }}</b>
         </div>
-        <span class="text-truncate col-3 number">
+        <span v-if="review.created_at === review.updated_at" class="text-truncate col-3 number">
           <b>{{ displayedAt()}}</b>
+        </span>
+        <span v-else class="text-truncate col-3 number">
+          <b>{{ displayedAt()}} (수정됨)</b>
         </span>
 
         <!-- 평점 -->
