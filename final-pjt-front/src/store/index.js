@@ -134,8 +134,7 @@ export default new Vuex.Store({
     
     
     getMovies(context) {
-       // 시작
-       // 경과시간(밀리초)
+      console.log('axios 시작', new Date())
       context.commit('SET_LOADING')
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
@@ -152,8 +151,8 @@ export default new Vuex.Store({
       const axiosprefer = axios.get(
         `${API_URL}/movies/prefer/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
-
-      axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandomGenre, axiosprefer])
+        
+        axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandomGenre, axiosprefer])
         .then(axios.spread((recommend, liked, recent, randomGenre, prefer) => {
           if (prefer.data.length === 0) {
             router.push({ name: 'SelectMovieView'})
@@ -165,13 +164,15 @@ export default new Vuex.Store({
             randomGenre: randomGenre.data,
             prefer: prefer.data,
           }
+          console.log('1번 댄', new Date())
           context.commit('GET_MOVIES', movies)
         }))
         .then(() => {
-          let start = new Date(); 
+          // let start = new Date(); 
+          // let end = new Date();
+          // console.log('Movie 걸린 시간:',end - start);
+          console.log('2번 댄: all무비 넘어가기', new Date())
           context.dispatch('getAllMovies')
-          let end = new Date();
-          console.log('Movie 걸린 시간:',end - start);
         })
         .catch(err => {
           if (err.response.status === 401) {
@@ -185,7 +186,7 @@ export default new Vuex.Store({
     },
     // 모든 영화
     getAllMovies(context) {
-      let start = new Date();
+      console.log('올무비 시작', new Date());
       context.commit('SET_LOADING')
       axios({
         method: 'get',
@@ -193,14 +194,17 @@ export default new Vuex.Store({
         headers: {
           Authorization: `Token ${this.state.token}`
         }
+        
       })
         .then((res) => {
+          console.log('마지막 댄', new Date());
           context.commit('GET_ALL_MOVIES', res.data)
         })
         .then(() => {
           context.commit('CLOSE_LOADING')
-          let end = new Date();
-          console.log('AllMovie 걸린 시간:', end - start);
+          console.log('로딩 끝',new Date());
+          // let end = new Date();
+          // console.log('AllMovie 걸린 시간:', end - start);
         })
         .catch(err => {
           if (err.response.status === 401) {
