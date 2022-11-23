@@ -1,6 +1,6 @@
 <template>
-  <div id="bgdiv">
-    <div id="bgdivdiv">
+  <div class="bgdiv">
+    <div class="bgdivdiv">
       <h1 class="text-truncate m-3 pb-3 text-white"><b>비슷한 영화를 추천해드릴게요!</b></h1>
       <div id="searchdiv">
         <autocomplete
@@ -114,12 +114,12 @@ export default {
   align-items: center !important;
 }
 
-#bgdiv {
+.bgdiv {
   min-height: 100vh;
   padding: 2rem 5rem;
 }
 
-#bgdivdiv {
+.bgdivdiv {
   margin: 0% 15%;
 }
 

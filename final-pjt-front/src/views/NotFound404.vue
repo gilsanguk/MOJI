@@ -1,5 +1,5 @@
 <template>
-<div id="bgdiv">
+<div class="bgdiv">
   <div id="notfounddiv">
     <img src="https://i.ibb.co/W6tgcKQ/softcodeon.gif" id="imgdiv" alt="">
     <div id="updiv">
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped>
-#bgdiv {
+.bgdiv {
   background-color: rgba(240, 240, 240);
   height: 1000px;
   opacity: 0.8;

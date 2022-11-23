@@ -168,9 +168,6 @@ export default {
       return this.$route.name === "MoviesView";
     },
   },
-  created() {
-    this.$store.dispatch("getAllMovies");
-  },
 };
 </script>
 

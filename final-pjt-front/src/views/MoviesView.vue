@@ -191,9 +191,8 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("getAllMovies");
-    this.$store.dispatch("getMovies");
     this.$modal.hideAll();
+    this.$store.dispatch("getMovies");
   },
   mounted() {
     console.log(this.$store.getters.prefer.length);

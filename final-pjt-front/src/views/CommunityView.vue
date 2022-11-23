@@ -1,5 +1,5 @@
 <template>
-  <div id="bgdiv">
+  <div class="bgdiv">
     <div class="container">
       <h1>
         <b>{{ movie?.title }}</b>
@@ -143,7 +143,7 @@ export default {
 
 <style scoped>
 /* 기본 */
-#bgdiv {
+.bgdiv {
   min-height: 100vh;
   padding: 2rem 5rem;
 }

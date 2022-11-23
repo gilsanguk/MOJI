@@ -37,6 +37,7 @@ export default new Vuex.Store({
       nickname: '',
       profileImage: null,
     },
+    isLoading: false,
   },
   getters: {
     isLogin(state) {
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     },
     getToken(state) {
       return state.token
+    },
+    isLoading(state) {
+      return state.isLoading
     },
     all(state) {
       return state.all
@@ -90,6 +94,13 @@ export default new Vuex.Store({
     // 선호 영화
     SET_PREFER(state, movies) {
       state.prefer = movies
+    },
+    // 로딩
+    SET_LOADING(state) {
+      state.isLoading = true;
+    },
+    CLOSE_LOADING(state) {
+      state.isLoading = false;
     }
   },
   actions: {
@@ -114,6 +125,7 @@ export default new Vuex.Store({
     },
     // 영화 정보
     getMovies(context) {
+      context.commit('SET_LOADING')
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
@@ -140,6 +152,9 @@ export default new Vuex.Store({
           }
           context.commit('GET_MOVIES', movies)
         }))
+        .then(() => {
+          context.dispatch('getAllMovies')
+        })
         .catch(err => {
           if (err.response.status === 401) {
             router.push({ name: 'LoginView' })
@@ -152,6 +167,7 @@ export default new Vuex.Store({
     },
     // 모든 영화
     getAllMovies(context) {
+      context.commit('SET_LOADING')
       axios({
         method: 'get',
         url: `${API_URL}/movies/`,
@@ -161,6 +177,9 @@ export default new Vuex.Store({
       })
         .then((res) => {
           context.commit('GET_ALL_MOVIES', res.data)
+        })
+        .then(() => {
+          context.commit('CLOSE_LOADING')
         })
         .catch(err => {
           if (err.response.status === 401) {

@@ -15,17 +15,15 @@ const routes = [
   {
     path: '*',
     beforeEnter: (to, from, next) => {
-      setTimeout(() => {
-        if (store.getters.isLogin) {
-          if (store.getters.prefer.length !== 0) {
-            next()
-          } else {
-            next('/selectmovie')
-          }
+      if (store.getters.isLogin) {
+        if (store.getters.prefer.length !== 0) {
+          next()
         } else {
-          next('/login')
+          next('/selectmovie')
         }
-      }, 350)
+      } else {
+        next('/login')
+      }
     },
   },
   {
@@ -62,17 +60,15 @@ const routes = [
     name: 'MoviesView',
     component: MoviesView,
     beforeEnter: (to, from, next) => {
-      setTimeout(() => {
-        if (store.getters.isLogin) {
-          if (store.getters.prefer.length !== 0) {
-            next()
-          } else {
-            next('/selectmovie')
-          }
+      if (store.getters.isLogin) {
+        if (store.getters.prefer.length !== 0) {
+          next()
         } else {
-          next('/login')
+          next('/selectmovie')
         }
-      }, 350)
+      } else {
+        next('/login')
+      }
     },
   },
   {
@@ -92,17 +88,15 @@ const routes = [
     name: 'CommunityView',
     component: CommunityView,
     beforeEnter: (to, from, next) => {
-      setTimeout(() => {
-        if (store.getters.isLogin) {
-          if (store.getters.prefer.length !== 0) {
-            next()
-          } else {
-            next('/selectmovie')
-          }
+      if (store.getters.isLogin) {
+        if (store.getters.prefer.length !== 0) {
+          next()
         } else {
-          next('/login')
+          next('/selectmovie')
         }
-      }, 350)
+      } else {
+        next('/login')
+      }
     },
   },
   {
@@ -110,17 +104,15 @@ const routes = [
     name: 'ReviewDetailView',
     component: ReviewDetailView,
     beforeEnter: (to, from, next) => {
-      setTimeout(() => {
-        if (store.getters.isLogin) {
-          if (store.getters.prefer.length !== 0) {
-            next()
-          } else {
-            next('/selectmovie')
-          }
+      if (store.getters.isLogin) {
+        if (store.getters.prefer.length !== 0) {
+          next()
         } else {
-          next('/login')
+          next('/selectmovie')
         }
-      }, 350)
+      } else {
+        next('/login')
+      }
     },
   },
   {

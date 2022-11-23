@@ -1,50 +1,81 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <div id="bg-div">
-      <p id="title">{{ review.title }}</p>
-      <p id="username" class="english">작성자 : {{ review.user?.nickname }}</p>
-      <p v-if="review.updated_at === review.created_at" id="time" class="number">
-        작성된 시간 : {{ displayedAt() }}
-      </p>
-      <p v-else id="time" class="number">수정된 시간 : {{ displayedAt() }}</p>
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <img
+      src="@/assets/logo.png"
+      alt="logo"
+      class="me-5"
+      height="200"
+    />
+    <div class="bg-div">
+      <div class="bg-div-div">
+        <!-- 헤더 -->
+        <p id="title">{{ review.title }}</p>
+        <p id="username" class="english">
+          작성자 : {{ review.user?.nickname }}
+        </p>
+        <p
+          v-if="review.updated_at === review.created_at"
+          id="time"
+          class="number"
+        >
+          작성된 시간 : {{ displayedAt() }}
+        </p>
+        <p v-else id="time" class="number">수정된 시간 : {{ displayedAt() }}</p>
+
         <!-- 평점 -->
         <div id="rank" class="star-ratings col-2">
           <div
             class="star-ratings-fill space-x-2 text-lg"
             :style="{ width: ratingToPercent() + '%' }"
           >
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            <span>★</span><span>★</span><span>★</span><span>★</span
+            ><span>★</span>
           </div>
           <div class="star-ratings-base space-x-2 text-lg">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            <span>★</span><span>★</span><span>★</span><span>★</span
+            ><span>★</span>
+          </div>
         </div>
+
+        <!-- 좋아요 -->
+        <div id="likebtn">
+          <button
+            class="like-btn btn"
+            :class="isLiked ? 'btn-outline-light' : 'btn-outline-danger'"
+            @click.prevent="likeReview(review.id)"
+          >
+            <i
+              class="fas fa-heart position-absolute"
+              :class="{ 'w-heart': !isLiked }"
+            ></i>
+          </button>
+          <span class="badge badge-light number d-flex align-items-center">{{
+            review.like_users?.length
+          }}</span>
+        </div>
+        <div id="content">{{ review.content }}</div>
+
+        <!-- 댓글 -->
+        <div>
+          <div class="comment">
+            <button @click="createComment">댓글 작성</button>
+          </div>
+          <CommentItem
+            class="commentitem"
+            v-for="(comment, index) in comments"
+            :key="index"
+            :comment="comment"
+          />
+        </div>
+
       </div>
-    <div id="likebtn">
-      <button
-          class="btn btn-outline-danger"
-          @click.prevent="likeReview(review.id)"
-        >
-          <i class="fas fa-heart"></i>
-          <span class="badge badge-light number">{{ review.like_users?.length }}</span>
-      </button>
-    </div>
-    <div id="content">{{ review.content }}</div>
-    <div id="comment">
-      <button @click="createComment">댓글 작성</button>
-      <CommentItem
-        id="commentitem"
-        v-for="(comment,index) in comments"
-        :key="index"
-        :comment="comment"
-        />
-    </div>
     </div>
   </div>
 </template>
 
 <script>
-import CommentCreate from '@/components/CommentCreate'
-import CommentItem from '@/components/CommentItem'
+import CommentCreate from "@/components/CommentCreate";
+import CommentItem from "@/components/CommentItem";
 
 import axios from "axios";
 
@@ -53,10 +84,11 @@ const API_URL = "http://127.0.0.1:8000/moji";
 export default {
   name: "ReviewDetailView",
   components: {
-    CommentItem
+    CommentItem,
   },
   data() {
     return {
+      isLiked: false,
       comments: [],
       review: {},
       time: "",
@@ -70,7 +102,7 @@ export default {
 
     // 평점 계산
     ratingToPercent() {
-      return this.review.rank * 10 
+      return this.review.rank * 10;
     },
 
     // 리뷰 받기
@@ -109,10 +141,33 @@ export default {
       };
       this.$store.dispatch("deleteReview", review);
     },
+    // 리뷰 좋아요
+    likeReview(reviewId) {
+      axios({
+        method: "post",
+        url: `${API_URL}/community/reviews/${reviewId}/like/`,
+        headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+      })
+        .then((res) => {
+          this.isLiked = res.data.is_liked;
+          console.log(this.isLiked);
+          this.getReview();
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.$router.push({ name: "LoginView" });
+          } else if (err.response.status === 404) {
+            this.$router.push({ name: "NotFound404" });
+          } else {
+            console.log(err);
+          }
+        });
+    },
 
     // 댓글 받기
     getComments() {
-      axios.get(
+      axios
+        .get(
           `${API_URL}/community/reviews/${this.$route.params.reviewId}/comments/`,
           {
             headers: { Authorization: `Token ${this.$store.getters.getToken}` },
@@ -155,18 +210,32 @@ export default {
   created() {
     this.getReview();
     this.getComments();
-    this.$modal.hideAll()
+    this.$modal.hideAll();
   },
 };
 </script>
 
 <style scoped>
-#bg-div {
-  width: 40%;
+/* 기본 */
+.bg-div {
+  width: 45%;
+  margin-bottom: 3rem;
+  /* border: 1px solid white; */
+  border-radius: 10px;
+  padding: 2%;
+  background-color: #292929;
+}
+
+.bg-div-div {
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #a7a7a7;
+  border-radius: 10px;
+  padding: 7%;
+  background-color: #292929;
 }
 
 #title {
-  margin: 3%;
   font-size: x-large;
   font-weight: bold;
 }
@@ -189,18 +258,53 @@ export default {
   text-align: left;
 }
 
+img {
+  opacity: 0.7;
+}
+
+/* 좋아요 */
 #likebtn {
+  margin-bottom: 1rem;
   display: flex;
   justify-content: flex-end;
 }
 
-#comment {
-  margin: 5% 0%
+.like-btn {
+  position: relative;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0;
 }
 
-#commentitem {
+.fa-heart {
+  position: absolute;
+  top: 22%;
+  left: 15%;
+  color: #f00;
+}
+
+.w-heart {
+  color: #fff !important;
+}
+
+.btn-outline-light:hover {
+  color: #f00;
+}
+
+/* 댓글 */
+.comment {
+  border-top: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+  margin-top: 1.2rem;
+  padding: 0.7rem 0;
+}
+
+.commentitem {
   text-align: left;
-  margin: 3% 0%
+  margin: 0%;
+  padding: 1rem 0;
+  border-bottom: 1px solid #404040;
 }
 
 /* 평점 */

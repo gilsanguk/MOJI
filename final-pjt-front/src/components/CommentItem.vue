@@ -1,8 +1,8 @@
 <template>
-  <div id="bgdiv">
+  <div class="bgdiv">
     <p>작성자 : {{ comment.user.nickname }} </p>
-    <p v-if="created_at === updated_at">{{displayedAt()}}</p>
-    <p v-else> 수정됨 {{displayedAt()}}</p>
+    <p v-if="comment.created_at === comment.updated_at" class="number">{{displayedAt()}}</p>
+    <p v-else class="number">{{displayedAt()}} (수정됨) </p>
     <div id="contentdiv">{{comment.content}}</div>
   </div>
 </template>
@@ -36,12 +36,12 @@ export default {
 </script>
 
 <style scoped>
-#bgdiv {
+.bgdiv {
   margin: 2% 0%;
   font-size: large;
 }
 
-#bgdiv p{
+.bgdiv p{
   margin: 0 0 1%
 }
 </style>

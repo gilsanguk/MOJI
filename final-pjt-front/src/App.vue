@@ -1,10 +1,33 @@
 <template>
   <div id="app" class="appbody">
     <AppNav v-if="isLogin"/>
+    <LoadingPage v-if="isLoading"/>
     <!-- <img src="@/assets/logo.png" @click="goHome"  class="bg-img"/> -->
     <router-view/>
   </div>
 </template>
+
+<script>
+import AppNav from '@/components/AppNav'
+import LoadingPage from '@/components/LoadingPage'
+import '@trevoreyre/autocomplete-vue/dist/style.css'
+
+export default {
+  name: 'App',
+  components: {
+    AppNav,
+    LoadingPage
+  },
+  computed: {
+    isLogin() {
+      return this.$store.getters.isLogin
+    },
+    isLoading() {
+      return this.$store.getters.isLoading
+    }
+  },
+}
+</script>
 
 <style>
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,700);
@@ -138,20 +161,3 @@ button:hover,
 }
 
 </style>
-
-<script>
-import AppNav from '@/components/AppNav'
-import '@trevoreyre/autocomplete-vue/dist/style.css'
-
-export default {
-  name: 'App',
-  components: {
-    AppNav,
-  },
-  computed: {
-    isLogin() {
-      return this.$store.getters.isLogin
-    },
-  },
-}
-</script>
