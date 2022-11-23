@@ -83,9 +83,14 @@ export default {
       if (this.selectmovies.length == 0) {
         alert("영화를 선택해주세요.");
       } else {
-        this.$store.dispatch("resetPrefer", this.selectmovies).then(() => {
-          this.$router.push({ name: "MoviesView" });
-        });
+        this.$store.commit("SET_PREFER", this.selectmovies);
+        // setTimeout(() => {
+          this.$store.dispatch("resetPrefer", this.selectmovies)
+            .then(() => {
+              this.$router.push({ name: "MoviesView" });
+            });
+        // }, 350);
+        
       }
     },
   },
@@ -157,6 +162,7 @@ export default {
   background-color: #141619;
   border: 0;
   outline: none;
+  margin-left: 1rem;
 }
 
 #clickbutton:hover {

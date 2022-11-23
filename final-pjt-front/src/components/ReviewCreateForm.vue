@@ -23,18 +23,25 @@
             v-model="content"
           ></textarea>
         </div>
+        <!-- 평점 -->
         <div id="rank">
-          <div>
-            <span>내가 생각하는 영화 평점</span>       
-            <select id="rate" v-model="rank">
-              <option style="color: black;" class="content-font" :value="rate" v-for="(rate, idx) in this.reviewRate" :key="idx">{{ rate }}</option>
-            </select>
-          </div>
+          <span>내가 생각하는 영화 평점</span>
+          <select id="rate" v-model="rank">
+            <option
+              style="color: black;"
+              class="content-font"
+              :value="rate"
+              v-for="(rate, idx) in this.reviewRate"
+              :key="idx"
+            >
+              {{ rate }}
+            </option>
+          </select>
+          <button type="submit" id="summitbtn" @click="createReview">
+            등록
+          </button>
         </div>
       </div>
-      <button type="submit" id="summitbtn" @click="createReview">
-        등록
-      </button>
     </form>
   </div>
 </template>
@@ -53,10 +60,10 @@ export default {
   },
   data() {
     return {
-      reviewRate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      reviewRate: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       title: "",
       content: "",
-      rank: 0,
+      rank: 10,
     };
   },
   methods: {
@@ -66,7 +73,7 @@ export default {
         title: this.title,
         content: this.content,
         rank: this.rank,
-      }
+      };
       console.log(data);
       axios({
         method: "post",
@@ -99,18 +106,17 @@ export default {
 /* 기본 */
 .vm--modal {
   border-radius: 10px;
-  overflow-y: scroll;
   background-color: #292929;
 }
 
 #reviewform {
-  padding: 3% 7%
+  padding: 3% 7%;
 }
 
 #closebtn {
   float: right;
   background-color: transparent;
-  font-size: xx-large;
+  font-size: x-large;
   color: #a7a7a7;
   border: 0;
   outline: 0;
@@ -134,7 +140,7 @@ export default {
 }
 
 #rank span {
-  margin-right: 3%
+  margin-right: 3%;
 }
 
 #reviewform .form-control {
@@ -142,15 +148,18 @@ export default {
 }
 
 #summitbtn {
-  float: right;
+  position: absolute;
   background-color: transparent;
   font-size: x-large;
   color: #a7a7a7;
   border: 0;
   outline: 0;
+  right: 8%;
+  bottom: 8%;
 }
 
-button:hover,
+/* button:hover, */
+#closebtn:hover,
 #summitbtn:hover {
   color: white;
   cursor: pointer;

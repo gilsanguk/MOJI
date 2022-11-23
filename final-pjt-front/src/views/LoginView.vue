@@ -72,7 +72,14 @@ export default {
           this.$store.dispatch('setUserData', this.username)
         })
         .then(() => {
-          this.$router.push({ name: 'MoviesView' })
+          setTimeout(() => {
+            if (this.$store.getters.prefer.length !== 0) {
+              this.$router.push({ name: 'MoviesView' })
+            } else {
+              this.$router.push({ name: 'SelectMovieView' })
+            }
+          }, 200)
+          
         })
         .catch(() => {
           this.err = true;
@@ -143,6 +150,8 @@ img {
 #password {
   width: 500px;
   border-radius: 10px;
+  border: 0;
+  outline: none;
   padding-left: 1rem;
   margin-top: 1rem;
   display: inline-block;
@@ -158,12 +167,11 @@ label#password {
 
 input#username,
 input#password {
-  height: 55px;
+  height: 50px;
 }
 
 .error {
-  border: 1px solid crimson;
-  box-shadow: 0 0 0 3px rgba(220, 50, 20, 0.5);
+  box-shadow: 0 0 0 4px rgba(220, 50, 20, 0.55);
 }
 
 /* 버튼 */

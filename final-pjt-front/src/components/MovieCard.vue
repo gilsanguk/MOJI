@@ -77,7 +77,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .movie-card {
   background-color: #3b3b3b;
   border-radius: 10px 10px 10px 10px !important;

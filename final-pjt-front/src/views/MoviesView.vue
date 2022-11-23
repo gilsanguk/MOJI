@@ -196,7 +196,8 @@ export default {
     this.$modal.hideAll();
   },
   mounted() {
-    if (!this.$store.getters.prefer) {
+    console.log(this.$store.getters.prefer.length);
+    if (this.$store.getters.prefer.length === 0) {
       this.$router.push({ name: "SelectMovieView" });
     }
   },

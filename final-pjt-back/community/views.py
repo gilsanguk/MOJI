@@ -69,7 +69,7 @@ def like_review(request, review_pk):
 @api_view(['GET',])
 def comment_list(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    comments = review.comments.all()
+    comments = review.comment_set.all()
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data)
 
@@ -77,7 +77,7 @@ def comment_list(request, review_pk):
 @api_view(['GET', 'POST',])
 def create_comment(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    serializer = ReviewSerializer(data=request.data)
+    serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(review=review, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

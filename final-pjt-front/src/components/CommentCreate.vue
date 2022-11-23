@@ -50,8 +50,7 @@ export default {
         headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         data: data,
       })
-        .then((res) => {
-        console.log(res.data);
+        .then(() => {
           this.content = "";
           this.closeModal();
           this.refresh();

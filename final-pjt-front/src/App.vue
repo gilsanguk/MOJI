@@ -95,6 +95,48 @@ nav a.router-link-exact-active {
   font-size: 1rem;
 }
 
+/* 리뷰 작성 버튼 */
+#reviewbtn {
+  margin-bottom: 2rem;
+  color: #a7a7a7;
+}
+
+#reviewbtn:hover {
+  color: #ffffff !important;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.btn-none {
+  background-color: transparent !important;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+
+/* 버튼 */
+.btn-cover {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+button,
+.btn-cover #page-btn {
+  padding: 0.3% 2%;
+  letter-spacing: 1px;
+  background-color: transparent;
+  color: #a7a7a7;
+  border: 0;
+  outline: 0;
+}
+
+button:hover,
+.btn-cover #page-btn:hover {
+  color: white;
+  cursor: pointer;
+}
+
 </style>
 
 <script>

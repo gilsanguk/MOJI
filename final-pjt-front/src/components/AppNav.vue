@@ -10,6 +10,7 @@
         @click="goHome"
       />
       <autocomplete
+        v-if="isIndex"
         :search="search"
         placeholder="Search for a movie"
         aria-label="Search for a movie"
@@ -160,6 +161,11 @@ export default {
     },
     resetMent() {
       this.isOvered = false;
+    },
+  },
+  computed: {
+    isIndex() {
+      return this.$route.name === "MoviesView";
     },
   },
   created() {

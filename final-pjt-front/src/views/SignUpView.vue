@@ -95,10 +95,11 @@ export default {
           this.$store.commit("SAVE_TOKEN", res.data.key);
         })
         .then(() => {
+          console.log(this.username);
           this.$store.dispatch("setUserData", this.username);
         })
         .then(() => {
-          this.$router.push({ name: "MoviesView" });
+          this.$router.push({ name: "SelectMovieView" });
         })
         .catch((err) => {
           if (err.response.status === 500) {
@@ -181,6 +182,8 @@ img {
   width: 500px;
   border-radius: 10px;
   padding-left: 1rem;
+  border: 0;
+  outline: none;
   margin-top: 1%;
   display: inline-block;
   text-align: left;
@@ -199,12 +202,11 @@ input#username,
 input#password1,
 input#password2,
 input#nickname {
-  height: 55px;
+  height: 50px;
 }
 
 .error {
-  border: 1px solid crimson;
-  box-shadow: 0 0 0 3px rgba(220, 50, 20, 0.5);
+  box-shadow: 0 0 0 4px rgba(220, 50, 20, 0.55);
 }
 /* 버튼 */
 .clickbutton {

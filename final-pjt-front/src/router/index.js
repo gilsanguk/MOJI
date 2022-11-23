@@ -13,18 +13,20 @@ import TestView from '@/views/TestView'
 Vue.use(VueRouter)
 const routes = [
   {
-    path: '/',
+    path: '*',
     beforeEnter: (to, from, next) => {
-      if (store.getters.isLogin) {
-        if (store.getters.prefer) {
-          next()
+      setTimeout(() => {
+        if (store.getters.isLogin) {
+          if (store.getters.prefer.length !== 0) {
+            next()
+          } else {
+            next('/selectmovie')
+          }
         } else {
-          next('/selectmovie')
+          next('/login')
         }
-      } else {
-        next('/login')
-      }
-    }
+      }, 350)
+    },
   },
   {
     path: '/notfound404',
@@ -60,12 +62,18 @@ const routes = [
     name: 'MoviesView',
     component: MoviesView,
     beforeEnter: (to, from, next) => {
-      if (store.getters.isLogin) {
-        next()
-      } else {
-        next('/login')
-      }
-    }
+      setTimeout(() => {
+        if (store.getters.isLogin) {
+          if (store.getters.prefer.length !== 0) {
+            next()
+          } else {
+            next('/selectmovie')
+          }
+        } else {
+          next('/login')
+        }
+      }, 350)
+    },
   },
   {
     path: '/selectmovie',
@@ -84,32 +92,36 @@ const routes = [
     name: 'CommunityView',
     component: CommunityView,
     beforeEnter: (to, from, next) => {
-      if (store.getters.isLogin) {
-        if (store.getters.prefer) {
-          next()
+      setTimeout(() => {
+        if (store.getters.isLogin) {
+          if (store.getters.prefer.length !== 0) {
+            next()
+          } else {
+            next('/selectmovie')
+          }
         } else {
-          next('/selectmovie')
+          next('/login')
         }
-      } else {
-        next('/login')
-      }
-    }
+      }, 350)
+    },
   },
   {
     path: '/community/:movieId/reviews/:reviewId',
     name: 'ReviewDetailView',
     component: ReviewDetailView,
     beforeEnter: (to, from, next) => {
-      if (store.getters.isLogin) {
-        if (store.getters.prefer) {
-          next()
+      setTimeout(() => {
+        if (store.getters.isLogin) {
+          if (store.getters.prefer.length !== 0) {
+            next()
+          } else {
+            next('/selectmovie')
+          }
         } else {
-          next('/selectmovie')
+          next('/login')
         }
-      } else {
-        next('/login')
-      }
-    }
+      }, 350)
+    },
   },
   {
     path: '/test',

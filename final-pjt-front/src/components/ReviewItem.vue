@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-4" @click="goDetail">
+  <div class="container p-3" @click="goDetail">
     <div class="row">
       <div class="d-flex">
         <!-- 제목 간략히 -->
@@ -49,11 +49,11 @@ export default {
   methods: {
     // 평점 계산
     ratingToPercent() {
-      return `${this.review.rank}` * 10 - 3;
+      return `${this.review.rank}` * 10 - 0.3;
     },
     // 리뷰 디테일
     goDetail() {
-      this.$router.push(`/community/${this.movie.id}/reviews/${this.review.id}`);
+      this.$router.push(`/community/${this.movie.id}/reviews/${this.review.id}/`);
     },
     // 날짜 표시
     displayedAt() {

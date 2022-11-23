@@ -6,9 +6,7 @@
       </h1>
       <!-- 리뷰 -->
       <h3 class="english m-3 pb-3"><b>Review</b></h3>
-      <div id="reviewbtn">
-        <button @click="openModal">리뷰 작성</button>
-      </div>
+      <button @click="openModal" id="reviewbtn" class="btn-none">리뷰 작성</button>
       <div v-if="reviews.length">
         <ReviewItem
           v-for="review in paginatedData"
@@ -102,7 +100,7 @@ export default {
           refresh: this.getReviews,
         },
         {
-          height: "50%",
+          height: "42%",
           adaptive: true,
         },
         { "before-close": (event) => event.cancel() }
@@ -143,43 +141,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* 기본 */
 #bgdiv {
   min-height: 100vh;
   padding: 2rem 5rem;
 }
 
-/* 리뷰 작성 버튼 */
-#reviewbtn {
-  text-align: right;
-  margin-bottom: 2rem;
-}
-
-.reviewbtn:hover {
-  color: #ffffff !important;
-  cursor: pointer;
-  transition: 0.4s;
-}
-
-/* 버튼 */
-.btn-cover {
-  margin-top: 1.5rem;
-  text-align: center;
-}
-
-button,
-.btn-cover #page-btn {
-  padding: 0.3% 2%;
-  letter-spacing: 1px;
-  background-color: transparent;
-  color: #a7a7a7;
-  border: 0;
-  outline: 0;
-}
-
-button:hover,
-.btn-cover #page-btn:hover {
-  color: white;
-  cursor: pointer;
-}

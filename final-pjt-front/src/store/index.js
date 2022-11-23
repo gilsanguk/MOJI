@@ -36,7 +36,7 @@ export default new Vuex.Store({
       username: '',
       nickname: '',
       profileImage: null,
-    }
+    },
   },
   getters: {
     isLogin(state) {
@@ -87,6 +87,10 @@ export default new Vuex.Store({
     GET_ALL_MOVIES(state, movies) {
       state.all = movies
     },
+    // 선호 영화
+    SET_PREFER(state, movies) {
+      state.prefer = movies
+    }
   },
   actions: {
     // 로그아웃
