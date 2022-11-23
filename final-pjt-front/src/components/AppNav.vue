@@ -40,11 +40,17 @@
           >다른 영화 추천받으러 가기</router-link
         >
       </div>
-      <router-link :to="{ name: 'SelectMovieView' }" class="link"
+      <router-link
+        :to="{ name: 'ProfileView', params: { nickname: nickname } }"
+        class="link"
         >내 프로필</router-link
       >
       <a @click.prevent="logOut" class="link">로그아웃</a>
-      <img src="@/assets/no_profile.png" alt="profile" width="50" height="50" />
+      <router-link
+        :to="{ name: 'ProfileView', params: { nickname: nickname } }"
+        class="link"
+        ><img :src="'http://127.0.0.1:8000' + profileImage" height="50"
+      /></router-link>
     </div>
 
     <!-- 좁은 화면 -->
@@ -70,7 +76,9 @@
           >
         </li>
         <li class="menu">
-          <router-link :to="{ name: 'SelectMovieView' }" class="link"
+          <router-link
+            :to="{ name: 'ProfileView', params: { nickname: nickname } }"
+            class="link"
             >내 프로필</router-link
           >
         </li>
@@ -81,7 +89,11 @@
           <a @click.prevent="logOut" class="link">로그아웃</a>
         </li>
       </ul>
-      <img src="@/assets/no_profile.png" alt="profile" width="50" height="50" />
+      <router-link
+        :to="{ name: 'ProfileView', params: { nickname: nickname } }"
+        class="link"
+        ><img :src="'http://127.0.0.1:8000' + profileImage" height="50"
+      /></router-link>
     </div>
   </nav>
 </template>
@@ -167,6 +179,12 @@ export default {
     isIndex() {
       return this.$route.name === "MoviesView";
     },
+    nickname() {
+      return this.$store.getters.getNickname;
+    },
+    profileImage() {
+      return this.$store.getters.getUserProfileImage;
+    },
   },
 };
 </script>
@@ -218,6 +236,10 @@ img {
   text-decoration-line: none;
 }
 
+#nav a.router-link-exact-active {
+  color: white;
+}
+
 .link:hover {
   color: white;
   transition: 0.4s;
@@ -245,6 +267,4 @@ img {
     align-items: center;
   }
 }
-
-
 </style>

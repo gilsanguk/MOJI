@@ -7,6 +7,7 @@ import MoviesView from '@/views/MoviesView'
 import CommunityView from '@/views/CommunityView'
 import ReviewDetailView from '@/views/ReviewDetailView'
 import SelectMovieView from '@/views/SelectMovieView'
+import ProfileView from '@/views/ProfileView'
 import NotFound404 from '@/views/NotFound404'
 import TestView from '@/views/TestView'
 
@@ -128,6 +129,22 @@ const routes = [
         next('/login')
       }
     },
+  },
+  {
+    path: '/profile/:nickname',
+    name: 'ProfileView',
+    component: ProfileView,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        if (store.getters.prefer.length !== 0) {
+          next()
+        } else {
+          next('/selectmovie')
+        }
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/test',

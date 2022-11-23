@@ -47,6 +47,12 @@ export default new Vuex.Store({
     getNickname(state) {
       return state.user.nickname
     },
+    getUserId(state) {
+      return state.user.id
+    },
+    getUserProfileImage(state) {
+      return state.user.profileImage
+    },
     getToken(state) {
       return state.token
     },
@@ -79,10 +85,11 @@ export default new Vuex.Store({
     },
     // 유저 정보
     SET_USER_DATA(state, userData) {
+      console.log(userData.profile_image);
       state.user.id = userData.id
       state.user.username = userData.username
       state.user.nickname = userData.nickname
-      state.user.profileImage = userData.profileImage
+      state.user.profileImage = userData.profile_image
     },
     // 영화 정보
     GET_MOVIES(state, movies) {
@@ -106,7 +113,7 @@ export default new Vuex.Store({
     },
     CLOSE_LOADING(state) {
       state.isLoading = false;
-    }
+    },
   },
   actions: {
     // 로그아웃
@@ -115,10 +122,10 @@ export default new Vuex.Store({
       router.push({ name: 'LoginView' })
     },
     // 유저 정보
-    setUserData({ commit }, username) {
+    setUserData({ commit }, nickname) {
       axios({
         method: 'get',
-        url: `${API_URL}/accounts/profile/${username}/`,
+        url: `${API_URL}/accounts/profile/${nickname}/`,
         headers: {
           Authorization: `Token ${this.state.token}`
         }
@@ -129,10 +136,6 @@ export default new Vuex.Store({
         .catch((err) => console.log(err));
     },
     // 영화 정보
-
-    // 시간재기
-    
-    
     getMovies(context) {
       context.commit('SET_LOADING')
       const axiosrecommend = axios.get(
