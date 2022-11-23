@@ -16,7 +16,7 @@ from sklearn.preprocessing import normalize
 import base64
 import numpy as np
 import faiss
-
+import time
 
 def row_to_numpy(row):
     vector_str = row[2]
@@ -33,8 +33,11 @@ id_to_index = {row[0]: i for i, row in enumerate(data)}
 
 index = faiss.IndexFlatL2(768)
 index.add(xb_norm)
+
+print('-------------전역--------------------')
     
 def get_recomandation(requestes_ids):
+    
     requested_indices = [id_to_index[movie_id] for movie_id in requestes_ids]
     requested_indices_set = set(requested_indices)
     
@@ -55,17 +58,18 @@ def get_recomandation(requestes_ids):
     return [data[idx][0] for idx in result_indices]
 
 
-
-
 @api_view(['GET'])
 def movie_list(request):
+    all = time.time()
     movies = Movie.objects.all()
     serializer = MovieListSerializer(movies, many=True)
+    print('ALL 걸린시간 : ', time.time() - all)
     return Response(serializer.data)
 
 
 @api_view(['GET',])
 def recommend_movie_list(request):
+    rec = time.time()
     user = request.user
     prefer_movies = user.prefer_movies.all()
     if prefer_movies:
@@ -76,6 +80,7 @@ def recommend_movie_list(request):
         movies = {}
     # movies = Movie.objects.all()[:10]
     serializer = MovieListSerializer(movies, many=True)
+    print('RECOMMEND 걸린시간 : ', time.time() - rec)
     return Response(serializer.data)
 
 
@@ -89,25 +94,31 @@ def recommend_movie(request, movie_pk):
 
 @api_view(['GET',])
 def liked_movie_list(request):
+    lik = time.time()
     user = request.user
     movies = user.like_movies.all()
     serializer = MovieListSerializer(movies, many=True)
+    print('LIKED 걸린시간 : ', time.time() - lik)
     return Response(serializer.data)
 
 
 @api_view(['GET',])
 def recent_movie_list(request):
+    rece = time.time()
     movies = Movie.objects.filter(release_date__lte=datetime.datetime.now()).order_by('-release_date')[:30]
     serializer = MovieListSerializer(movies, many=True)
+    print('RECENT 걸린시간 : ', time.time() - rece)
     return Response(serializer.data)
 
 
 @api_view(['GET',])
 def random_genre_movie_list(request):
+    ran = time.time()
     genres = get_list_or_404(Genre)
     genre = random.choice(genres)
     movies = Movie.objects.filter(genres=genre)[:30]
     serializers = MovieListSerializer(movies, many=True)
+    print('RANDOM 걸린시간 : ', time.time() - ran)
     return Response([serializers.data, genre.name])
 
 

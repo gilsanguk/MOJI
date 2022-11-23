@@ -129,7 +129,13 @@ export default new Vuex.Store({
         .catch((err) => console.log(err));
     },
     // 영화 정보
+
+    // 시간재기
+    
+    
     getMovies(context) {
+       // 시작
+       // 경과시간(밀리초)
       context.commit('SET_LOADING')
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
@@ -162,7 +168,10 @@ export default new Vuex.Store({
           context.commit('GET_MOVIES', movies)
         }))
         .then(() => {
+          let start = new Date(); 
           context.dispatch('getAllMovies')
+          let end = new Date();
+          console.log('Movie 걸린 시간:',end - start);
         })
         .catch(err => {
           if (err.response.status === 401) {
@@ -176,6 +185,7 @@ export default new Vuex.Store({
     },
     // 모든 영화
     getAllMovies(context) {
+      let start = new Date();
       context.commit('SET_LOADING')
       axios({
         method: 'get',
@@ -189,6 +199,8 @@ export default new Vuex.Store({
         })
         .then(() => {
           context.commit('CLOSE_LOADING')
+          let end = new Date();
+          console.log('AllMovie 걸린 시간:', end - start);
         })
         .catch(err => {
           if (err.response.status === 401) {
@@ -202,6 +214,7 @@ export default new Vuex.Store({
     },
     // 영화 재로딩
     getPartMovies(context) {
+      let start = new Date(); 
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
@@ -231,6 +244,8 @@ export default new Vuex.Store({
             prefer: prefer.data,
           }
           context.commit('GET_MOVIES', movies)
+          let end = new Date();
+          console.log('좋아요 걸린 시간:', end - start);
         }))
         .catch(err => {
           if (err.response.status === 401) {
