@@ -1,5 +1,5 @@
 <template>
-  <nav class="row sticky-top py-2 px-1">
+  <nav id="nav" class="row sticky-top py-2 px-1">
     <!-- 로고 -->
     <div class="d-flex col-8 col-lg-6 col-xxl-8">
       <img
@@ -168,7 +168,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* 기본 */
 nav {
   display: flex;
@@ -243,23 +243,5 @@ img {
   }
 }
 
-/* 검색창 */
-.autocomplete {
-  width: 30vw;
-}
 
-.autocomplete-input {
-  padding: 10px 60px !important;
-}
-
-/* 검색목록 */
-.result {
-  display: flex;
-  align-items: center;
-  color: black;
-}
-
-.result-title {
-  font-size: 1rem;
-}
 </style>

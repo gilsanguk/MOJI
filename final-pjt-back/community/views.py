@@ -5,8 +5,9 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import (
     ReviewListSerializer,
     ReviewSerializer,
+    CommentSerializer,
 )
-from .models import Review
+from .models import Review, Comment
 from movies.models import Movie
 
 # Create your views here.
@@ -49,21 +50,7 @@ def review_detail(request, movie_pk, review_pk):
             serializer.save()
             return Response(serializer.data)
 
-
-@api_view(['GET', 'POST',])
-def create_comment(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
-    if request.method == 'GET':
-        serializer = ReviewSerializer()
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(review=review, user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
+        
 @api_view(['POST',])
 def like_review(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
@@ -77,3 +64,20 @@ def like_review(request, review_pk):
             'is_liked': review.like_users.filter(pk=request.user.pk).exists(),
         }
         return Response(context)
+        
+
+@api_view(['GET',])
+def comment_list(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    comments = review.comments.all()
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET', 'POST',])
+def create_comment(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    serializer = ReviewSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(review=review, user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

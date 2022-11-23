@@ -75,6 +75,26 @@ nav a.router-link-exact-active {
   max-height: 40vh !important;
 }
 
+/* 네브바 검색창 */
+#nav .autocomplete {
+  width: 30vw;
+}
+
+#nav .autocomplete-input {
+  padding: 10px 60px !important;
+}
+
+/* 검색목록 */
+#nav .result {
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+#nav .result-title {
+  font-size: 1rem;
+}
+
 </style>
 
 <script>

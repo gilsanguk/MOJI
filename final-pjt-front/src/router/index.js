@@ -13,6 +13,20 @@ import TestView from '@/views/TestView'
 Vue.use(VueRouter)
 const routes = [
   {
+    path: '/',
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        if (store.getters.prefer) {
+          next()
+        } else {
+          next('/selectmovie')
+        }
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
     path: '/notfound404',
     name: 'NotFound404',
     component: NotFound404,

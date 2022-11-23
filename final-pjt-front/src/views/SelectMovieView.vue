@@ -154,6 +154,9 @@ export default {
 /*  버튼 */
 #clickbutton {
   color: #a7a7a7;
+  background-color: #141619;
+  border: 0;
+  outline: none;
 }
 
 #clickbutton:hover {

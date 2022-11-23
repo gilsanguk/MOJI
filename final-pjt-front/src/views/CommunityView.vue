@@ -6,8 +6,8 @@
       </h1>
       <!-- 리뷰 -->
       <h3 class="english m-3 pb-3"><b>Review</b></h3>
-      <div id="reviewdiv">
-        <button id="reviewbtn" @click="openModal">리뷰 작성</button>
+      <div id="reviewbtn">
+        <button @click="openModal">리뷰 작성</button>
       </div>
       <div v-if="reviews.length">
         <ReviewItem
@@ -151,13 +151,12 @@ export default {
 }
 
 /* 리뷰 작성 버튼 */
-#reviewdiv {
+#reviewbtn {
   text-align: right;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid #404040;
+  margin-bottom: 2rem;
 }
 
-#reviewbtn:hover {
+.reviewbtn:hover {
   color: #ffffff !important;
   cursor: pointer;
   transition: 0.4s;
@@ -174,13 +173,13 @@ button,
   padding: 0.3% 2%;
   letter-spacing: 1px;
   background-color: transparent;
-  color: #ffffff;
+  color: #a7a7a7;
   border: 0;
   outline: 0;
 }
 
 button:hover,
 .btn-cover #page-btn:hover {
+  color: white;
   cursor: pointer;
 }
-</style>

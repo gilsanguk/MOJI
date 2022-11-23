@@ -1,38 +1,20 @@
 <template>
-  <div id="reviewform">
+  <div id="commentform">
     <!-- 창 닫기 -->
     <button id="closebtn" @click="closeModal">X</button>
 
     <!-- 리뷰 작성 폼 -->
     <form @submit.prevent>
-      <div class="form-group">
-        <div id="title">
-          <p>제목</p>
-          <input
-            class="form-control"
-            placeholder="제목을 입력해 주세요"
-            v-model="title"
-          />
-        </div>
-        <div id="content">
+      <div id="content">
           <p>내용</p>
           <textarea
-            class="form-control"
-            rows="3"
-            placeholder="내용을 입력해 주세요"
-            v-model="content"
+          class="form-control"
+          rows="3"
+          placeholder="내용을 입력해 주세요"
+          v-model="content"
           ></textarea>
-        </div>
-        <div id="rank">
-          <div>
-            <span>내가 생각하는 영화 평점</span>       
-            <select id="rate" v-model="rank">
-              <option style="color: black;" class="content-font" :value="rate" v-for="(rate, idx) in this.reviewRate" :key="idx">{{ rate }}</option>
-            </select>
-          </div>
-        </div>
       </div>
-      <button type="submit" id="summitbtn" @click="createReview">
+      <button type="submit" id="summitbtn" @click="createComment">
         등록
       </button>
     </form>
@@ -45,39 +27,32 @@ import axios from "axios";
 const API_URL = "http://127.0.0.1:8000/moji";
 
 export default {
-  name: "ReviewCreateForm",
+  name: "CommentsCreate",
   props: {
     closeModal: Function,
     refresh: Function,
-    movie: Object,
+    review: Object,
   },
   data() {
     return {
-      reviewRate: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      title: "",
       content: "",
-      rank: 0,
     };
   },
   methods: {
-    // 리뷰 생성 요청
-    createReview() {
+    // 댓글 생성 요청
+    createComment() {
       const data = {
-        title: this.title,
         content: this.content,
-        rank: this.rank,
       }
-      console.log(data);
       axios({
         method: "post",
-        url: `${API_URL}/community/${this.$route.params.movieId}/reviews/create/`,
+        url: `${API_URL}/community/reviews/${this.review.id}/comments/create/`,
         headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         data: data,
       })
-        .then(() => {
-          this.title = "";
+        .then((res) => {
+        console.log(res.data);
           this.content = "";
-          this.rank = "";
           this.closeModal();
           this.refresh();
         })
@@ -103,7 +78,7 @@ export default {
   background-color: #292929;
 }
 
-#reviewform {
+#commentform {
   padding: 3% 7%
 }
 
@@ -116,28 +91,14 @@ export default {
   outline: 0;
 }
 
-#title p,
-#content p,
-#rank {
+#content p {
+  margin-top: 7%;
   color: white;
   font-size: large;
   font-weight: bold;
 }
 
-#title p {
-  margin-top: 5%;
-}
-
-#content p,
-#rank {
-  margin-top: 7%;
-}
-
-#rank span {
-  margin-right: 3%
-}
-
-#reviewform .form-control {
+#content .form-control {
   resize: none;
 }
 
@@ -150,7 +111,7 @@ export default {
   outline: 0;
 }
 
-button:hover,
+#closebtn:hover,
 #summitbtn:hover {
   color: white;
   cursor: pointer;
