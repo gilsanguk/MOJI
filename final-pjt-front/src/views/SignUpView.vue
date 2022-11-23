@@ -95,7 +95,6 @@ export default {
           this.$store.commit("SAVE_TOKEN", res.data.key);
         })
         .then(() => {
-          console.log(this.username);
           this.$store.dispatch("setUserData", this.username);
         })
         .then(() => {

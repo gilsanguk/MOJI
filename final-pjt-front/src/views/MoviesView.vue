@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="recommend">
-      <h2 class="pb-4">당신을 위한 추천 영화</h2>
+      <h2 class="pb-4">{{ nickname }}님을 위한 추천 영화</h2>
       <swiper class="swiper swiper3D" :options="swiperOption3D" ref="swiper3D">
         <swiper-slide v-for="movie in recommend" :key="movie.id">
           <MoviesMainItem
@@ -12,6 +12,17 @@
             @play-auto-play="playAutoPlay"
           />
         </swiper-slide>
+      </swiper>
+    </div>
+
+     <div id="liked" v-show="liked.length !== 0">
+      <h2>{{ nickname }}님이 좋아요한 영화</h2>
+      <swiper class="swiper" :options="swiperOptionNoLoop">
+        <swiper-slide v-for="movie in liked" :key="movie.id">
+          <MoviesItem :movie="movie" @open-modal="openModal" />
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div>
 
@@ -139,6 +150,42 @@ export default {
           },
         },
       },
+      swiperOptionNoLoop: {
+        effect: "slide",
+        grabCursor: true,
+        spaceBetween: 50,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          1400: {
+            slidesPerView: 5,
+            slidesPerGroup: 5,
+            initialSlide: 5,
+          },
+          1200: {
+            slidesPerView: 4,
+            slidesPerGroup: 4,
+            initialSlide: 4,
+          },
+          850: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+            initialSlide: 3,
+          },
+          640: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+            initialSlide: 2,
+          },
+          320: {
+            slidesPerView: 1,
+            slidesPerGroup: 1,
+            initialSlide: 1,
+          },
+        },
+      },
     };
   },
   components: {
@@ -164,13 +211,15 @@ export default {
         .then((res) => {
           this.$modal.show(
             MovieDetail,
-            { movie: res.data },
+            { 
+              movie: res.data,
+            },
             {
               height: "80%",
               width: "60%",
               adaptive: true,
               shiftY: 0.5,
-            }
+            },
           );
         })
         .catch((err) => {
@@ -189,16 +238,13 @@ export default {
     swiper() {
       return this.$refs.swiper3D.$swiper;
     },
+    nickname() {
+      return this.$store.getters.getNickname;
+    },
   },
   created() {
     this.$modal.hideAll();
     this.$store.dispatch("getMovies");
-  },
-  mounted() {
-    console.log(this.$store.getters.prefer.length);
-    if (this.$store.getters.prefer.length === 0) {
-      this.$router.push({ name: "SelectMovieView" });
-    }
   },
 };
 </script>

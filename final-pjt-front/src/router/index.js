@@ -13,6 +13,20 @@ import TestView from '@/views/TestView'
 Vue.use(VueRouter)
 const routes = [
   {
+    path: '',
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isLogin) {
+        if (store.getters.prefer.length !== 0) {
+          next('/movies')
+        } else {
+          next('/selectmovie')
+        }
+      } else {
+        next('/login')
+      }
+    },
+  },
+  {
     path: '*',
     beforeEnter: (to, from, next) => {
       if (store.getters.isLogin) {

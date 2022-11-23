@@ -37,7 +37,7 @@
               :class="isLiked ? 'fas' : 'far'"
             ></i>
           </div>
-          <h5>
+          <h5 class="d-flex justify-content-between me-3">
             <b>{{ relatedYear }}</b>
           </h5>
           <p id="overview">{{ movie?.overview }}</p>
@@ -155,6 +155,7 @@ export default {
     },
     // 좋아요
     changeLike() {
+      // console.log(this.movie);
       axios({
         method: "post",
         url: `${API_URL}/movies/${this.movie.id}/like/`,
@@ -164,7 +165,7 @@ export default {
       })
         .then((res) => {
           this.isLiked = res.data.is_liked;
-          this.likeCount = res.data.like_count;
+          this.$store.dispatch("getPartMovies");
         })
         .catch((err) => {
           console.log(err);

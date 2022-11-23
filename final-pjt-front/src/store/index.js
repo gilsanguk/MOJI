@@ -27,6 +27,7 @@ export default new Vuex.Store({
   state: {
     all: [],
     recommend: [],
+    liked: [],
     recent: [],
     randomGenre: [],
     token: null,
@@ -42,6 +43,9 @@ export default new Vuex.Store({
   getters: {
     isLogin(state) {
       return state.token !== null
+    },
+    getNickname(state) {
+      return state.user.nickname
     },
     getToken(state) {
       return state.token
@@ -83,6 +87,7 @@ export default new Vuex.Store({
     // 영화 정보
     GET_MOVIES(state, movies) {
       state.recommend = movies.recommend
+      state.liked = movies.liked
       state.recent = movies.recent
       state.randomGenre = movies.randomGenre
       state.prefer = movies.prefer
@@ -129,6 +134,9 @@ export default new Vuex.Store({
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosliked = axios.get(
+        `${API_URL}/movies/liked/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
       const axiosrecent = axios.get(
         `${API_URL}/movies/recent/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
@@ -139,13 +147,14 @@ export default new Vuex.Store({
         `${API_URL}/movies/prefer/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
 
-      axios.all([axiosrecommend, axiosrecent, axiosrandomGenre, axiosprefer])
-        .then(axios.spread((recommend, recent, randomGenre, prefer) => {
-          if (recommend.data.length === 0) {
+      axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandomGenre, axiosprefer])
+        .then(axios.spread((recommend, liked, recent, randomGenre, prefer) => {
+          if (prefer.data.length === 0) {
             router.push({ name: 'SelectMovieView'})
           }
           const movies = {
             recommend: recommend.data,
+            liked: liked.data,
             recent: recent.data,
             randomGenre: randomGenre.data,
             prefer: prefer.data,
@@ -181,6 +190,48 @@ export default new Vuex.Store({
         .then(() => {
           context.commit('CLOSE_LOADING')
         })
+        .catch(err => {
+          if (err.response.status === 401) {
+            router.push({ name: 'LoginView' })
+          } else if (err.response.status === 404) {
+            router.push({ name: 'NotFound404' })
+          } else {
+            console.log(err)
+          }
+        });
+    },
+    // 영화 재로딩
+    getPartMovies(context) {
+      const axiosrecommend = axios.get(
+        `${API_URL}/movies/recommend/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosliked = axios.get(
+        `${API_URL}/movies/liked/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosrecent = axios.get(
+        `${API_URL}/movies/recent/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosrandomGenre = axios.get(
+        `${API_URL}/movies/random_genre/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+      const axiosprefer = axios.get(
+        `${API_URL}/movies/prefer/`,
+        {headers: { Authorization: `Token ${this.state.token}`}})
+
+      axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandomGenre, axiosprefer])
+        .then(axios.spread((recommend, liked, recent, randomGenre, prefer) => {
+          if (prefer.data.length === 0) {
+            router.push({ name: 'SelectMovieView'})
+          }
+          const movies = {
+            recommend: recommend.data,
+            liked: liked.data,
+            recent: recent.data,
+            randomGenre: randomGenre.data,
+            prefer: prefer.data,
+          }
+          context.commit('GET_MOVIES', movies)
+        }))
         .catch(err => {
           if (err.response.status === 401) {
             router.push({ name: 'LoginView' })

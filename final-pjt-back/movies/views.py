@@ -56,11 +56,13 @@ def get_recomandation(requestes_ids):
 
 
 
+
 @api_view(['GET'])
 def movie_list(request):
-    movies = get_list_or_404(Movie)
-    serializer = MovieAllListSerializer(movies, many=True)
+    movies = Movie.objects.all()[:10]
+    serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET',])
 def recommend_movie_list(request):
@@ -72,8 +74,10 @@ def recommend_movie_list(request):
         movies = Movie.objects.filter(id__in=recommend_movies_ids)
     else:
         movies = {}
+    # movies = Movie.objects.all()[:10]
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET',])
 def recommend_movie(request, movie_pk):
@@ -84,11 +88,18 @@ def recommend_movie(request, movie_pk):
 
 
 @api_view(['GET',])
+def liked_movie_list(request):
+    user = request.user
+    movies = user.like_movies.all()
+    serializer = MovieListSerializer(movies, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET',])
 def recent_movie_list(request):
-    recent_movies = get_list_or_404(
-        Movie.objects.filter(release_date__lte=datetime.datetime.now()).order_by('-release_date'))[:30]
-    serializers = MovieListSerializer(recent_movies, many=True)
-    return Response(serializers.data)
+    movies = Movie.objects.filter(release_date__lte=datetime.datetime.now()).order_by('-release_date')[:30]
+    serializer = MovieListSerializer(movies, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET',])
@@ -129,13 +140,10 @@ def like_movie(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     if movie.like_users.filter(pk=request.user.pk).exists():
         movie.like_users.remove(request.user)
-        if request.user.prefer_movies.filter(pk=movie.pk).exists():
-            request.user.prefer_movies.remove(movie)
+        request.user.prefer_movies.remove(movie)
     else:
         movie.like_users.add(request.user)
         request.user.prefer_movies.add(movie)
-        if request.user.prefer_movies.count() > 5:
-            request.user.prefer_movies.first().delete()
     context = {
         'like_count': movie.like_users.count(),
         'is_liked': movie.like_users.filter(pk=request.user.pk).exists(),
