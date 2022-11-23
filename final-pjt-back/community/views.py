@@ -81,3 +81,24 @@ def create_comment(request, review_pk):
     if serializer.is_valid(raise_exception=True):
         serializer.save(review=review, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET', 'DELETE', 'PUT'])
+def comment_detail(request, review_pk, comment_pk):
+    if not Review.objects.filter(pk=review_pk).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    if request.method == 'GET':
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data)
+
+    elif request.method == 'DELETE':
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    elif request.method == 'PUT':
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)

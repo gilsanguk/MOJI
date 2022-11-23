@@ -2,7 +2,7 @@
   <div id="app" class="appbody">
     <AppNav v-if="isLogin"/>
     <LoadingPage v-if="isLoading"/>
-    <!-- <img src="@/assets/logo.png" @click="goHome"  class="bg-img"/> -->
+    <!-- <img src="@/assets/logo.png" class="bg-img"/> -->
     <router-view/>
   </div>
 </template>

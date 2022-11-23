@@ -16,7 +16,7 @@ const routes = [
     path: '',
     beforeEnter: (to, from, next) => {
       if (store.getters.isLogin) {
-        if (store.getters.prefer.length !== 0) {
+        if (store.getters.prefer !== null) {
           next('/movies')
         } else {
           next('/selectmovie')

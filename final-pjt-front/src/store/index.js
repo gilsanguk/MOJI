@@ -134,7 +134,6 @@ export default new Vuex.Store({
     
     
     getMovies(context) {
-      console.log('axios 시작', new Date())
       context.commit('SET_LOADING')
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
@@ -164,14 +163,9 @@ export default new Vuex.Store({
             randomGenre: randomGenre.data,
             prefer: prefer.data,
           }
-          console.log('1번 댄', new Date())
           context.commit('GET_MOVIES', movies)
         }))
         .then(() => {
-          // let start = new Date(); 
-          // let end = new Date();
-          // console.log('Movie 걸린 시간:',end - start);
-          console.log('2번 댄: all무비 넘어가기', new Date())
           context.dispatch('getAllMovies')
         })
         .catch(err => {
@@ -186,7 +180,6 @@ export default new Vuex.Store({
     },
     // 모든 영화
     getAllMovies(context) {
-      console.log('올무비 시작', new Date());
       context.commit('SET_LOADING')
       axios({
         method: 'get',
@@ -197,14 +190,10 @@ export default new Vuex.Store({
         
       })
         .then((res) => {
-          console.log('마지막 댄', new Date());
           context.commit('GET_ALL_MOVIES', res.data)
         })
         .then(() => {
           context.commit('CLOSE_LOADING')
-          console.log('로딩 끝',new Date());
-          // let end = new Date();
-          // console.log('AllMovie 걸린 시간:', end - start);
         })
         .catch(err => {
           if (err.response.status === 401) {
@@ -218,7 +207,6 @@ export default new Vuex.Store({
     },
     // 영화 재로딩
     getPartMovies(context) {
-      let start = new Date(); 
       const axiosrecommend = axios.get(
         `${API_URL}/movies/recommend/`,
         {headers: { Authorization: `Token ${this.state.token}`}})
@@ -248,8 +236,6 @@ export default new Vuex.Store({
             prefer: prefer.data,
           }
           context.commit('GET_MOVIES', movies)
-          let end = new Date();
-          console.log('좋아요 걸린 시간:', end - start);
         }))
         .catch(err => {
           if (err.response.status === 401) {

@@ -8,6 +8,7 @@ from movies.serializers import (
     MovieSerializer,
 )
 from movies.models import Movie, Genre
+from django.views.decorators.cache import cache_page
 
 import random
 import datetime
@@ -16,7 +17,6 @@ from sklearn.preprocessing import normalize
 import base64
 import numpy as np
 import faiss
-import time
 
 def row_to_numpy(row):
     vector_str = row[2]
@@ -34,13 +34,10 @@ id_to_index = {row[0]: i for i, row in enumerate(data)}
 index = faiss.IndexFlatL2(768)
 index.add(xb_norm)
 
-print('-------------전역--------------------')
-    
+
 def get_recomandation(requestes_ids):
-    
     requested_indices = [id_to_index[movie_id] for movie_id in requestes_ids]
     requested_indices_set = set(requested_indices)
-    
     D, I = index.search(xb_norm[requested_indices], 100)
     found_movies = []
     for D_row, I_row in zip(D,I):
@@ -50,7 +47,6 @@ def get_recomandation(requestes_ids):
     found_movies = sorted(found_movies, key=lambda x: x[0])
     founded_index_set = set()
     result_indices = []
-    
     for _, idx in found_movies:
         if idx not in founded_index_set:
             result_indices.append(idx)
@@ -59,17 +55,15 @@ def get_recomandation(requestes_ids):
 
 
 @api_view(['GET'])
+@cache_page(60 * 60 * 24)
 def movie_list(request):
-    all = time.time()
     movies = Movie.objects.all()
-    serializer = MovieListSerializer(movies, many=True)
-    print('ALL 걸린시간 : ', time.time() - all)
+    serializer = MovieAllListSerializer(movies, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET',])
 def recommend_movie_list(request):
-    rec = time.time()
     user = request.user
     prefer_movies = user.prefer_movies.all()
     if prefer_movies:
@@ -78,47 +72,40 @@ def recommend_movie_list(request):
         movies = Movie.objects.filter(id__in=recommend_movies_ids)
     else:
         movies = {}
-    # movies = Movie.objects.all()[:10]
     serializer = MovieListSerializer(movies, many=True)
-    print('RECOMMEND 걸린시간 : ', time.time() - rec)
     return Response(serializer.data)
 
 
 @api_view(['GET',])
+@cache_page(60 * 60 * 24)
 def recommend_movie(request, movie_pk):
     recommend_movies_ids = get_recomandation([movie_pk])
-    movies = Movie.objects.filter(id__in=recommend_movies_ids)
+    movies = Movie.objects.filter(id__in=recommend_movies_ids)[:36]
     serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET',])
 def liked_movie_list(request):
-    lik = time.time()
     user = request.user
     movies = user.like_movies.all()
     serializer = MovieListSerializer(movies, many=True)
-    print('LIKED 걸린시간 : ', time.time() - lik)
     return Response(serializer.data)
 
 
 @api_view(['GET',])
 def recent_movie_list(request):
-    rece = time.time()
     movies = Movie.objects.filter(release_date__lte=datetime.datetime.now()).order_by('-release_date')[:30]
     serializer = MovieListSerializer(movies, many=True)
-    print('RECENT 걸린시간 : ', time.time() - rece)
     return Response(serializer.data)
 
 
 @api_view(['GET',])
 def random_genre_movie_list(request):
-    ran = time.time()
     genres = get_list_or_404(Genre)
     genre = random.choice(genres)
     movies = Movie.objects.filter(genres=genre)[:30]
     serializers = MovieListSerializer(movies, many=True)
-    print('RANDOM 걸린시간 : ', time.time() - ran)
     return Response([serializers.data, genre.name])
 
 
@@ -151,10 +138,14 @@ def like_movie(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     if movie.like_users.filter(pk=request.user.pk).exists():
         movie.like_users.remove(request.user)
-        request.user.prefer_movies.remove(movie)
+        if request.user.prefer_movies.filter(pk=movie_pk).exists():
+            request.user.prefer_movies.remove(movie)
     else:
         movie.like_users.add(request.user)
-        request.user.prefer_movies.add(movie)
+        if not request.user.prefer_movies.filter(pk=movie.pk).exists():
+            request.user.prefer_movies.add(movie)
+        if request.user.prefer_movies.count() > 10:
+            request.user.prefer_movies.remove(request.user.prefer_movies.first())
     context = {
         'like_count': movie.like_users.count(),
         'is_liked': movie.like_users.filter(pk=request.user.pk).exists(),
