@@ -44,8 +44,8 @@ export default new Vuex.Store({
     isLogin(state) {
       return state.token !== null
     },
-    getNickname(state) {
-      return state.user.nickname
+    getUsername(state) {
+      return state.user.username
     },
     getUserId(state) {
       return state.user.id

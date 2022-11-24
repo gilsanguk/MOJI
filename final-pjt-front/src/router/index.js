@@ -131,7 +131,7 @@ const routes = [
     },
   },
   {
-    path: '/profile/:nickname',
+    path: '/profile/:username',
     name: 'ProfileView',
     component: ProfileView,
     beforeEnter: (to, from, next) => {

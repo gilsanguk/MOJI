@@ -57,7 +57,7 @@ export default {
   methods: {
     getUserInfo() {
       axios.get(
-        `${API_URL}/accounts/profile/${this.$route.params.nickname}/`, {
+        `${API_URL}/accounts/profile/${this.$route.params.username}/`, {
           headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         })
         .then((res) => {
@@ -76,9 +76,7 @@ export default {
     },
     uploadImg(e) {
       this.image = e.target.files[0];
-      console.log(this.image);
       const url = URL.createObjectURL(this.image);
-      console.log(url);
       this.user.profile_image = url;
     },
     updateProfile() {
@@ -86,14 +84,14 @@ export default {
       data.append("profile_image", this.image);
       axios
         .patch(
-          `${API_URL}/accounts/profile/${this.$route.params.nickname}/update/`,
+          `${API_URL}/accounts/profile/${this.$route.params.username}/update/`,
           data,
           {
             headers: { Authorization: `Token ${this.$store.getters.getToken}` },
           }
         )
         .then(() => {
-          this.$store.dispatch("setUserData", this.user.nickname);
+          this.$store.dispatch("setUserData", this.user.username);
           this.$router.push({ name: "MoviesView" });
         })
         .catch((err) => {

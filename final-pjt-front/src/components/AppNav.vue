@@ -41,13 +41,13 @@
         >
       </div>
       <router-link
-        :to="{ name: 'ProfileView', params: { nickname: nickname } }"
+        :to="{ name: 'ProfileView', params: { username: username } }"
         class="link"
         >프로필</router-link
       >
       <a @click.prevent="logOut" class="link">로그아웃</a>
       <router-link
-        :to="{ name: 'ProfileView', params: { nickname: nickname } }"
+        :to="{ name: 'ProfileView', params: { username: username } }"
         class="link"
         ><img class="profile-img" :src="'http://127.0.0.1:8000' + profileImage" height="50"
       /></router-link>
@@ -77,7 +77,7 @@
         </li>
         <li class="menu">
           <router-link
-            :to="{ name: 'ProfileView', params: { nickname: nickname } }"
+            :to="{ name: 'ProfileView', params: { username: username } }"
             class="link"
             >내 프로필</router-link
           >
@@ -90,7 +90,7 @@
         </li>
       </ul>
       <router-link
-        :to="{ name: 'ProfileView', params: { nickname: nickname } }"
+        :to="{ name: 'ProfileView', params: { username: username } }"
         class="link"
         ><img class="profile-img" :src="'http://127.0.0.1:8000' + profileImage" height="50"
       /></router-link>
@@ -179,8 +179,8 @@ export default {
     isIndex() {
       return this.$route.name === "MoviesView";
     },
-    nickname() {
-      return this.$store.getters.getNickname;
+    username() {
+      return this.$store.getters.getUsername;
     },
     profileImage() {
       return this.$store.getters.getUserProfileImage;

@@ -71,7 +71,6 @@ export default {
         }
       })
         .then((res) => {
-          console.log(res);
           this.$store.commit('SAVE_TOKEN', res.data.key)
         })
         .then(() => {

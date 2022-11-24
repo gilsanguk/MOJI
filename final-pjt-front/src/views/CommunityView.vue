@@ -16,7 +16,7 @@
           리뷰 작성
         </button>
       </div>
-      <div class="container p-3">
+      <div class="container p-3 schema">
         <div class="row">
           <div class="d-flex">
             <div class="text-truncate col-2">작성자</div>
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div v-if="reviews.length" class="">
+      <div v-if="reviews.length" style="border-top: 2px solid #404040; border-radius: 0.25rem;">
         <ReviewItem
           v-for="review in paginatedData"
           :key="review.id"

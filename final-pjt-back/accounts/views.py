@@ -30,9 +30,3 @@ def profile_image_change(request, username):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors)
-
-
-# @api_view(['POST',])
-# def signout(request):
-#     request.user.auth_token.delete()
-#     return Response(status=204)
