@@ -12,47 +12,7 @@ from django.views.decorators.cache import cache_page
 
 import random
 import datetime
-import sqlite3
-from sklearn.preprocessing import normalize
-import base64
-import numpy as np
-import faiss
-
-def row_to_numpy(row):
-    vector_str = row[2]
-    vector = np.frombuffer(base64.b64decode(vector_str), dtype=np.float32)
-    return vector
-    
-con = sqlite3.connect("db.sqlite3")
-cur = con.cursor()
-res = cur.execute("SELECT id, overview, vector, title FROM movies_movie")
-data = list(res)
-xb = np.array([row_to_numpy(row) for row in data])
-xb_norm = normalize(xb, axis=1, norm='l2')
-id_to_index = {row[0]: i for i, row in enumerate(data)}
-
-index = faiss.IndexFlatL2(768)
-index.add(xb_norm)
-
-
-def get_recomandation(requestes_ids):
-    requested_indices = [id_to_index[movie_id] for movie_id in requestes_ids]
-    requested_indices_set = set(requested_indices)
-    D, I = index.search(xb_norm[requested_indices], 100)
-    found_movies = []
-    for D_row, I_row in zip(D,I):
-        for distance, idx in zip(D_row, I_row):
-            if distance < 0.1 and idx not in requested_indices_set:
-                found_movies.append((distance, idx))
-    found_movies = sorted(found_movies, key=lambda x: x[0])
-    founded_index_set = set()
-    result_indices = []
-    for _, idx in found_movies:
-        if idx not in founded_index_set:
-            result_indices.append(idx)
-            founded_index_set.add(idx)
-    return [data[idx][0] for idx in result_indices]
-
+z
 
 @api_view(['GET'])
 @cache_page(60 * 60 * 24)
