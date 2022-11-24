@@ -120,9 +120,9 @@
 > Heroku와 Netlify를 이용해 배포한 웹사이트입니다.
 
 ### 1.회원가입 페이지
-
-
+![image](https://user-images.githubusercontent.com/109333410/203735377-d811b325-62a5-4d9d-8ee2-b7f7772a05b5.png)
 회원가입은 username, nickname, password 정보를 입력함으로 가능하다.
+
 
 nickname은 고유값으로 다른 사람이 사용하고 있을 시 같은 값으로는 사용이 불가능하다.
 
@@ -136,19 +136,24 @@ password와 password comfirmation이 다를 경우 또는 사용하고 있는 ni
 
 
 ### 2.로그인 페이지
-
+![image](https://user-images.githubusercontent.com/109333410/203735158-26557a4a-e70b-49ae-9a66-c9986bb2d8ea.png)
 Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다.
 
 
 ### 3.메인 페이지
-
-
 메인 페이지에는 4가지 종류의 영화를 보여준다
+![image](https://user-images.githubusercontent.com/109333410/203735572-e2a14f2b-1f79-43e1-b018-79eb6fe38d4f.png)
 1. 사용자가 좋아요 누르거나 보고싶은 영화로 선택한 영화들을 기반으로 `AI`를 이용해 맞춤 영화를 30개까지 추천한다.
   - 영화를 추천하는 방법은 다음과 같다. 
   - 
+
 2. 사용자가 좋아요 누른 영화들만 보여준다.
+![image](https://user-images.githubusercontent.com/109333410/203736241-b7642974-f674-4022-96a2-fe6353d10267.png)
+
+
 3. 최근개봉 영화를 보여준다.
+
+
 4. 장르를 랜덤으로 선택하여 그 장르에 있는 영화를 랜덤으로 30개 추천해준다. 새로고침을 누를 때마다 장르는 랜덤으로 변경된다.
 
 
@@ -161,7 +166,7 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 두번째 줄부터는 드래그를 하거나 버튼을 누르면 되는데, 이때 버튼을 누르면 반응형을 적용하여 그 페이지에 보이는 영화 개수만큼 넘어간다.
 
 ### 3.2 포스터의 hover 
-
+![image](https://user-images.githubusercontent.com/109333410/203735975-321ce11d-d1d6-4480-a152-e8adfa8a8f54.png)
 `hover` 기능을 사용하여 이미지에 마우스를 올리면 제목,좋아요 누른 사람수 그리고 평점이 나오고 이미지를 클릭하면 영화 상세 페이지로 넘어간다.
 
 
