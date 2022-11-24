@@ -105,7 +105,7 @@ export default {
           Swal.fire({
             position: 'center',
             icon: 'error',
-            title: '아이디 또는 비밀번호가 틀렸습니다.',
+            title: '존재하는 닉네임이거나 비밀번호가 틀렸습니다.',
           })
           if (err.response.status === 500) {
             this.err.nickname = true;

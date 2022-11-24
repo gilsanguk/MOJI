@@ -75,6 +75,13 @@ export default {
     },
     // 댓글 수정
     updateComment() {
+      if (!this.content) {
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "내용을 입력해주세요",
+        });
+      }
       const data = {
         content: this.content,
       };

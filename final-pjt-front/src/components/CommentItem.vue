@@ -143,7 +143,7 @@ export default {
         });
     },
     getComments() {
-      this.$emit("getComments");
+      this.$emit("get-comments");
       this.updating = false;
     },
   },
