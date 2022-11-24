@@ -9,9 +9,9 @@ import ReviewDetailView from '@/views/ReviewDetailView'
 import SelectMovieView from '@/views/SelectMovieView'
 import ProfileView from '@/views/ProfileView'
 import NotFound404 from '@/views/NotFound404'
-import TestView from '@/views/TestView'
 
 Vue.use(VueRouter)
+
 const routes = [
   {
     path: '',
@@ -145,11 +145,6 @@ const routes = [
         next('/login')
       }
     }
-  },
-  {
-    path: '/test',
-    name: 'TestView',
-    component: TestView,
   },
   {
     path: '*',
