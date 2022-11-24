@@ -66,8 +66,8 @@
         <div v-if="comments.length !== 0">
           <CommentItem
             class="commentitem py-1"
-            v-for="(comment, index) in paginatedData"
-            :key="index"
+            v-for="comment in paginatedData"
+            :key="comment.id"
             :comment="comment"
             :getReview="getReview"
             @get-comments="getComments"
