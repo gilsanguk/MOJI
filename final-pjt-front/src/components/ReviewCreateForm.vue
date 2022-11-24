@@ -25,10 +25,10 @@
         </div>
         <!-- 평점 -->
         <div id="rank">
-          <span>내가 생각하는 영화 평점</span>
+          <span>평점</span>
           <select id="rate" v-model="rank">
             <option
-              style="color: black;"
+              style="color: black"
               class="content-font"
               :value="rate"
               v-for="(rate, idx) in this.reviewRate"
@@ -47,9 +47,9 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
-const API_URL = "http://127.0.0.1:8000/moji"
+const API_URL = "http://127.0.0.1:8000/moji";
 
 export default {
   name: "ReviewCreateForm",
@@ -67,7 +67,7 @@ export default {
       title: "",
       content: "",
       rank: 10,
-    }
+    };
   },
   methods: {
     // 리뷰 생성 요청
@@ -76,21 +76,32 @@ export default {
         title: this.title,
         content: this.content,
         rank: this.rank,
-      }
+      };
       if (this.review) {
         axios({
           method: "put",
           url: `${API_URL}/community/${this.$route.params.movieId}/reviews/${this.review.id}/`,
           headers: { Authorization: `Token ${this.$store.getters.getToken}` },
-          data: data
+          data: data,
         })
           .then(() => {
-          this.title = ""
-          this.content = ""
-          this.rank = ""
-          this.closeModal()
-          this.getReviews
-        })
+            this.title = "";
+            this.content = "";
+            this.rank = "";
+            this.closeModal();
+          })
+          .then(() => {
+            this.getReviews();
+          })
+          .catch((err) => {
+            if (err.response.status === 401) {
+              this.$router.push({ name: "LoginView" });
+            } else if (err.response.status === 404) {
+              this.$router.push({ name: "NotFound404" });
+            } else {
+              console.log(err);
+            }
+          });
       } else {
         axios({
           method: "post",
@@ -98,32 +109,34 @@ export default {
           headers: { Authorization: `Token ${this.$store.getters.getToken}` },
           data: data,
         })
-        .then(() => {
-          this.title = ""
-          this.content = ""
-          this.rank = ""
-          this.closeModal()
-          this.getreviews()
-        })
-        .catch((err) => {
-          if (err.response.status === 401) {
-            this.$router.push({ name: "LoginView" });
-          } else if (err.response.status === 404) {
-            this.$router.push({ name: "NotFound404" });
-          } else {
-            console.log(err);
-          }
-        });
+          .then(() => {
+            this.title = "";
+            this.content = "";
+            this.rank = "";
+            this.closeModal();
+          })
+          .then(() => {
+            this.getReviews();
+          })
+          .catch((err) => {
+            if (err.response.status === 401) {
+              this.$router.push({ name: "LoginView" });
+            } else if (err.response.status === 404) {
+              this.$router.push({ name: "NotFound404" });
+            } else {
+              console.log(err);
+            }
+          });
       }
-    }
+    },
   },
   created() {
     if (this.review) {
-      this.title = this.review.title
-      this.content = this.review.content
-      this.rank = this.review.rank
+      this.title = this.review.title;
+      this.content = this.review.content;
+      this.rank = this.review.rank;
     }
-  }
+  },
 };
 </script>
 

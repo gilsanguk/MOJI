@@ -9,7 +9,7 @@
       <div class='d-flex' :class="reviews.length ? 'justify-content-end' : 'justify-content-center'">
         <button @click="openModal" id="reviewbtn" class="btn-none">리뷰 작성</button>
       </div>
-      <div v-if="reviews.length">
+      <div v-if="reviews.length" class="">
         <ReviewItem
           v-for="review in paginatedData"
           :key="review.id"
@@ -148,4 +148,5 @@ export default {
 .bgdiv {
   min-height: 100vh;
   padding: 2rem 5rem;
+  z-index: 1;
 }

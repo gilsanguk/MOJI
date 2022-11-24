@@ -1,12 +1,9 @@
 <template>
   <div id="loadingbox">
     <div id="loading"><div class="spinner"></div></div>
-    <img
-      class="img"
-      src="@/assets/logo_film.png"
-      alt="loading..."
-      width="200"
-    />
+    <div class="bg">
+      <img src="@/assets/logo_film.png" class="bg-img"/>
+    </div>
   </div>
 </template>
 
@@ -21,18 +18,30 @@ export default {
 #loadingbox {
   position: absolute;
   z-index: 1000;
-  background-color: black;
+  background-color: #141619;
   height: 100vh;
-  width: 100vw;
+  width: 99vw;
   text-align: center;
   justify-content: center;
   line-height: 100vh;
 }
 
-.img {
-  position: relative;
-  margin: auto;
-  margin-top: 20%;
+.bg {
+  position: fixed;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bg-img {
+  position: absolute;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  -webkit-user-drag: none;
 }
 
 /* 로딩바 */

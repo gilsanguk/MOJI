@@ -85,6 +85,7 @@ export default {
   border-bottom: 1px solid #404040;
   border-radius: 0.25rem;
   cursor: pointer;
+  z-index: 1;
 }
 
 /* 평점 */

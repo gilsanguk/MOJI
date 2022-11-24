@@ -23,13 +23,15 @@
         />
       </label>
       <input id="file-input" @change="uploadImg" type="file" accept="image/*" class="d-none"/>
-      <h5 class="my-4">ID : {{ user.username }}</h5>
-      <button class="send-btn" @click.prevent="updateProfile">
-        수정하기
-      </button>
-      <button class="delete-btn" @click.prevent="deleteUser">
-        회원탈퇴
-      </button>
+      <h5 class="mb-4">ID : {{ user.username }}</h5>
+      <div class="button row">
+        <button @click.prevent="updateProfile" class="col-6 left-btn py-3">
+          수정하기
+        </button>
+        <button @click.prevent="deleteUser" class="col-6 py-3">
+          회원탈퇴
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -123,11 +125,10 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
-  width: 40%;
-  margin-bottom: 3rem;
+  margin: 30px 0;
+  width: 450px;
   border-radius: 10px;
-  padding: 2%;
+  padding: 2% 2% 0%;
   background-color: #343434;
 }
 
@@ -139,5 +140,16 @@ export default {
 
 .profile-plus {
   position: absolute;
+}
+
+.button {
+  border-top: 1px solid #404040;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.left-btn {
+  border-right: 1px solid #404040;
 }
 </style>

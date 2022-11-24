@@ -2,7 +2,9 @@
   <div id="app" class="appbody">
     <AppNav v-if="isLogin"/>
     <LoadingPage v-if="isLoading"/>
-    <!-- <img src="@/assets/logo.png" class="bg-img"/> -->
+    <div class="bg">
+      <img v-if="isShowed" src="@/assets/logo.png" class="bg-img"/>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -24,6 +26,9 @@ export default {
     },
     isLoading() {
       return this.$store.getters.isLoading
+    },
+    isShowed() {
+      return this.$route.name === 'MoviesView' || this.$route.name === 'CommunityView'
     }
   },
 }
@@ -45,16 +50,27 @@ export default {
   max-width: 100vw;
   background-color: #141619;
   scroll-behavior: smooth;
+  position: relative;
+}
+
+.bg {
+  position: fixed;
+  width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
 .bg-img {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: absolute;
+  width: 600px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
   z-index: -1;
-  opacity: 0.5;
+  -webkit-user-drag: none;
 }
 /* 영어, 숫자 폰트 */
 #app .english {
