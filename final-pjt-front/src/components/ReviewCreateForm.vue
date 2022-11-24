@@ -11,7 +11,8 @@
           <input
             class="form-control"
             placeholder="제목을 입력해 주세요"
-            v-model="title"
+            v-model.trim="title"
+            :class="err ? 'error' : ''"
           />
         </div>
         <div id="content">
@@ -20,7 +21,8 @@
             class="form-control"
             rows="3"
             placeholder="내용을 입력해 주세요"
-            v-model="content"
+            v-model.trim="content"
+            :class="err ? 'error' : ''"
           ></textarea>
         </div>
         <!-- 평점 -->
@@ -67,11 +69,24 @@ export default {
       title: "",
       content: "",
       rank: 10,
+      err: false,
     };
   },
   methods: {
     // 리뷰 생성 요청
     createReview() {
+      if (!this.title && !this.content) {
+        this.err = true;
+        alert("제목과 내용을 입력해주세요");
+        return;
+      } else if (!this.content) {
+        this.err = true;
+        alert("내용을 입력해주세요");
+        return;
+      } else if (!this.title) {
+        this.err = true;
+        return;
+      }
       const data = {
         title: this.title,
         content: this.content,
@@ -91,7 +106,7 @@ export default {
             this.closeModal();
           })
           .then(() => {
-            this.getReviews();
+            this.getReview();
           })
           .catch((err) => {
             if (err.response.status === 401) {

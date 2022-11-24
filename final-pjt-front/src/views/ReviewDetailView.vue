@@ -71,13 +71,32 @@
               @getComments="getComments"
             />
           </div>
-          <CommentItem
-            class="commentitem"
-            v-for="(comment, index) in comments"
-            :key="index"
-            :comment="comment"
-            @getComments="getComments"
-          />
+          <div v-if="comments.length">
+            <CommentItem
+              class="commentitem"
+              v-for="(comment, index) in paginatedData"
+              :key="index"
+              :comment="comment"
+              @getComments="getComments"
+            />
+            <!-- 버튼 -->
+            <div class="btn-cover">
+              <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
+                &lt;
+              </button>
+              <span class="page-count"
+                ><span class="number">{{ pageNum + 1 }} / {{ pageCount }}</span>
+                페이지</span
+              >
+              <button
+                :disabled="pageNum >= pageCount - 1"
+                @click="nextPage"
+                id="page-btn"
+              >
+                &gt;
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -105,6 +124,8 @@ export default {
       comments: [],
       review: {},
       time: "",
+      pageNum: 0,
+      pageSize: 5,
     };
   },
   methods: {
@@ -214,7 +235,31 @@ export default {
     },
     closeModal() {
       this.$modal.hideAll();
-    }
+    },
+    // 페이지네이션
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+  },
+  computed: {
+    // 페이지네이션
+    pageCount() {
+      let page = Math.floor(this.comments.length / this.pageSize);
+      if (this.comments.length % this.pageSize > 0) page++;
+      return page;
+    },
+    paginatedData() {
+      if (this.comments.length >= 1) {
+        const start = this.pageNum * this.pageSize;
+        let end = start + this.pageSize;
+        return this.comments.slice(start, end);
+      } else {
+        return 0;
+      }
+    },
   },
   created() {
     this.getReview();

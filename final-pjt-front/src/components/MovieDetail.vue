@@ -155,7 +155,6 @@ export default {
     },
     // 좋아요
     changeLike() {
-      // console.log(this.movie);
       axios({
         method: "post",
         url: `${API_URL}/movies/${this.movie.id}/like/`,

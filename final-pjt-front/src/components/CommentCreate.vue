@@ -8,7 +8,8 @@
         class="form-control"
         rows="3"
         placeholder="내용을 입력해 주세요"
-        v-model="content"
+        v-model.trim="content"
+        :class="err ? 'error' : ''"
         ></textarea>
       </div>
       <button type="submit" id="summitbtn" @click="createComment">
@@ -31,11 +32,17 @@ export default {
   data() {
     return {
       content: "",
+      err: false,
     };
   },
   methods: {
     // 댓글 생성 요청
     createComment() {
+      if (!this.content) {
+        this.err = true;
+        alert("내용을 입력해주세요");
+        return;
+      }
       const data = {
         content: this.content,
       }

@@ -7,8 +7,8 @@ from rest_framework import status
 
 # Create your views here.
 @api_view(['GET', 'DELETE', ])
-def profile(request, nickname):
-    user = get_user_model().objects.get(nickname=nickname)
+def profile(request, username):
+    user = get_user_model().objects.get(username=username)
 
     if request.method == 'GET':
         serializer = ProfileSerializer(user)
@@ -23,8 +23,8 @@ def profile(request, nickname):
 
 
 @api_view(['PATCH'])
-def profile_image_change(request, nickname):
-    user = get_user_model().objects.get(nickname=nickname)
+def profile_image_change(request, username):
+    user = get_user_model().objects.get(username=username)
     serializer = ProfileImageSerializer(user, data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save()

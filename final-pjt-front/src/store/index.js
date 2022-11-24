@@ -85,6 +85,7 @@ export default new Vuex.Store({
     },
     // 유저 정보
     SET_USER_DATA(state, userData) {
+      console.log(userData);
       state.user.id = userData.id
       state.user.username = userData.username
       state.user.nickname = userData.nickname
@@ -106,6 +107,10 @@ export default new Vuex.Store({
     SET_PREFER(state, movies) {
       state.prefer = movies
     },
+    // 영화 재로딩
+    GET_PART_MOVIES(state, liked) {
+      state.liked = liked
+    },
     // 로딩
     SET_LOADING(state) {
       state.isLoading = true;
@@ -121,10 +126,10 @@ export default new Vuex.Store({
       router.push({ name: 'LoginView' })
     },
     // 유저 정보
-    setUserData({ commit }, nickname) {
+    setUserData({ commit }, username) {
       axios({
         method: 'get',
-        url: `${API_URL}/accounts/profile/${nickname}/`,
+        url: `${API_URL}/accounts/profile/${username}/`,
         headers: {
           Authorization: `Token ${this.state.token}`
         }
@@ -223,36 +228,14 @@ export default new Vuex.Store({
     },
     // 영화 재로딩
     getPartMovies(context) {
-      const axiosrecommend = axios.get(
-        `${API_URL}/movies/recommend/`,
-        {headers: { Authorization: `Token ${this.state.token}`}})
-      const axiosliked = axios.get(
+      axios.get(
         `${API_URL}/movies/liked/`,
-        {headers: { Authorization: `Token ${this.state.token}`}})
-      const axiosrecent = axios.get(
-        `${API_URL}/movies/recent/`,
-        {headers: { Authorization: `Token ${this.state.token}`}})
-      const axiosrandomGenre = axios.get(
-        `${API_URL}/movies/random_genre/`,
-        {headers: { Authorization: `Token ${this.state.token}`}})
-      const axiosprefer = axios.get(
-        `${API_URL}/movies/prefer/`,
-        {headers: { Authorization: `Token ${this.state.token}`}})
-
-      axios.all([axiosrecommend, axiosliked, axiosrecent, axiosrandomGenre, axiosprefer])
-        .then(axios.spread((recommend, liked, recent, randomGenre, prefer) => {
-          if (prefer.data.length === 0) {
-            router.push({ name: 'SelectMovieView'})
-          }
-          const movies = {
-            recommend: recommend.data,
-            liked: liked.data,
-            recent: recent.data,
-            randomGenre: randomGenre.data,
-            prefer: prefer.data,
-          }
-          context.commit('GET_MOVIES', movies)
-        }))
+        {headers: { Authorization: `Token ${this.state.token}`}}
+        )
+        .then((liked) => {
+            liked.data
+          context.commit('GET_PART_MOVIES', liked.data)
+          })
         .catch(err => {
           if (err.response.status === 401) {
             router.push({ name: 'LoginView' })
