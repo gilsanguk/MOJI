@@ -53,27 +53,39 @@
             review.like_users?.length
           }}</span>
         </div>
+
+        <!-- 내용 -->
         <div id="content">{{ review.content }}</div>
+
+        <!-- 수정, 삭제 -->
+        <div class='d-flex justify-content-end'>
+          <button @click="openModal" class="updatebtn">수정</button>
+          <button @click="deleteReview" class="deletebtn">삭제</button>
+        </div>
 
         <!-- 댓글 -->
         <div>
           <div class="comment">
-            <button @click="createComment">댓글 작성</button>
+            <CommentCreate
+              :reviewId="review.id"
+              @getComments="getComments"
+            />
           </div>
           <CommentItem
             class="commentitem"
             v-for="(comment, index) in comments"
             :key="index"
             :comment="comment"
+            @getComments="getComments"
           />
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ReviewCreateForm from "@/components/ReviewCreateForm"
 import CommentCreate from "@/components/CommentCreate";
 import CommentItem from "@/components/CommentItem";
 
@@ -85,6 +97,7 @@ export default {
   name: "ReviewDetailView",
   components: {
     CommentItem,
+    CommentCreate,
   },
   data() {
     return {
@@ -125,22 +138,36 @@ export default {
           }
         });
     },
+
+
     // 리뷰 수정
-    updateReview() {
-      const review = {
-        id: this.$route.params.id,
-        title: this.title,
-        content: this.content,
-      };
-      this.$store.dispatch("updateReview", review);
+    openModal(){
+      this.$modal.show(
+        ReviewCreateForm,
+        {
+          review: this.review,
+          closeModal: this.closeModal,
+          getReview: this.getReview,
+        },
+        {
+          height: "42%",
+          adaptive: true,
+        },
+        { "before-close": (event) => event.cancel() }
+      );
     },
+  
     // 리뷰 삭제
     deleteReview() {
-      const review = {
-        id: this.$route.params.id,
-      };
-      this.$store.dispatch("deleteReview", review);
-    },
+      axios.delete(
+        `${API_URL}/community/${this.$route.params.movieId}/reviews/${this.$route.params.reviewId}/`, {
+        headers: { Authorization: `Token ${this.$store.getters.getToken}`},
+        })
+          .then(() => {
+            this.$router.push({name:'CommunityView', params:{movieId:this.$route.params.movieId}})
+        })
+      },
+
     // 리뷰 좋아요
     likeReview(reviewId) {
       axios({
@@ -150,7 +177,6 @@ export default {
       })
         .then((res) => {
           this.isLiked = res.data.is_liked;
-          console.log(this.isLiked);
           this.getReview();
         })
         .catch((err) => {
@@ -186,26 +212,9 @@ export default {
           }
         });
     },
-
-    // 댓글 작성 모달
-    createComment() {
-      this.$modal.show(
-        CommentCreate,
-        {
-          review: this.review,
-          closeModal: this.closeModal,
-          refresh: this.getComments,
-        },
-        {
-          height: "50%",
-          adaptive: true,
-        },
-        { "before-close": (event) => event.cancel() }
-      );
-    },
     closeModal() {
       this.$modal.hideAll();
-    },
+    }
   },
   created() {
     this.getReview();
@@ -296,8 +305,6 @@ img {
 .comment {
   border-top: 1px solid #404040;
   border-bottom: 1px solid #404040;
-  margin-top: 1.2rem;
-  padding: 0.7rem 0;
 }
 
 .commentitem {

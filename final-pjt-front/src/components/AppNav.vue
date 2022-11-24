@@ -43,7 +43,7 @@
       <router-link
         :to="{ name: 'ProfileView', params: { nickname: nickname } }"
         class="link"
-        >내 프로필</router-link
+        >프로필</router-link
       >
       <a @click.prevent="logOut" class="link">로그아웃</a>
       <router-link

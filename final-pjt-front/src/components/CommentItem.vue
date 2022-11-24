@@ -1,17 +1,30 @@
 <template>
-  <div class="bgdiv">
-    <p>작성자 : {{ comment.user.nickname }} </p>
-    <p v-if="comment.created_at === comment.updated_at" class="number">{{displayedAt()}}</p>
-    <p v-else class="number">{{displayedAt()}} (수정됨) </p>
+  <div class="bgdiv ">
+    <div class="d-flex justify-content-between">
+      <div>
+        <p>작성자 : {{ comment.user.nickname }} </p>
+        <p v-if="comment.created_at === comment.updated_at" class="number">{{displayedAt()}}</p>
+        <p v-else class="number">{{displayedAt()}} (수정됨) </p>
+      </div>
+      <div>
+        <button>좋아요</button>
+        <button @click="deleteComment">X</button>
+        <button @click="updateComment">수정</button>
+      </div>
+    </div>
     <div id="contentdiv">{{comment.content}}</div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
+const API_URL = "http://127.0.0.1:8000/moji";
+
 export default {
   name: "CommentItem",
   props: {
-    comment: Object
+    comment: Object,
   },
   methods: {
     // 날짜 표시
@@ -31,6 +44,33 @@ export default {
       const years = days / 365
       return `${Math.floor(years)}년 전`
     },
+
+    // 댓글 수정
+    updateComment() {
+      const data = {
+        content: this.content
+      }
+      axios({
+        method: "put",
+          url: `${API_URL}/community/reviews/${this.$route.params.reviewId}/comments/${this.comment.id}/`,
+          headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+          data: data
+        })
+        .then(() => {
+          this.content = ""
+          this.refresh()
+        })
+    },
+    // 댓글 삭제
+    deleteComment() {
+      axios.delete(
+        `${API_URL}/community/reviews/${this.$route.params.reviewId}/comments/${this.comment.id}/`, {
+        headers: { Authorization: `Token ${this.$store.getters.getToken}`},
+        })
+          .then(() => {
+            this.$emit('getComments')
+          })
+      },
   }
 }
 </script>

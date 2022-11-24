@@ -47,24 +47,27 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 
-const API_URL = "http://127.0.0.1:8000/moji";
+const API_URL = "http://127.0.0.1:8000/moji"
 
 export default {
   name: "ReviewCreateForm",
   props: {
     closeModal: Function,
-    refresh: Function,
+    getReview: Function,
+    getReviews: Function,
     movie: Object,
+    review: Object,
   },
+
   data() {
     return {
       reviewRate: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       title: "",
       content: "",
       rank: 10,
-    };
+    }
   },
   methods: {
     // 리뷰 생성 요청
@@ -73,20 +76,34 @@ export default {
         title: this.title,
         content: this.content,
         rank: this.rank,
-      };
-      console.log(data);
-      axios({
-        method: "post",
-        url: `${API_URL}/community/${this.$route.params.movieId}/reviews/create/`,
-        headers: { Authorization: `Token ${this.$store.getters.getToken}` },
-        data: data,
-      })
+      }
+      if (this.review) {
+        axios({
+          method: "put",
+          url: `${API_URL}/community/${this.$route.params.movieId}/reviews/${this.review.id}/`,
+          headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+          data: data
+        })
+          .then(() => {
+          this.title = ""
+          this.content = ""
+          this.rank = ""
+          this.closeModal()
+          this.getReviews
+        })
+      } else {
+        axios({
+          method: "post",
+          url: `${API_URL}/community/${this.$route.params.movieId}/reviews/create/`,
+          headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+          data: data,
+        })
         .then(() => {
-          this.title = "";
-          this.content = "";
-          this.rank = "";
-          this.closeModal();
-          this.refresh();
+          this.title = ""
+          this.content = ""
+          this.rank = ""
+          this.closeModal()
+          this.getreviews()
         })
         .catch((err) => {
           if (err.response.status === 401) {
@@ -97,8 +114,16 @@ export default {
             console.log(err);
           }
         });
-    },
+      }
+    }
   },
+  created() {
+    if (this.review) {
+      this.title = this.review.title
+      this.content = this.review.content
+      this.rank = this.review.rank
+    }
+  }
 };
 </script>
 

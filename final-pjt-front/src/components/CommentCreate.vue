@@ -1,21 +1,18 @@
 <template>
   <div id="commentform">
-    <!-- 창 닫기 -->
-    <button id="closebtn" @click="closeModal">X</button>
-
     <!-- 리뷰 작성 폼 -->
     <form @submit.prevent>
       <div id="content">
-          <p>내용</p>
-          <textarea
-          class="form-control"
-          rows="3"
-          placeholder="내용을 입력해 주세요"
-          v-model="content"
-          ></textarea>
+        <p>내용</p>
+        <textarea
+        class="form-control"
+        rows="3"
+        placeholder="내용을 입력해 주세요"
+        v-model="content"
+        ></textarea>
       </div>
       <button type="submit" id="summitbtn" @click="createComment">
-        등록
+        작성
       </button>
     </form>
   </div>
@@ -29,9 +26,7 @@ const API_URL = "http://127.0.0.1:8000/moji";
 export default {
   name: "CommentsCreate",
   props: {
-    closeModal: Function,
-    refresh: Function,
-    review: Object,
+    reviewId: Number,
   },
   data() {
     return {
@@ -46,14 +41,13 @@ export default {
       }
       axios({
         method: "post",
-        url: `${API_URL}/community/reviews/${this.review.id}/comments/create/`,
+        url: `${API_URL}/community/reviews/${this.reviewId}/comments/create/`,
         headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         data: data,
       })
         .then(() => {
           this.content = "";
-          this.closeModal();
-          this.refresh();
+          this.$emit('getComments')
         })
         .catch((err) => {
           if (err.response.status === 401) {
@@ -110,7 +104,6 @@ export default {
   outline: 0;
 }
 
-#closebtn:hover,
 #summitbtn:hover {
   color: white;
   cursor: pointer;

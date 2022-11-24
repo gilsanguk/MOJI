@@ -99,7 +99,7 @@ export default {
         {
           movie: this.movie,
           closeModal: this.closeModal,
-          refresh: this.getReviews,
+          getReviews: this.getReviews,
         },
         {
           height: "42%",
@@ -149,4 +149,3 @@ export default {
   min-height: 100vh;
   padding: 2rem 5rem;
 }
-

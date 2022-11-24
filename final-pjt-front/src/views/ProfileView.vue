@@ -10,9 +10,6 @@
       />
       <!-- <p v-else>{{ user.profile_image }}</p> -->
       <form>
-        <div>
-          <label for="chooseFile"> Click </label>
-        </div>
         <input @change="uploadImg" type="file" accept="image/*" />
         <button class="send-btn" @click.prevent="updateProfile">프로필 수정</button>
       </form>
