@@ -50,9 +50,9 @@
 
 **Gill Sang Uk &  Song Eun Ji**
 
-- 길상욱: 프론트엔드 담당 - 화면 설계 및 디자인, Vue Cli 및 Axios를 통한 REST API 활용
+- 길상욱: 백엔드 담당 - DB/ Django REST API 설계, Vue Cli 및 Axios 로직 구현 
 
-- 송은지: 백엔드 담당 - DB/ Django REST API 설계, Vue Cli 및 Axios 로직 구현 
+- 송은지: 프론트엔드 담당 - 화면 설계 및 디자인, Vue Cli 및 Axios를 통한 REST API 활용
 
 <br>
 
@@ -78,7 +78,7 @@
 - <a href="./DailyREADME/README_1121.md">11/21 - 영화 추천 서비스 수정 + 영화 nav바 수정 + 영화 추천 Pagination 적용</a>
 - <a href="./DailyREADME/README_1122.md">11/22 - 영화 리뷰 작성 Modal + 리뷰 댓글 작성 Modal + 리뷰 댓글 리스트</a>
 - <a href="./DailyREADME/README_1123.md">11/23 - 영화 리뷰 좋아요 + 추천 알고리즘 수정 + 로딩창 수정</a>
-- <a href="./DailyREADME/README_1124.md">11/24 - 배포 완료 + 팔로잉 기능 </a>
+- <a href="./DailyREADME/README_1124.md">11/24 - 전반적인 테스트 및 디버깅, 결과 제출을 위한 발표 준비 </a>
 
 <br>
 
