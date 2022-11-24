@@ -44,7 +44,6 @@ export default {
     // 댓글 생성 요청
     createComment() {
       if (!this.content) {
-        this.err = true;
         Swal.fire({
           position: "center",
           icon: "warning",
@@ -62,7 +61,7 @@ export default {
       })
         .then(() => {
           this.content = "";
-          this.$emit("getComments");
+          this.$emit("get-comments");
         })
         .catch((err) => {
           if (err.response.status === 401) {

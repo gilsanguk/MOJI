@@ -83,6 +83,7 @@
           v-for="movie in paginatedData"
           :key="movie.id"
           :movie="movie"
+          class="moviecard"
         />
       </div>
       <div v-else class="modal-footer mt-5 text-center">
@@ -206,7 +207,8 @@ export default {
     // 페이지네이션
     pageCount() {
       let page = Math.floor(this.recommend.length / this.pageSize);
-      if (this.recommend.length % this.pageSize >= 0) page++;
+      if (this.recommend.length % this.pageSize > 0) page++;
+      if (page === 0) page = 1;
       return page;
     },
     paginatedData() {
@@ -266,6 +268,10 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+}
+
+.moviecard {
+  cursor: pointer;
 }
 
 /* 평점 */

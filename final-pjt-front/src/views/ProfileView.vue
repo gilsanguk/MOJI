@@ -105,6 +105,7 @@ export default {
   },
   created() {
     this.getUserInfo();
+    this.$modal.hideAll();
   },
 };
 </script>

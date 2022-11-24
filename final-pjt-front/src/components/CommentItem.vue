@@ -139,7 +139,7 @@ export default {
           }
         )
         .then(() => {
-          this.$emit("getComments");
+          this.$emit("get-comments");
         });
     },
     getComments() {

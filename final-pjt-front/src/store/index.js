@@ -53,6 +53,9 @@ export default new Vuex.Store({
     getUserProfileImage(state) {
       return state.user.profileImage
     },
+    getNickname(state) {
+      return state.user.nickname
+    },
     getToken(state) {
       return state.token
     },
@@ -85,7 +88,6 @@ export default new Vuex.Store({
     },
     // 유저 정보
     SET_USER_DATA(state, userData) {
-      console.log(userData);
       state.user.id = userData.id
       state.user.username = userData.username
       state.user.nickname = userData.nickname

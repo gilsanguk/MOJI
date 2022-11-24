@@ -70,7 +70,7 @@
             :key="index"
             :comment="comment"
             :getReview="getReview"
-            @getComments="getComments"
+            @get-comments="getComments"
           />
           <!-- 페이지네이션 -->
           <div class="my-3">
@@ -92,7 +92,7 @@
         </div>
 
         <div class="comment">
-          <CommentCreate :reviewId="review.id" @getComments="getComments" />
+          <CommentCreate :reviewId="review.id" @get-comments="getComments" />
         </div>
       </div>
     </div>
@@ -223,6 +223,7 @@ export default {
         )
         .then((res) => {
           this.comments = res.data;
+          if (this.pageNum !== 0 && this.comments.length % 5 === 0) this.pageNum--;
         })
         .catch((err) => {
           if (err.response.status === 401) {

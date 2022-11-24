@@ -144,6 +144,7 @@ export default {
     pageCount() {
       let page = Math.floor(this.reviews.length / this.pageSize);
       if (this.reviews.length % this.pageSize > 0) page++;
+      if (page === 0) page = 1;
       return page;
     },
     paginatedData() {
