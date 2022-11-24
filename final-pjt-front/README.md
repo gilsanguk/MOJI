@@ -1,13 +1,5 @@
-# MovieRecommendApp
-
-### SSAFY 1학기 최종 프로젝트 - 영화 추천 앱 제작
-#### 계획
-![image](https://user-images.githubusercontent.com/109333410/203188330-5b5ae6c6-f884-4db8-8055-b0c465d3cb49.png)
-![image](https://user-images.githubusercontent.com/109333410/203188778-79f8ed63-b462-4064-996d-34595daa8fba.png)
-
-
-
 # Welcome to MoJi 👋
+##### SSAFY 1학기 최종 프로젝트 - 영화 추천 앱 제작
 
 ![Version](images/README/version-0.1.0-blue.svg)
 
@@ -75,6 +67,8 @@
 <br>
 
 ## 📒 Tech Log
+![image](https://user-images.githubusercontent.com/109333410/203188330-5b5ae6c6-f884-4db8-8055-b0c465d3cb49.png)
+![image](https://user-images.githubusercontent.com/109333410/203188778-79f8ed63-b462-4064-996d-34595daa8fba.png)
 
 - <a href="./DailyREADME/README_1116.md">11/16 - 기획 + 개발 세팅 + 메인페이지 + 영화 디테일 페이지 + 리뷰 + 회원가입/로그인 페이지 + 사용자 인증</a>
 - <a href="./DailyREADME/README_1117.md">11/17 - DB 수정 + 장르별 영화 랜덤 추천 + 영화, 리뷰 좋아요 + 전체적인 디자인 색상 정하기</a>
@@ -107,7 +101,7 @@
 ## 📌 DB Modeling(ERD)
 <img src="ERD.drawio.png">
 
-## 📌 DB Modeling(ERD)
+## 📌 Vue Modeling(Compontent)
 <img src="ERD.drawio.png">
 
 <br>
