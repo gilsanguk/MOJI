@@ -5,6 +5,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import (
     ReviewListSerializer,
     ReviewSerializer,
+    CommentListSerializer,
     CommentSerializer,
 )
 from .models import Review, Comment
@@ -70,7 +71,7 @@ def like_review(request, review_pk):
 def comment_list(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     comments = review.comment_set.order_by('-created_at')
-    serializer = CommentSerializer(comments, many=True)
+    serializer = CommentListSerializer(comments, many=True)
     return Response(serializer.data)
 
 

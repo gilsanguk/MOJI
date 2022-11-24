@@ -147,6 +147,10 @@ export default {
       this.updating = false;
     },
   },
+  created() {
+    this.isLiked = this.comment.like_users.includes(this.$store.state.user.id);
+    this.likeCount = this.comment.like_users.length;
+  },
 };
 </script>
 

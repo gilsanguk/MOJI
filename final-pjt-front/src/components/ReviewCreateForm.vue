@@ -21,7 +21,6 @@
             rows="3"
             placeholder="내용을 입력해 주세요"
             v-model.trim="content"
-            :class="err ? 'error' : ''"
           ></textarea>
         </div>
         <!-- 평점 -->
@@ -75,7 +74,6 @@ export default {
     // 리뷰 생성 요청
     createReview() {
     if (!this.title && !this.content) {
-        this.err = true;
         Swal.fire({
           position: 'center',
           icon: 'warning',
@@ -83,7 +81,6 @@ export default {
         })
         return;
       } else if (!this.content) {
-        this.err = true;
         Swal.fire({
           position: 'center',
           icon: 'warning',
@@ -91,7 +88,6 @@ export default {
         })
         return;
       } else if (!this.title) {
-        this.err = true;
         Swal.fire({
           position: 'center',
           icon: 'warning',

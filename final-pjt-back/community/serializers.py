@@ -27,3 +27,12 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'content', 'created_at', 'updated_at', 'user', 'review',)
+
+
+class CommentListSerializer(serializers.ModelSerializer):
+    user = ProfileSerializer()
+    review = ReviewSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = '__all__'

@@ -144,6 +144,7 @@ export default {
       })
         .then((res) => {
           this.review = res.data;
+          this.isLiked = this.review.like_users.includes(this.$store.state.user.id);
         })
         .catch((err) => {
           if (err.response.status === 401) {
