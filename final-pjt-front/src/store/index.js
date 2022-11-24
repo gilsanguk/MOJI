@@ -189,6 +189,9 @@ export default new Vuex.Store({
           context.commit('GET_MOVIES', movies)
         }))
         .then(() => {
+          router.push({ name: 'MoviesView' })
+        })
+        .then(() => {
           context.dispatch('getAllMovies')
         })
         .catch(err => {
