@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2/dist/sweetalert2'
 import axios from 'axios';
 const API_URL = 'http://127.0.0.1:8000/moji'
 
@@ -88,7 +89,11 @@ export default {
         })
         .catch((err) => {
           this.err = err.response.data;
-          alert('아이디 또는 비밀번호가 틀렸습니다.')
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '아이디 또는 비밀번호가 틀렸습니다.',
+          })
         });
     },
     // 회원가입 페이지로 이동

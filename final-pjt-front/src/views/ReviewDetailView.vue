@@ -1,11 +1,6 @@
 <template>
   <div class="d-flex flex-column justify-content-center align-items-center">
-    <img
-      src="@/assets/logo.png"
-      alt="logo"
-      class="me-5"
-      height="200"
-    />
+    <img src="@/assets/logo.png" alt="logo" class="me-5" height="200" />
     <div class="bg-div">
       <div class="bg-div-div">
         <!-- 헤더 -->
@@ -58,45 +53,42 @@
         <div id="content">{{ review.content }}</div>
 
         <!-- 수정, 삭제 -->
-        <div class='d-flex justify-content-end'>
+        <div class="d-flex justify-content-end">
           <button @click="openModal" class="updatebtn">수정</button>
           <button @click="deleteReview" class="deletebtn">삭제</button>
         </div>
 
         <!-- 댓글 -->
-        <div>
-          <div class="comment">
-            <CommentCreate
-              :reviewId="review.id"
-              @getComments="getComments"
-            />
+
+        <div v-if="comments.length !== 0">
+          <CommentItem
+            class="commentitem"
+            v-for="(comment, index) in paginatedData"
+            :key="index"
+            :comment="comment"
+            @getComments="getComments"
+          />
+          <!-- 페이지네이션 -->
+          <div class="my-3">
+            <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
+              &lt;
+            </button>
+            <span class="page-count"
+              ><span class="number">{{ pageNum + 1 }} / {{ pageCount }}</span>
+              페이지</span
+            >
+            <button
+              :disabled="pageNum >= pageCount - 1"
+              @click="nextPage"
+              id="page-btn"
+            >
+              &gt;
+            </button>
           </div>
-          <div v-if="comments.length">
-            <CommentItem
-              class="commentitem"
-              v-for="(comment, index) in paginatedData"
-              :key="index"
-              :comment="comment"
-              @getComments="getComments"
-            />
-            <!-- 버튼 -->
-            <div class="btn-cover">
-              <button :disabled="pageNum === 0" @click="prevPage" id="page-btn">
-                &lt;
-              </button>
-              <span class="page-count"
-                ><span class="number">{{ pageNum + 1 }} / {{ pageCount }}</span>
-                페이지</span
-              >
-              <button
-                :disabled="pageNum >= pageCount - 1"
-                @click="nextPage"
-                id="page-btn"
-              >
-                &gt;
-              </button>
-            </div>
-          </div>
+        </div>
+
+        <div class="comment">
+          <CommentCreate :reviewId="review.id" @getComments="getComments" />
         </div>
       </div>
     </div>
@@ -104,7 +96,7 @@
 </template>
 
 <script>
-import ReviewCreateForm from "@/components/ReviewCreateForm"
+import ReviewCreateForm from "@/components/ReviewCreateForm";
 import CommentCreate from "@/components/CommentCreate";
 import CommentItem from "@/components/CommentItem";
 
@@ -160,9 +152,8 @@ export default {
         });
     },
 
-
     // 리뷰 수정
-    openModal(){
+    openModal() {
       this.$modal.show(
         ReviewCreateForm,
         {
@@ -177,17 +168,23 @@ export default {
         { "before-close": (event) => event.cancel() }
       );
     },
-  
+
     // 리뷰 삭제
     deleteReview() {
-      axios.delete(
-        `${API_URL}/community/${this.$route.params.movieId}/reviews/${this.$route.params.reviewId}/`, {
-        headers: { Authorization: `Token ${this.$store.getters.getToken}`},
-        })
-          .then(() => {
-            this.$router.push({name:'CommunityView', params:{movieId:this.$route.params.movieId}})
-        })
-      },
+      axios
+        .delete(
+          `${API_URL}/community/${this.$route.params.movieId}/reviews/${this.$route.params.reviewId}/`,
+          {
+            headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+          }
+        )
+        .then(() => {
+          this.$router.push({
+            name: "CommunityView",
+            params: { movieId: this.$route.params.movieId },
+          });
+        });
+    },
 
     // 리뷰 좋아요
     likeReview(reviewId) {
@@ -272,10 +269,10 @@ export default {
 <style scoped>
 /* 기본 */
 .bg-div {
-  width: 45%;
+  width: 600px;
   margin-bottom: 3rem;
   border-radius: 10px;
-  padding: 2%;
+  padding: 30px;
   background-color: #343434;
 }
 
@@ -317,7 +314,7 @@ img {
 
 /* 좋아요 */
 #likebtn {
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
   display: flex;
   justify-content: flex-end;
 }
@@ -325,15 +322,15 @@ img {
 .like-btn {
   position: relative;
   border-radius: 50%;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 20px;
+  height: 25px;
   border: 0;
 }
 
 .fa-heart {
   position: absolute;
-  top: 22%;
-  left: 15%;
+  top: 5.21px;
+  left: 4px;
   color: #f00;
 }
 
@@ -348,7 +345,6 @@ img {
 /* 댓글 */
 .comment {
   border-top: 1px solid #404040;
-  border-bottom: 1px solid #404040;
 }
 
 .commentitem {

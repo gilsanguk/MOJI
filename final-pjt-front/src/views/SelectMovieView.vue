@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2/dist/sweetalert2'
 import Autocomplete from "@trevoreyre/autocomplete-vue";
 import SelectedMovieItem from "@/components/SelectedMovieItem";
 
@@ -76,12 +77,20 @@ export default {
       if (this.selectmovies.length < 6) {
         this.selectmovies.push(result);
       } else {
-        alert("6개까지만 선택 가능합니다.");
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '6개까지만 선택 가능합니다.',
+        })
       }
     },
     resetPrefer() {
       if (this.selectmovies.length == 0) {
-        alert("영화를 선택해주세요.");
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '영화를 선택해주세요.',
+        })
       } else {
         this.$store.commit("SET_PREFER", this.selectmovies);
         // setTimeout(() => {

@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2/dist/sweetalert2'
 import axios from "axios";
 const API_URL = 'http://127.0.0.1:8000/moji';
 
@@ -101,7 +102,11 @@ export default {
           this.$router.push({ name: "SelectMovieView" });
         })
         .catch((err) => {
-          alert('아이디 또는 비밀번호가 틀렸습니다.');
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '아이디 또는 비밀번호가 틀렸습니다.',
+          })
           if (err.response.status === 500) {
             this.err.nickname = true;
             return

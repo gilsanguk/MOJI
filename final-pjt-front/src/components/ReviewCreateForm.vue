@@ -12,7 +12,6 @@
             class="form-control"
             placeholder="제목을 입력해 주세요"
             v-model.trim="title"
-            :class="err ? 'error' : ''"
           />
         </div>
         <div id="content">
@@ -50,6 +49,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2"
 
 const API_URL = "http://127.0.0.1:8000/moji";
 
@@ -69,23 +69,34 @@ export default {
       title: "",
       content: "",
       rank: 10,
-      err: false,
     };
   },
   methods: {
     // 리뷰 생성 요청
     createReview() {
-      if (!this.title && !this.content) {
+    if (!this.title && !this.content) {
         this.err = true;
-        alert("제목과 내용을 입력해주세요");
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '제목과 내용을 입력해주세요',
+        })
         return;
       } else if (!this.content) {
         this.err = true;
-        alert("내용을 입력해주세요");
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '내용을 입력해주세요',
+        })
         return;
       } else if (!this.title) {
         this.err = true;
-        return;
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '제목을 입력해주세요',
+        })
       }
       const data = {
         title: this.title,

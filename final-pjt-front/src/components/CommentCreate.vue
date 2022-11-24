@@ -3,16 +3,15 @@
     <!-- 리뷰 작성 폼 -->
     <form @submit.prevent>
       <div id="content">
-        <p>내용</p>
+        <p class="m-1">댓글</p>
         <textarea
         class="form-control"
         rows="3"
         placeholder="내용을 입력해 주세요"
         v-model.trim="content"
-        :class="err ? 'error' : ''"
         ></textarea>
       </div>
-      <button type="submit" id="summitbtn" @click="createComment">
+      <button type="submit" id="summitbtn" @click="createComment" :class="content !== '' ? 'focus' : ''">
         작성
       </button>
     </form>
@@ -21,6 +20,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2"
 
 const API_URL = "http://127.0.0.1:8000/moji";
 
@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       content: "",
-      err: false,
     };
   },
   methods: {
@@ -40,8 +39,11 @@ export default {
     createComment() {
       if (!this.content) {
         this.err = true;
-        alert("내용을 입력해주세요");
-        return;
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: '내용을 입력해주세요',
+        })
       }
       const data = {
         content: this.content,
@@ -79,7 +81,7 @@ export default {
 }
 
 #commentform {
-  padding: 3% 7%
+  position: relative;
 }
 
 #closebtn {
@@ -92,27 +94,32 @@ export default {
 }
 
 #content p {
-  margin-top: 7%;
   color: white;
   font-size: large;
   font-weight: bold;
+  text-align: start;
 }
 
 #content .form-control {
   resize: none;
 }
 
+
 #summitbtn {
-  float: right;
-  background-color: transparent;
-  font-size: x-large;
-  color: #a7a7a7;
-  border: 0;
-  outline: 0;
+  font-size: small;
+  padding: 1.5% 2%;
+  position: absolute;
+  bottom: 3%;
+  right: 2%;
+  border-radius: 10px;
 }
 
-#summitbtn:hover {
-  color: white;
-  cursor: pointer;
+.focus {
+  background-color: rgb(255, 190, 134);
+  color: black;
+}
+
+button:hover {
+  color: #a7a7a7 !important;
 }
 </style>
