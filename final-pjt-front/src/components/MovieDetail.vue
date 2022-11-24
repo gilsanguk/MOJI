@@ -30,7 +30,7 @@
             <h2 class="text-truncate">
               <b>{{ movie?.title }}</b>
             </h2>
-            <!-- 하트 -->
+            <!-- 좋아요 -->
             <i
               class="heart fa-heart fa-3x"
               @click="changeLike"
@@ -296,7 +296,7 @@ export default {
   padding: 0;
 }
 
-/* 하트 */
+/* 좋아요 */
 .heart {
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;

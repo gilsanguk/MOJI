@@ -34,6 +34,10 @@
 
         <!-- 좋아요 -->
         <div id="likebtn">
+          <i
+            class="heart fa-heart fa-3x"
+            :class="isLiked ? 'fas' : 'far'"
+          ></i>
           <button
             class="like-btn btn"
             :class="isLiked ? 'btn-outline-light' : 'btn-outline-danger'"
@@ -49,14 +53,17 @@
           }}</span>
         </div>
 
-        <!-- 내용 -->
-        <div id="content">{{ review.content }}</div>
-
         <!-- 수정, 삭제 -->
-        <div class="d-flex justify-content-end">
+        <div
+          v-if="$store.state.user.id === review.user?.id"
+          class="d-flex justify-content-end"
+        >
           <button @click="openModal" class="updatebtn">수정</button>
           <button @click="deleteReview" class="deletebtn">삭제</button>
         </div>
+
+        <!-- 내용 -->
+        <div id="content">{{ review.content }}</div>
 
         <!-- 댓글 -->
 
@@ -66,6 +73,7 @@
             v-for="(comment, index) in paginatedData"
             :key="index"
             :comment="comment"
+            :getReview="getReview"
             @getComments="getComments"
           />
           <!-- 페이지네이션 -->
@@ -306,6 +314,8 @@ export default {
 
 #content {
   text-align: left;
+  border-bottom: 1px solid #404040;
+  padding-bottom: 1rem;
 }
 
 img {

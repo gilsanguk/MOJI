@@ -5,13 +5,18 @@
       <div id="content">
         <p class="m-1">댓글</p>
         <textarea
-        class="form-control"
-        rows="3"
-        placeholder="내용을 입력해 주세요"
-        v-model.trim="content"
+          class="form-control"
+          rows="3"
+          placeholder="내용을 입력해 주세요"
+          v-model.trim="content"
         ></textarea>
       </div>
-      <button type="submit" id="summitbtn" @click="createComment" :class="content !== '' ? 'focus' : ''">
+      <button
+        type="submit"
+        id="summitbtn"
+        @click="comment ? updateComment() : createComment()"
+        :class="content !== '' ? 'focus' : ''"
+      >
         작성
       </button>
     </form>
@@ -20,7 +25,7 @@
 
 <script>
 import axios from "axios";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 
 const API_URL = "http://127.0.0.1:8000/moji";
 
@@ -28,6 +33,7 @@ export default {
   name: "CommentsCreate",
   props: {
     reviewId: Number,
+    comment: Object,
   },
   data() {
     return {
@@ -40,14 +46,14 @@ export default {
       if (!this.content) {
         this.err = true;
         Swal.fire({
-          position: 'center',
-          icon: 'warning',
-          title: '내용을 입력해주세요',
-        })
+          position: "center",
+          icon: "warning",
+          title: "내용을 입력해주세요",
+        });
       }
       const data = {
         content: this.content,
-      }
+      };
       axios({
         method: "post",
         url: `${API_URL}/community/reviews/${this.reviewId}/comments/create/`,
@@ -56,7 +62,7 @@ export default {
       })
         .then(() => {
           this.content = "";
-          this.$emit('getComments')
+          this.$emit("getComments");
         })
         .catch((err) => {
           if (err.response.status === 401) {
@@ -68,6 +74,26 @@ export default {
           }
         });
     },
+    // 댓글 수정
+    updateComment() {
+      const data = {
+        content: this.content,
+      };
+      axios({
+        method: "put",
+        url: `${API_URL}/community/reviews/${this.$route.params.reviewId}/comments/${this.comment.id}/`,
+        headers: { Authorization: `Token ${this.$store.getters.getToken}` },
+        data: data,
+      }).then(() => {
+        this.content = "";
+        this.$emit("get-comments");
+      });
+    },
+  },
+  created() {
+    if (this.comment) {
+      this.content = this.comment.content;
+    }
   },
 };
 </script>
@@ -103,7 +129,6 @@ export default {
 #content .form-control {
   resize: none;
 }
-
 
 #summitbtn {
   font-size: small;

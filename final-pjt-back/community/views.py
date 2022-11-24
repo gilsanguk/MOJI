@@ -69,7 +69,7 @@ def like_review(request, review_pk):
 @api_view(['GET',])
 def comment_list(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    comments = review.comment_set.all()
+    comments = review.comment_set.order_by('-created_at')
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data)
 
@@ -102,3 +102,18 @@ def comment_detail(request, review_pk, comment_pk):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+        
+
+@api_view(['POST',])
+def like_comment(request, review_pk, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    if request.method == 'POST':
+        if comment.like_users.filter(pk=request.user.pk).exists():
+            comment.like_users.remove(request.user)
+        else:
+            comment.like_users.add(request.user)
+        context = {
+            'like_count': comment.like_users.count(),
+            'is_liked': comment.like_users.filter(pk=request.user.pk).exists(),
+        }
+        return Response(context)
