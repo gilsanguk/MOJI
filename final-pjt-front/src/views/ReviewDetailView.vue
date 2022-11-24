@@ -34,10 +34,6 @@
 
         <!-- 좋아요 -->
         <div id="likebtn">
-          <i
-            class="heart fa-heart fa-3x"
-            :class="isLiked ? 'fas' : 'far'"
-          ></i>
           <button
             class="like-btn btn"
             :class="isLiked ? 'btn-outline-light' : 'btn-outline-danger'"
@@ -69,7 +65,7 @@
 
         <div v-if="comments.length !== 0">
           <CommentItem
-            class="commentitem"
+            class="commentitem py-1"
             v-for="(comment, index) in paginatedData"
             :key="index"
             :comment="comment"
@@ -360,7 +356,6 @@ img {
 .commentitem {
   text-align: left;
   margin: 0%;
-  padding: 1rem 0;
   border-bottom: 1px solid #404040;
 }
 

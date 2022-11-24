@@ -4,10 +4,29 @@
       <h1>
         <b>{{ movie?.title }}</b>
       </h1>
-      <!-- 리뷰 -->
+      <!-- 스키마 -->
       <h3 class="english m-3 pb-3"><b>Review</b></h3>
-      <div class='d-flex' :class="reviews.length ? 'justify-content-end' : 'justify-content-center'">
-        <button @click="openModal" id="reviewbtn" class="btn-none">리뷰 작성</button>
+      <div
+        class="d-flex"
+        :class="
+          reviews.length ? 'justify-content-end' : 'justify-content-center'
+        "
+      >
+        <button @click="openModal" id="reviewbtn" class="btn-none">
+          리뷰 작성
+        </button>
+      </div>
+      <div class="container p-3">
+        <div class="row">
+          <div class="d-flex">
+            <div class="text-truncate col-2">작성자</div>
+            <div class="text-truncate col-5">제목</div>
+            <div class="text-truncate col-2">작성/수정시간</div>
+            <div class="text-truncate col-1">평점</div>
+            <div class="text-truncate col-1">좋아요</div>
+            <div class="text-truncate col-1">댓글 수</div>
+          </div>
+        </div>
       </div>
       <div v-if="reviews.length" class="">
         <ReviewItem
@@ -65,7 +84,7 @@ export default {
     getMovies() {
       axios
         .get(`${API_URL}/movies/${this.$route.params.movieId}/`, {
-          headers: { Authorization: `Token ${this.$store.getters.getToken}`},
+          headers: { Authorization: `Token ${this.$store.getters.getToken}` },
         })
         .then((res) => {
           this.movie = res.data;
@@ -73,7 +92,8 @@ export default {
         });
     },
     getReviews() {
-      axios.get(
+      axios
+        .get(
           `${API_URL}/community/${this.$route.params.movieId}/reviews/?page=${this.pageNum}&page_size=${this.pageSize}`,
           {
             headers: { Authorization: `Token ${this.$store.getters.getToken}` },

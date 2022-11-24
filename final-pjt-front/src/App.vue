@@ -2,10 +2,10 @@
   <div id="app" class="appbody">
     <AppNav v-if="isLogin"/>
     <LoadingPage v-if="isLoading"/>
+    <router-view/>
     <div class="bg">
       <img v-if="isShowed" src="@/assets/logo.png" class="bg-img"/>
     </div>
-    <router-view/>
   </div>
 </template>
 
@@ -71,6 +71,7 @@ export default {
   opacity: 0.3;
   z-index: -1;
   -webkit-user-drag: none;
+  pointer-events: none;
 }
 /* 영어, 숫자 폰트 */
 #app .english {

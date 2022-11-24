@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div >
     <div class="bgdiv position-relative" v-if="!updating">
       <div class="d-flex justify-content-between">
         <div>
           <p>작성자 : {{ comment.user.nickname }}</p>
-          <p v-if="comment.created_at === comment.updated_at" class="number">
+          <p v-if="comment.created_at === comment.updated_at" class="number py-1" style="font-size:small; font-weight:300">
             {{ displayedAt() }}
           </p>
-          <p v-else class="number">{{ displayedAt() }} (수정됨)</p>
+          <p v-else class="number py-1" style="font-size:small; font-weight:300">{{ displayedAt() }} (수정됨)</p>
         </div>
 
         <div>

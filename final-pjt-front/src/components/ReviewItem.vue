@@ -4,14 +4,22 @@
       <div class="d-flex">
         <!-- 제목 간략히 -->
         <div class="text-truncate col-2">{{ review.user.nickname }}</div>
-        <div class="text-truncate col-4">
+        <div class="text-truncate col-5">
           <b>{{ review.title }}</b>
         </div>
-        <span v-if="review.created_at === review.updated_at" class="text-truncate col-3 number">
-          <b>{{ displayedAt()}}</b>
+        <span
+          v-if="review.created_at === review.updated_at"
+          class="text-truncate col-2 number"
+          style="font-size: small"
+        >
+          <b>{{ displayedAt() }}</b>
         </span>
-        <span v-else class="text-truncate col-3 number">
-          <b>{{ displayedAt()}} (수정됨)</b>
+        <span
+          v-else
+          class="text-truncate col-2 number"
+          style="font-size: small"
+        >
+          <b>{{ displayedAt() }} (수정됨)</b>
         </span>
 
         <!-- 평점 -->
@@ -20,17 +28,23 @@
             class="star-ratings-fill space-x-2 text-lg"
             :style="{ width: ratingToPercent() + '%' }"
           >
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            <span>★</span><span>★</span><span>★</span><span>★</span
+            ><span>★</span>
           </div>
           <div class="star-ratings-base space-x-2 text-lg">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            <span>★</span><span>★</span><span>★</span><span>★</span
+            ><span>★</span>
           </div>
         </div>
 
         <!-- 좋아요 -->
         <div class="col-1 number">
-            <i class="fas fa-heart"></i>
-            {{ review.like_users.length }}
+          <i class="fas fa-heart"></i>
+          {{ review.like_users.length }}
+        </div>
+        <!-- 댓글 수 -->
+        <div class="col-1 number">
+          {{ review.comment_set.length }}
         </div>
       </div>
     </div>
@@ -56,24 +70,26 @@ export default {
     },
     // 리뷰 디테일
     goDetail() {
-      this.$router.push(`/community/${this.movie.id}/reviews/${this.review.id}/`);
+      this.$router.push(
+        `/community/${this.movie.id}/reviews/${this.review.id}/`
+      );
     },
     // 날짜 표시
     displayedAt() {
-      const seconds = (new Date() - new Date(this.review.updated_at)) / 1000
-      if (seconds < 60) return `방금 전`
-      const minutes = seconds / 60
-      if (minutes < 60) return `${Math.floor(minutes)}분 전`
-      const hours = minutes / 60
-      if (hours < 24) return `${Math.floor(hours)}시간 전`
-      const days = hours / 24
-      if (days < 7) return `${Math.floor(days)}일 전`
-      const weeks = days / 7
-      if (weeks < 5) return `${Math.floor(weeks)}주 전`
-      const months = days / 30
-      if (months < 12) return `${Math.floor(months)}개월 전`
-      const years = days / 365
-      return `${Math.floor(years)}년 전`
+      const seconds = (new Date() - new Date(this.review.updated_at)) / 1000;
+      if (seconds < 60) return `방금 전`;
+      const minutes = seconds / 60;
+      if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+      const hours = minutes / 60;
+      if (hours < 24) return `${Math.floor(hours)}시간 전`;
+      const days = hours / 24;
+      if (days < 7) return `${Math.floor(days)}일 전`;
+      const weeks = days / 7;
+      if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+      const months = days / 30;
+      if (months < 12) return `${Math.floor(months)}개월 전`;
+      const years = days / 365;
+      return `${Math.floor(years)}년 전`;
     },
   },
 };

@@ -1,9 +1,9 @@
 <template>
-  <div id="commentform">
+  <div id="commentform" class="py-2">
     <!-- 리뷰 작성 폼 -->
     <form @submit.prevent>
       <div id="content">
-        <p class="m-1">댓글</p>
+        <p class="my-2">댓글</p>
         <textarea
           class="form-control"
           rows="3"
@@ -134,7 +134,7 @@ export default {
   font-size: small;
   padding: 1.5% 2%;
   position: absolute;
-  bottom: 3%;
+  bottom: 8%;
   right: 2%;
   border-radius: 10px;
 }
