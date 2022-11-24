@@ -12,7 +12,6 @@ from django.views.decorators.cache import cache_page
 
 import random
 import datetime
-z
 
 @api_view(['GET'])
 @cache_page(60 * 60 * 24)
