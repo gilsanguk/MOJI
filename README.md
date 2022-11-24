@@ -1,13 +1,7 @@
 # Welcome to MoJi 👋
 ##### SSAFY 1학기 최종 프로젝트 - 영화 추천 앱 제작
 
-![Version](images/README/version-0.1.0-blue.svg)
-
-<img src="final-pjt-front\src\assets\logo.png.png">
-
-> MoJi (Movie 뭐보Ji) 웹사이트
-
-### 🏠 [Homepage](https://brave-hamilton-108ad5.netlify.app/)
+### 🏠 MoJi
 
 <br>
 
@@ -48,7 +42,7 @@
 
 ## 👥 팀원 및 업무 분담
 
-**Gill Sang Uk &  Song Eun Ji**
+**Gil Sang Uk &  Song Eun Ji**
 
 - 길상욱: 백엔드 담당 - DB/ Django REST API 설계, Vue Cli 및 Axios 로직 구현 
 
@@ -86,38 +80,30 @@
 
 - **Front-end**
   - Vue CLI
-  - npm
   - Font Awesome
-  - Bootstrap 4
+  - Bootstrap
   - Sweet Alert2
-
+  - Vue-Awesome-Swiper
+  - Vue-js-modal
+  - LittleSnippets
 - **Back-end**
   - Django
   - Django-rest-auth
-  - python
+  - Python
+  - distilbert-base-uncased
+  - huggingface transformer
 
 <br>
 
 ## 📌 DB Modeling(ERD)
 <img src="ERD.drawio.png">
 
-## 📌 Vue Modeling(Compontent)
-<img src="ERD.drawio.png">
 
-<br>
-
-## ⭐️ Vue 핵심 기능
-
-![capture-2500935](images/README/capture-2500935.png)
-
-<br>
 
 ## 💡 Django
 
 
 ## 💡 Vue
-
-> Heroku와 Netlify를 이용해 배포한 웹사이트입니다.
 
 ### 1.회원가입 페이지
 ![image](https://user-images.githubusercontent.com/109333410/203735377-d811b325-62a5-4d9d-8ee2-b7f7772a05b5.png)
@@ -132,7 +118,11 @@ password와 password comfirmation이 다를 경우 또는 사용하고 있는 ni
 
 ### 1.1회원가입 후 영화 선택 페이지
 
+![image-20221125002530829](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125002530829.png)
+
 회원가입 후 선호하는 영화 정보에 맞추어서 영화를 추천해 주므로, 회원가입 후 바로 로그인이 되고 선택 페이지로 넘어가게 했다.
+
+
 
 
 ### 2.로그인 페이지
@@ -143,9 +133,12 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 ### 3.메인 페이지
 메인 페이지에는 4가지 종류의 영화를 보여준다
 ![image](https://user-images.githubusercontent.com/109333410/203735572-e2a14f2b-1f79-43e1-b018-79eb6fe38d4f.png)
-1. 사용자가 좋아요 누르거나 보고싶은 영화로 선택한 영화들을 기반으로 `AI`를 이용해 맞춤 영화를 30개까지 추천한다.
-  - 영화를 추천하는 방법은 다음과 같다. 
-  - 
+
+1. 사용자가 좋아요 누르거나 보고싶은 영화로 선택한 영화들을 기반으로 `AI`를 이용해 맞춤 영화를 추천한다.
+  - AI를 이용하여 사용자가 고른영화의 **줄거리**를 바탕으로 비슷한 줄거리의 영화를 추천해 준다.
+  - AI모델은 BERT를 사용하였고, BERT는 구글에서 개발한 자연어 처리 모델로, 문자열 input을 내부에 학습된 지식을 적용하여 벡터로 치환하여 준다.
+  - 이를 이용하여 영화의 줄거리를 보고 장르를 반환해주는 모델을 찾을 수 있었고, 이를 이용하여 추천 알고리즘을 구현하였다.
+  - https://huggingface.co/Tejas3/distillbert_110_uncased_movie_genre 
 
 2. 사용자가 좋아요 누른 영화들만 보여준다.
 ![image](https://user-images.githubusercontent.com/109333410/203736241-b7642974-f674-4022-96a2-fe6353d10267.png)
@@ -153,8 +146,12 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 3. 최근개봉 영화를 보여준다.
 
+   ![image-20221124215310701](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215310701.png)
+
 
 4. 장르를 랜덤으로 선택하여 그 장르에 있는 영화를 랜덤으로 30개 추천해준다. 새로고침을 누를 때마다 장르는 랜덤으로 변경된다.
+
+   ![image-20221124215347722](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215347722.png)
 
 
 ### 3.1 리스트의 Swiper
@@ -169,10 +166,13 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 ![image](https://user-images.githubusercontent.com/109333410/203735975-321ce11d-d1d6-4480-a152-e8adfa8a8f54.png)
 `hover` 기능을 사용하여 이미지에 마우스를 올리면 제목,좋아요 누른 사람수 그리고 평점이 나오고 이미지를 클릭하면 영화 상세 페이지로 넘어간다.
 
-
 ### 4.영화 상세 페이지
 
-영화의 예고편을 youtube를 이용해서 적용했고, 전체 화면으로 보기도 가능하다.
+![image-20221124215454344](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215454344.png) 
+
+상세 페이지는 모달을 이용하여 구성하였다.
+
+영화의 예고편이 담긴 youtube 영상을 보여주고, 전체 화면으로 보기도 가능하다.
 
 영화 포스터, 제목, 개봉한 년도, 평점, 영화 줄거리, 감독, 출연진, 좋아요버튼으로 이루어져 있다.
 
@@ -183,15 +183,20 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 ### 4.1 영화 좋아요
 
-하트 버튼을 누르면 버튼이 빨간색 하트로 채워지고 내 좋아요 목록에 추가 된다. 다시 누르면 빈 하트로 바뀌고 내 좋아요 목록에서 삭제 된다.
+![image-20221124215626369](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215626369.png)
 
+하트 버튼을 누르면 버튼이 빨간색 하트로 채워지고 내 좋아요 목록에 추가 된다. 다시 누르면 빈 하트로 바뀌고 내 좋아요 목록에서 삭제 된다.
 
 ### 4.2 추천된 비슷한 영화
 
-추천된 비슷한 영화들 이미지에 메인 페이지와 똑같은 기능들을 구현했다. `hover` 기능을 사용하여 이미지에 마우스를 올리면 제목, 좋아요 누른 사람수 그리고 평점이 나오고 이미지를 클릭하면 영화 상세 페이지로 넘어간다.
+![image-20221124215801554](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215801554.png)
+
+추천 콘텐츠에  메인 페이지와 똑같은 기능들을 구현했다. bootstrap의 카드를 이용하여 구성하였고, 이미지를 클릭하면 영화 상세 페이지로 넘어간다.
 
 
 ### 5. 리뷰 페이지
+
+![image-20221124215929925](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215929925.png)
 
 그 영화에 달린 다양한 사람들이 작성한 리뷰를 보여준다.
 
@@ -208,18 +213,22 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 평점은 0부터 10까지 남길 수 있으며 처음에 주어진 값은 10으로 햇다. 리뷰를 통해 남긴 평점은 별을 채워짐으로 리뷰 페이지에서 보여진다.
 
-
 ### 7. 리뷰 상세 페이지
+
+![image-20221124220010481](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124220010481.png)
 
 제목, 작성자, 시간, 이 영화에 대한 평점, 리뷰에 대한 좋아요 버튼, 작성된 내용, 댓글 입력창 그리고 달린 댓글들이 표시된다.
 
-
 ### 7.1 리뷰 좋아요
+
+![image-20221125001218842](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125001218842.png)
 
 영화 좋아요와 비슷하지만 하트 버튼을 누름과 동시에 버튼 주변에 빨간색 동그라미가 생겼다가 사라지고 하트가 빨갛게 채워진다. 그리고 좋아요 누른 사람수가 1명 증가한다. 다시 누르면 버튼 주변에 흰색 동그라미가 생겼다가 사라지고 하트가 흰색으로 채워진다. 그리고 좋아요 누른 사람수가 1명 줄어든다.
 
 
 ### 7.2 리뷰 수정
+
+![image-20221125001308930](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125001308930.png)
 
 수정 버튼을 누르면 입력된 제목과 내용을 기반으로 수정이 가능하다.
 
@@ -236,6 +245,8 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 한번 삭제한 리뷰는 다시 되돌일 수 없다.
 
 ### 7.3 댓글 등록
+
+![image-20221125001951251](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125001951251.png)
 
 리뷰 상세 페이지에서 리뷰에 따른 댓글이 등록가능하게 했다.
 
@@ -258,17 +269,24 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 한번 삭제한 댓글은 다시 되돌일 수 없다.
 
-
 ### 8. nav바
+
+왼쪽 상단에는 로고를 배치하고, 클릭하면 메인 화면으로 이동되게 하였다. 우측에는 추천받기, 프로필, 로그아웃의 라우터 링크들을 배치하고, 반응형으로 화면이 작아질 경우 드롭다운으로 바뀌게 하였다.
+
+
+
+### 8.1 보고 싶은 영화가 없다면?
+
+회원 가입시 선택한 영화를 기반으로 추천 받은 영화가 모두 마음에 들지 않을 경우, 알고리즘을 리셋하여 새로운 영화를 기반으로 추천을 진행할 수 있다. 선택 방법 및 추천 알고리즘은 회원가입시 했던 방법과 동일하게 최대 6개 까지 원하는 영화를 선택가능하다.
+
+
+
 
 
 ### 9. 내 프로필 페이지
 
+![image-20221125002245589](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125002245589.png)
 
-### 10. 보고 싶은 영화가 없다면?
+프로필 사진과 아이디, 닉네임을 간략하게 표시하며, 프로필사진의 +버튼을 통해 프로필 사진을 교체할 수 있다.
 
-
-### 11. 이미지
-
-
-
+또한 회원 탈퇴를 버튼을 통해 회원에서 탈퇴를 진행할 수 있다.
