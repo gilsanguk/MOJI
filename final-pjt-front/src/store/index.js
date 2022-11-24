@@ -209,8 +209,7 @@ export default new Vuex.Store({
         url: `${API_URL}/movies/`,
         headers: {
           Authorization: `Token ${this.state.token}`
-        }
-        
+        }       
       })
         .then((res) => {
           context.commit('GET_ALL_MOVIES', res.data)
@@ -260,6 +259,9 @@ export default new Vuex.Store({
           movies: movies
         }
       })
+        .then((res) => {
+          context.commit('SET_PREFER', res.data);
+        })
         .then(() => {
           context.dispatch('getMovies')
         })

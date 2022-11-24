@@ -92,14 +92,7 @@ export default {
           title: '영화를 선택해주세요.',
         })
       } else {
-        this.$store.commit("SET_PREFER", this.selectmovies);
-        // setTimeout(() => {
-          this.$store.dispatch("resetPrefer", this.selectmovies)
-            .then(() => {
-              this.$router.push({ name: "MoviesView" });
-            });
-        // }, 350);
-        
+        this.$store.dispatch("resetPrefer", this.selectmovies)
       }
     },
   },

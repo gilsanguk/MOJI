@@ -77,14 +77,11 @@ export default {
           this.$store.dispatch('setUserData', this.username)
         })
         .then(() => {
-          setTimeout(() => {
             if (this.$store.getters.prefer.length !== 0) {
               this.$router.push({ name: 'MoviesView' })
             } else {
               this.$router.push({ name: 'SelectMovieView' })
             }
-          }, 200)
-          
         })
         .catch((err) => {
           this.err = err.response.data;

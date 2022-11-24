@@ -130,7 +130,9 @@ def reset_prefer(request):
     user.prefer_movies.clear()
     for movie in request.data.get('movies'):
         user.prefer_movies.add(movie.get('id'))
-    return Response(status=status.HTTP_200_OK)
+    movies = user.prefer_movies.all()
+    serializer = MovieListSerializer(movies, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['POST',])

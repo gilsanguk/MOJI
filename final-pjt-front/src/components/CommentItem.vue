@@ -150,7 +150,6 @@ export default {
   created() {
     this.isLiked = this.comment.like_users.includes(this.$store.state.user.id);
     this.likeCount = this.comment.like_users.length;
-    console.log(this.comment);
   },
 };
 </script>
