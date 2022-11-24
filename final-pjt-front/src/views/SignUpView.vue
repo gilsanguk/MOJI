@@ -101,6 +101,7 @@ export default {
           this.$router.push({ name: "SelectMovieView" });
         })
         .catch((err) => {
+          alert('아이디 또는 비밀번호가 틀렸습니다.');
           if (err.response.status === 500) {
             this.err.nickname = true;
             return

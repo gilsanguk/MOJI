@@ -49,7 +49,7 @@
       <router-link
         :to="{ name: 'ProfileView', params: { nickname: nickname } }"
         class="link"
-        ><img :src="'http://127.0.0.1:8000' + profileImage" height="50"
+        ><img class="profile-img" :src="'http://127.0.0.1:8000' + profileImage" height="50"
       /></router-link>
     </div>
 
@@ -92,7 +92,7 @@
       <router-link
         :to="{ name: 'ProfileView', params: { nickname: nickname } }"
         class="link"
-        ><img :src="'http://127.0.0.1:8000' + profileImage" height="50"
+        ><img class="profile-img" :src="'http://127.0.0.1:8000' + profileImage" height="50"
       /></router-link>
     </div>
   </nav>
@@ -224,6 +224,11 @@ img {
   cursor: pointer;
   font-size: large;
   outline-style: none;
+}
+
+.profile-img {
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 /* 라우터 링크 */

@@ -85,7 +85,6 @@ export default new Vuex.Store({
     },
     // 유저 정보
     SET_USER_DATA(state, userData) {
-      console.log(userData.profile_image);
       state.user.id = userData.id
       state.user.username = userData.username
       state.user.nickname = userData.nickname
@@ -132,6 +131,20 @@ export default new Vuex.Store({
       })
         .then((res) => {
           commit('SET_USER_DATA', res.data)
+        })
+        .catch((err) => console.log(err));
+    },
+    // 회원탈퇴
+    deleteUser({ commit }) {
+      axios({
+        method: 'delete',
+        url: `${API_URL}/accounts/profile/${this.state.user.nickname}/`,
+        headers: { Authorization: `Token ${this.state.token}` }
+      })
+        .then(() => {
+          commit('SAVE_TOKEN', null)
+          alert('회원탈퇴가 완료되었습니다.')
+          router.push({ name: 'LoginView' })
         })
         .catch((err) => console.log(err));
     },

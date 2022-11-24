@@ -15,7 +15,7 @@
             id="username"
             placeholder="아이디를 입력하시오."
             v-model="username"
-            :class="err ? 'error' : ''"
+            :class="err.username ? 'error' : ''"
           />
         </div>
         <div class="d-flex flex-column">
@@ -27,7 +27,7 @@
             autocomplete="on"
             placeholder="비밀번호를 입력하시오."
             v-model="password"
-            :class="err ? 'error' : ''"
+            :class="err.password ? 'error' : ''"
           />
         </div>
         <!-- 푸터 -->
@@ -50,7 +50,11 @@ export default {
     return {
       username: null,
       password: null,
-      err: null,
+      err: {
+        username: false,
+        password: false,
+        non_field_errors: false,
+      },
     };
   },
   methods: {
@@ -81,8 +85,9 @@ export default {
           }, 200)
           
         })
-        .catch(() => {
-          this.err = true;
+        .catch((err) => {
+          this.err = err.response.data;
+          alert('아이디 또는 비밀번호가 틀렸습니다.')
         });
     },
     // 회원가입 페이지로 이동

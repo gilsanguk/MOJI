@@ -229,10 +229,9 @@ export default {
 .bg-div {
   width: 45%;
   margin-bottom: 3rem;
-  /* border: 1px solid white; */
   border-radius: 10px;
   padding: 2%;
-  background-color: #292929;
+  background-color: #343434;
 }
 
 .bg-div-div {
@@ -241,7 +240,7 @@ export default {
   border: 1px solid #a7a7a7;
   border-radius: 10px;
   padding: 7%;
-  background-color: #292929;
+  background-color: #343434;
 }
 
 #title {
