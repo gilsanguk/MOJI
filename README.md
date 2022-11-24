@@ -19,11 +19,11 @@
     $ pip install -r requirements.txt
     ```
 
-- migrate을 실행합니다.
+- migrate을 실행하고, json파일을 로드합니다.
 
   - ```bash
     $ python manage.py migrate
-    $ python manage.py runserver
+    $ python manage.py loaddata data.json
     ```
 
 - Django 프로젝트를 실행합니다.
