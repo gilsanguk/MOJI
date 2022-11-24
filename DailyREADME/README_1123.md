@@ -23,14 +23,17 @@
 ### FrontEnd
 ##### Vue
 - 영화 리뷰 좋아요, Count
-- 리뷰 댓글 리스트 만들기
+- 댓글 리스트로 띄우기
 - 로딩창 수정
 
 
 ##### CSS
 - 영화 리뷰 좋아요, Count
-- 리뷰 댓글 리스트 만들기
+![image](https://user-images.githubusercontent.com/109333410/203667509-319aefe5-4b94-4e4c-affe-183dbc924e74.png)
+- 댓글 리스트로 띄우기
+![image](https://user-images.githubusercontent.com/109333410/203667458-2dc8beb6-465c-46f7-8bfe-a969ec1efb4f.png)
 - 로딩창 수정
+![image](https://user-images.githubusercontent.com/109333410/203668251-af75cec9-c639-4a17-bc56-3adbce7bdadc.png)
 
 
 <br>
