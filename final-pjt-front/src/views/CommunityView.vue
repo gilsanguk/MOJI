@@ -89,6 +89,15 @@ export default {
         .then((res) => {
           this.movie = res.data;
           this.getReviews();
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.$router.push({ name: "LoginView" });
+          } else if (err.response.status === 404) {
+            this.$router.push({ name: "NotFound404" });
+          } else {
+            console.log(err);
+          }
         });
     },
     getReviews() {
