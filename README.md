@@ -163,8 +163,8 @@ password와 password comfirmation이 다를 경우 또는 사용하고 있는 ni
 
 ### 1.1회원가입 후 영화 선택 페이지
 
-![image-20221125002530829](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125002530829.png)
-
+![image](https://user-images.githubusercontent.com/109333410/230808504-ef20235f-05c2-4c92-a9bf-ac92d69c2301.png)
+![image](https://user-images.githubusercontent.com/109333410/230813297-38dd1854-d40d-4607-b4ec-b84ad5e29616.png)
 회원가입 후 선호하는 영화 정보에 맞추어서 영화를 추천해 주므로, 회원가입 후 바로 로그인이 되고 선택 페이지로 넘어가게 했다.
 
 
@@ -190,13 +190,11 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 
 3. 최근개봉 영화를 보여준다.
-
-   ![image-20221124215310701](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215310701.png)
+![image](https://user-images.githubusercontent.com/109333410/230813425-55c4b0ba-d0b9-49d1-8e60-d1a02f3fed50.png)
 
 
 4. 장르를 랜덤으로 선택하여 그 장르에 있는 영화를 랜덤으로 30개 추천해준다. 새로고침을 누를 때마다 장르는 랜덤으로 변경된다.
-
-   ![image-20221124215347722](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215347722.png)
+![image](https://user-images.githubusercontent.com/109333410/230813487-e2022458-5490-456b-b683-a7f2dd828c2b.png)
 
 
 ### 3.1 리스트의 Swiper
@@ -208,12 +206,15 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 두번째 줄부터는 드래그를 하거나 버튼을 누르면 되는데, 이때 버튼을 누르면 반응형을 적용하여 그 페이지에 보이는 영화 개수만큼 넘어간다.
 
 ### 3.2 포스터의 hover 
+
 ![image](https://user-images.githubusercontent.com/109333410/203735975-321ce11d-d1d6-4480-a152-e8adfa8a8f54.png)
+
 `hover` 기능을 사용하여 이미지에 마우스를 올리면 제목,좋아요 누른 사람수 그리고 평점이 나오고 이미지를 클릭하면 영화 상세 페이지로 넘어간다.
 
 ### 4.영화 상세 페이지
 
-![image-20221124215454344](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215454344.png) 
+![image](https://user-images.githubusercontent.com/109333410/230820967-b49bfbb1-61b7-4934-80d2-84dfd930d31f.png)
+
 
 상세 페이지는 모달을 이용하여 구성하였다.
 
@@ -228,20 +229,20 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 ### 4.1 영화 좋아요
 
-![image-20221124215626369](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215626369.png)
+![image](https://user-images.githubusercontent.com/109333410/230821020-e72454cc-799d-47e3-a52e-81e9c7efbb08.png)
 
 하트 버튼을 누르면 버튼이 빨간색 하트로 채워지고 내 좋아요 목록에 추가 된다. 다시 누르면 빈 하트로 바뀌고 내 좋아요 목록에서 삭제 된다.
 
 ### 4.2 추천된 비슷한 영화
 
-![image-20221124215801554](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215801554.png)
+![image](https://user-images.githubusercontent.com/109333410/230821083-f140e173-b0d6-4f80-b2fb-dcdbf596e526.png)
 
 추천 콘텐츠에  메인 페이지와 똑같은 기능들을 구현했다. bootstrap의 카드를 이용하여 구성하였고, 이미지를 클릭하면 영화 상세 페이지로 넘어간다.
 
 
 ### 5. 리뷰 페이지
 
-![image-20221124215929925](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124215929925.png)
+![image](https://user-images.githubusercontent.com/109333410/230821243-86794f38-c78f-4d35-98b9-f13e90d78dc7.png)
 
 그 영화에 달린 다양한 사람들이 작성한 리뷰를 보여준다.
 
@@ -252,21 +253,22 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 ### 6. 리뷰 작성 페이지
 
+![image](https://user-images.githubusercontent.com/109333410/230821302-4a398676-76ea-427e-8c86-815838955268.png)
+
 리뷰 작성을 누르면 `Modal`을 이용하여 리뷰를 작성할 수 있게 한다.
 
 제목, 내용, 평점을 남길 수 있다. 제목과 내용에 입력값이 없으면 리뷰를 등록할 수 없다.
 
 평점은 0부터 10까지 남길 수 있으며 처음에 주어진 값은 10으로 햇다. 리뷰를 통해 남긴 평점은 별을 채워짐으로 리뷰 페이지에서 보여진다.
 
+
 ### 7. 리뷰 상세 페이지
 
-![image-20221124220010481](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221124220010481.png)
+![image](https://user-images.githubusercontent.com/109333410/230821325-39ce9c33-7ab0-4404-8c68-dcb66ca36590.png)
 
 제목, 작성자, 시간, 이 영화에 대한 평점, 리뷰에 대한 좋아요 버튼, 작성된 내용, 댓글 입력창 그리고 달린 댓글들이 표시된다.
 
 ### 7.1 리뷰 좋아요
-
-![image-20221125001218842](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125001218842.png)
 
 영화 좋아요와 비슷하지만 하트 버튼을 누름과 동시에 버튼 주변에 빨간색 동그라미가 생겼다가 사라지고 하트가 빨갛게 채워진다. 그리고 좋아요 누른 사람수가 1명 증가한다. 다시 누르면 버튼 주변에 흰색 동그라미가 생겼다가 사라지고 하트가 흰색으로 채워진다. 그리고 좋아요 누른 사람수가 1명 줄어든다.
 
@@ -291,7 +293,7 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 ### 7.3 댓글 등록
 
-![image-20221125001951251](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125001951251.png)
+![image](https://user-images.githubusercontent.com/109333410/230821575-7d71b11e-d29d-4650-ad2e-e1abbcdcb621.png)
 
 리뷰 상세 페이지에서 리뷰에 따른 댓글이 등록가능하게 했다.
 
@@ -325,7 +327,7 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 ### 8.1 보고 싶은 영화가 없다면?
 - 호버 전
-![image](https://user-images.githubusercontent.com/109333410/203875211-3f37a8a6-2c75-4f74-a8c7-6551e965391b.png)
+![image](https://user-images.githubusercontent.com/109333410/230821680-00233e2d-6aa7-4795-8a1e-a539e09b6e5f.png)
 
 - 호버 후
 ![image](https://user-images.githubusercontent.com/109333410/203875174-2a5e750b-3f64-4552-8121-8e0011eff9d6.png)
@@ -342,7 +344,7 @@ Login 페이지에서 Signup을 누르면 회원가입 페이지로 이동한다
 
 ### 9. 내 프로필 페이지
 
-![image-20221125002245589](/Users/gilsang-uk/Library/Application Support/typora-user-images/image-20221125002245589.png)
+![image](https://user-images.githubusercontent.com/109333410/230821737-d229ebc1-c486-4d1d-8092-c5df09e91205.png)
 
 프로필 사진과 아이디, 닉네임을 간략하게 표시하며, 프로필사진의 +버튼을 통해 프로필 사진을 교체할 수 있다.
 
