@@ -125,6 +125,9 @@
 - 자연어처리 모델 BERT를 이용한 영화 discription들의 코사인 유사도 분석
 - 키워드 기반의 추천 알고리즘 구현
 
+### 아키텍쳐
+![moji 아키텍쳐](https://user-images.githubusercontent.com/109332551/232225404-de0e779e-0323-4c66-a52f-0fdf5279ed70.png)
+
 ## 💡 Vue
 
 ### 1.회원가입 페이지
