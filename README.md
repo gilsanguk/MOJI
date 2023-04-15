@@ -109,8 +109,7 @@
   - Django
   - Django-rest-auth
   - Python
-  - distilbert-base-uncased
-  - huggingface transformer
+  - BERT
 
 <br>
 
@@ -120,7 +119,9 @@
 
 
 ## 💡 Django
-
+### 기술 스택
+- 자연어처리 모델 BERT를 이용한 영화 discription들의 코사인 유사도 분석
+- 키워드 기반의 추천 알고리즘 구현
 
 ## 💡 Vue
 
