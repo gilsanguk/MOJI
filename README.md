@@ -27,13 +27,6 @@
     - db에 loaddata까지 끝난 이후 주석을 해제합니다.
   
     ```python
-    
-    ```python
-      def row_to_numpy(row):
-      vector_str = row[2]
-      vector = np.frombuffer(base64.b64decode(vector_str), dtype=np.float32)
-      return vector
-
       con = sqlite3.connect("db.sqlite3")
       cur = con.cursor()
       res = cur.execute("SELECT id, overview, vector, title FROM movies_movie")
@@ -44,25 +37,6 @@
 
       index = faiss.IndexFlatL2(768)
       index.add(xb_norm)
-
-
-      def get_recomandation(requestes_ids):
-          requested_indices = [id_to_index[movie_id] for movie_id in requestes_ids]
-          requested_indices_set = set(requested_indices)
-          D, I = index.search(xb_norm[requested_indices], 100)
-          found_movies = []
-          for D_row, I_row in zip(D,I):
-              for distance, idx in zip(D_row, I_row):
-                  if distance < 0.1 and idx not in requested_indices_set:
-                      found_movies.append((distance, idx))
-          found_movies = sorted(found_movies, key=lambda x: x[0])
-          founded_index_set = set()
-          result_indices = []
-          for _, idx in found_movies:
-              if idx not in founded_index_set:
-                  result_indices.append(idx)
-                  founded_index_set.add(idx)
-          return [data[idx][0] for idx in result_indices]
     ```
 
 - Django 프로젝트를 실행합니다.
