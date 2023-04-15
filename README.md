@@ -63,9 +63,9 @@
 
 **Gil Sang Uk &  Song Eun Ji**
 
-- 길상욱: 백엔드 담당 - DB/ Django REST API 설계, Vue Cli 및 Axios 로직 구현 
+- 길상욱: Back-End 담당 - DB/ Django REST API 설계, 자연어처리 모델을 이용한 추천 알고리즘 구현
 
-- 송은지: 프론트엔드 담당 - 화면 설계 및 디자인, Vue Cli 및 Axios를 통한 REST API 활용
+- 송은지: Front-End 담당 - 화면 설계 및 디자인, Vue Cli 및 Axios를 통한 REST API 활용
 
 <br>
 
